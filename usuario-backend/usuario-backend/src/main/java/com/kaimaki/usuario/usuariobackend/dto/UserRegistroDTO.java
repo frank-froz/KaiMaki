@@ -1,13 +1,24 @@
 package com.kaimaki.usuario.usuariobackend.dto;
 
+import jakarta.validation.constraints.*;
+
+
 public class UserRegistroDTO {
 
+    @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
+    @NotBlank(message = "El apellido es obligatorio")
     private String apellido;
+    @Email(message = "El correo no tiene un formato válido")
+    @NotBlank(message = "El correo es obligatorio")
     private String correo;
+    @NotBlank(message = "La contraseña es obligatoria")
+    @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
     private String contrasena;
     private String telefono;
+    @NotNull(message = "El rol es obligatorio")
     private Integer rolId;
+    @NotNull(message = "El estado es obligatorio")
     private Integer estadoId;
 
     // Getters y Setters
