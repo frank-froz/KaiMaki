@@ -5,6 +5,7 @@ import com.kaimaki.usuario.usuariobackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -15,7 +16,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/registro")
-    public ResponseEntity<?> registrar(@RequestBody UserRegistroDTO dto) {
+    public ResponseEntity<?> registrar(@Valid @RequestBody UserRegistroDTO dto) {
         try {
             User nuevoUsuario = userService.registrarUsuario(dto);
             return ResponseEntity.ok(nuevoUsuario);
