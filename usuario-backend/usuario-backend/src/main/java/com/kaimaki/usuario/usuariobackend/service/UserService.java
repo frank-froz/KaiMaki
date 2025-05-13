@@ -6,6 +6,8 @@ import com.kaimaki.usuario.usuariobackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 @Service
 public class UserService {
 
@@ -21,7 +23,11 @@ public class UserService {
         user.setNombre(dto.getNombre());
         user.setApellido(dto.getApellido());
         user.setCorreo(dto.getCorreo());
-        user.setContrasena(dto.getContrasena()); // Puedes encriptar luego
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String contrasenaEncriptada = encoder.encode(dto.getContrasena());
+        user.setContrasena(contrasenaEncriptada);
+
         user.setTelefono(dto.getTelefono());
         user.setRolId(dto.getRolId());
         user.setEstadoId(dto.getEstadoId());
