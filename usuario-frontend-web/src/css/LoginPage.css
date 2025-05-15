@@ -1,0 +1,181 @@
+/* src/pages/LoginPage.css */
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f7f7f7;  /* Fondo gris claro */
+}
+.nsm7Bb-HzV7m-LgbsSe-BPrWId {
+   font-size: 16px;
+}
+.login-card {
+  background-color: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 400px;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.login-buttons {
+  display: flex;
+  flex-direction: column;
+  
+  gap: 20px;
+}
+
+.google-login-button {
+  background-color: #4285F4;
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.email-login-button {
+  background-color: #ffffff;
+  color: #555;
+  padding: 9px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 90px; /* Aumentar el espacio entre el icono y el texto */
+}
+.email-login-button:hover {
+  background-color: #f7f7f7;
+}
+
+.material-icons {
+  font-size: 18px;  /* Tamaño del icono */
+  vertical-align: middle;  /* Centra el icono verticalmente */
+}
+
+.terms {
+  font-size: 14px;
+  color: #888;
+  margin-top: 20px;
+}
+
+.terms a {
+  color: #4285F4;
+  text-decoration: none;
+}
+
+.terms a:hover {
+  text-decoration: underline;
+}
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f7f7f7;
+}
+
+.login-card {
+  background-color: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 400px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+button {
+  padding: 12px;
+  background-color: #4285F4;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #4285F4;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+}
+
+.terms {
+  font-size: 14px;
+  color: #888;
+  margin-top: 20px;
+}
+
+.back-button {
+  background-color: transparent;
+  border: none;
+  color: transparent;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  display: inline-flex;
+}
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espacio entre la flecha y el título */
+  margin-bottom: 20px;
+  padding-left: 10px; /* Añadir un poco de padding para alejar el contenido del borde */
+}
+
+.back-button {
+  background-color: transparent;
+  border: none;
+  color: #010101;
+  cursor: pointer;
+  padding: 0;  /* Eliminar cualquier padding extra */
+  font-size: 50px; /* Ajuste el tamaño de la flecha */
+  width: auto; /* Evitar que el botón ocupe demasiado espacio */
+  height: auto; /* Ajuste automático de la altura */
+}
+
+.back-button svg {
+  width: 20px; /* Tamaño de la flecha ajustado */
+  height: 20px;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0; /* Eliminar márgenes innecesarios */
+}
+

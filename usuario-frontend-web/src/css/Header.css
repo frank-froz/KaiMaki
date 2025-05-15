@@ -1,0 +1,121 @@
+/* src/components/Header.css */
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background-color: #ffffff; /* Fondo blanco para el header */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Mantener el header encima del contenido */
+}
+
+.app-header .logo a {
+  color: #333; /* Color oscuro para el texto */
+  font-size: 2rem;
+  font-weight: bold;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+.app-header .logo a:hover {
+  color: #ff7f00; /* Color naranja en hover */
+}
+
+.app-header nav {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.app-header nav ul {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+}
+
+.app-header nav ul li {
+  position: relative;
+}
+
+.app-header nav ul li a {
+  color: #333;
+  font-size: 1rem;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.app-header nav ul li a:hover {
+  background-color: #ff7f00; /* Fondo naranja al hacer hover */
+  color: white; /* Texto blanco en hover */
+}
+
+.app-header .auth-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.app-header .auth-buttons a {
+  text-decoration: none;
+  color: #ff7f00; /* Color del texto del botón */
+  font-weight: 500;
+  padding: 10px 20px;
+  border: 2px solid #ff7f00;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.app-header .auth-buttons a:hover {
+  background-color: #ff7f00;
+  color: white; /* Texto blanco cuando se pasa el mouse por encima */
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    padding: 15px;
+    flex-direction: column;
+  }
+
+  .app-header nav {
+    width: 100%;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .app-header nav ul {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .app-header .auth-buttons {
+    margin-top: 20px;
+    justify-content: center;
+  }
+
+  .app-header .auth-buttons a {
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+  }
+}
+/* Estilo para el Logo */
+.app-header .logo a {
+  font-family: 'Pacifico', cursive; /* Usamos la fuente cursiva */
+  color: #ff7f00; /* Color Naranja */
+  font-size: 2.5rem; /* Tamaño grande para el logo */
+  font-weight: normal;
+  text-decoration: none; /* Quitamos el subrayado */
+  letter-spacing: 2px; /* Espaciado entre letras */
+  transition: color 0.3s ease, transform 0.3s ease; /* Efecto de transición */
+}
+
+.app-header .logo a:hover {
+  color: #ff5e00; /* Cambia a un tono de naranja más oscuro al hacer hover */
+  transform: scale(1.05); /* Ligera animación al pasar el cursor */
+}
