@@ -16,19 +16,15 @@ POST `/api/usuarios/registro`
 ```json
 
 {
-  "nombre": "Carlos",
-  "apellido": "Ramirez",
-  "correo": "carlos@example.com",
-  "contrasena": "12345678",
-  "telefono": "987654321"
+    "nombre": "Fulano",
+    "correo":"fulanito@tecsup.edu.pe",
+    "contrasena":"12345678"
 }
 ```
 
 ## ✅ Campos obligatorios
 
 - `nombre`: texto
-
-- `apellido`: texto
 
 - `correo`: formato válido de email
 
@@ -38,14 +34,14 @@ POST `/api/usuarios/registro`
 
 ```json
 {
-  "mensaje": "Usuario registrado correctamente",
-  "usuario": {
-    "id": 1,
-    "nombre": "Carlos",
-    "apellido": "Ramirez",
-    "correo": "carlos@example.com",
-    "telefono": "987654321"
-  }
+    "id": 9,
+    "nombre": "Fulano",
+    "apellido": null,
+    "correo": "fulanito@tecsup.edu.pe",
+    "contrasena": "$2a$10$.n2RLrwjDi766Jgf.c5ECuut/FPOpoxI2Ypu/v0BRDAtxXiN.gcDG",
+    "telefono": null,
+    "rolId": 1,
+    "estadoId": 1
 }
 
 ```
