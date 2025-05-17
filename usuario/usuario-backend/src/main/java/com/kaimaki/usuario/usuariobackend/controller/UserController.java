@@ -17,6 +17,7 @@ public class UserController {
 
     @PostMapping("/registro")
     public ResponseEntity<?> registrar(@Valid @RequestBody UserRegistroDTO dto) {
+        System.out.println("DTO recibido: " + dto);
         try {
             User nuevoUsuario = userService.registrarUsuario(dto);
             return ResponseEntity.ok(nuevoUsuario);
@@ -24,4 +25,5 @@ public class UserController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 }

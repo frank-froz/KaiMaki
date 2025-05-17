@@ -5,7 +5,6 @@ import com.kaimaki.usuario.usuariobackend.model.User;
 import com.kaimaki.usuario.usuariobackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
@@ -20,17 +19,18 @@ public class UserService {
         }
 
         User user = new User();
-        user.setNombre(dto.getNombre());
-        user.setApellido(dto.getApellido());
         user.setCorreo(dto.getCorreo());
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String contrasenaEncriptada = encoder.encode(dto.getContrasena());
         user.setContrasena(contrasenaEncriptada);
 
-        user.setTelefono(dto.getTelefono());
-        user.setRolId(dto.getRolId());
-        user.setEstadoId(dto.getEstadoId());
+        // Campos por defecto
+        user.setNombre("Sin nombre");
+        user.setApellido("Sin apellido");
+        user.setTelefono(null);
+        user.setRolId(1);    // rol por defecto, ej: usuario normal
+        user.setEstadoId(1); // estado activo
 
         return userRepository.save(user);
     }

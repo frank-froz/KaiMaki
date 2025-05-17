@@ -11,11 +11,8 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Desactiva CSRF para Postman
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/usuarios/registro").permitAll() // permite el endpoint de registro
-                        .anyRequest().authenticated() // el resto requiere autenticación
-                );
+                .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()); // Permitir todo sin auth
 
         return http.build();
     }

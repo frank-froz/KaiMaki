@@ -12,28 +12,31 @@ export default function RegisterPage() {
   const { login } = useContext(AuthContext)
   const navigate = useNavigate()
 
-  const onSubmit = async data => {
-    try {
-      // Llamada al endpoint de registro
-      const { data: res } = await apiRegister({
-        email: data.email,
-        password: data.password
-      })
-      // Si el backend devuelve token, iniciamos sesión automáticamente
-      if (res.token) {
-        login(res.token)
-        navigate('/dashboard')
-      } else {
-        // Si sólo confirma registro, llevamos al login
-        navigate('/login')
-      }
-    } catch (error) {
-      console.error(error)
-      // Aquí podrías mostrar un toast o mensaje de error
-    }
-  }
+    const onSubmit = async (data) => {
+        try {
+            // Mapeo de campos para backend
+            const payload = {
+                correo: data.email,
+                contrasena: data.password,
+            };
 
-  return (
+            // Llamada al endpoint con payload correcto
+            const { data: res } = await apiRegister(payload);
+
+            if (res.token) {
+                login(res.token);
+                navigate('/dashboard');
+            } else {
+                navigate('/login');
+            }
+        } catch (error) {
+            console.error(error);
+            // Aquí podrías mostrar un mensaje de error
+        }
+    };
+
+
+    return (
       <div >
       <Header/>
       <div className="register-page">

@@ -1,18 +1,14 @@
-// src/services/authService.js
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL
+  baseURL: '/api',  // URL relativa para que el proxy funcione
 })
 
-export const register = data =>
-  api.post('/auth/register', data)
+export const register = data => api.post('/usuarios/registro', data)
+
 
 export const login = data =>
-  api.post('/auth/login', data)
+    api.post('/auth/login', data)
 
 export const oauthGoogle = idToken =>
-  api.post('/auth/oauth/google', { idToken })
-
-export const oauthFacebook = accessToken =>
-  api.post('/auth/oauth/facebook', { accessToken })
+    api.post('/auth/oauth/google', { idToken })

@@ -10,33 +10,36 @@ const schema = yup.object({
     .string()
     .oneOf([yup.ref('password')], 'Las contraseñas no coinciden')
     .required('Requerido'),
+
 })
-
 export function RegisterForm({ onSubmit }) {
-  const { register, handleSubmit, formState } = useForm({
-    resolver: yupResolver(schema)
-  })
+    const { register, handleSubmit, formState } = useForm({
+        resolver: yupResolver(schema),
+    });
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register('email')} placeholder="Email" />
-      <p>{formState.errors.email?.message}</p>
+    // Esta función intercepta el submit para mostrar los datos antes de pasar al onSubmit externo
+    const onSubmitInternal = (data) => {
+        console.log('Datos enviados desde el formulario:', data);
+        onSubmit(data);
+    };
 
-      <input
-        {...register('password')}
-        type="password"
-        placeholder="Contraseña"
-      />
-      <p>{formState.errors.password?.message}</p>
+    return (
+        <form onSubmit={handleSubmit(onSubmitInternal)}>
+            <input {...register('email')} placeholder="Email" />
+            <p>{formState.errors.email?.message}</p>
 
-      <input
-        {...register('confirmPassword')}
-        type="password"
-        placeholder="Confirmar contraseña"
-      />
-      <p>{formState.errors.confirmPassword?.message}</p>
+            <input {...register('password')} type="password" placeholder="Contraseña" />
+            <p>{formState.errors.password?.message}</p>
 
-      <button type="submit">Registrarse</button>
-    </form>
-  )
+            <input
+                {...register('confirmPassword')}
+                type="password"
+                placeholder="Confirmar contraseña"
+            />
+            <p>{formState.errors.confirmPassword?.message}</p>
+
+            <button type="submit">Registrarse</button>
+        </form>
+    );
 }
+
