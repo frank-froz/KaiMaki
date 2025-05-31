@@ -1,15 +1,15 @@
 // src/pages/LandingPage.jsx
 import React from 'react';
-import { Link } from 'react-router-dom'; // Para enlaces de navegación
+import { Link } from 'react-router-dom'; 
 
-import '../css/LandingPage.css'; // Aquí se incluirán los estilos
+import '../css/LandingPage.css'; 
 import Header from '../components/Header';
 
 const LandingPage = () => {
   return (
     <div className="landing-page">
 
-      <Header />
+      <Header isLoggedIn={false} />
 
       <main className="main-content">
         <h2>Bienvenido a Kaimaki</h2>

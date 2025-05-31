@@ -2,17 +2,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
-import { AuthProvider } from './context/AuthContext' // Importa tu contexto de autenticación
-import { GoogleOAuthProvider } from '@react-oauth/google' // Proveedor de Google OAuth
+import { AuthProvider } from './context/AuthContext'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
-// Proveedor de Google OAuth - Necesario para el login de Google
-const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+const googleClientId = '170867542358-hdsnihn8u028bper2o6sgrvtr98iv6su.apps.googleusercontent.com';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {/* Proveedor para la autenticación con Google */}
     <GoogleOAuthProvider clientId={googleClientId}>
-      {/* Proveedor de contexto de autenticación */}
       <AuthProvider>
         <App />
       </AuthProvider>
