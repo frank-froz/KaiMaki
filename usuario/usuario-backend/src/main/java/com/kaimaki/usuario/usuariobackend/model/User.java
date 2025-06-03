@@ -15,7 +15,7 @@ public class User {
 
     @Column(unique = true)
     private String correo;
-
+    @Column(name = "contrasena", nullable = true)
     private String contrasena;
     private String telefono;
 

@@ -1,10 +1,10 @@
-package com.kaimaki.usuario.usuariobackend.service;
+package com.kaimaki.usuario.usuariobackend.service.impl;
 
 import com.kaimaki.usuario.usuariobackend.dto.UserRegistroDTO;
 import com.kaimaki.usuario.usuariobackend.dto.LoginRequestDTO;
 import com.kaimaki.usuario.usuariobackend.model.User;
 import com.kaimaki.usuario.usuariobackend.repository.UserRepository;
-import com.kaimaki.usuario.usuariobackend.service.impl.UserService;
+import com.kaimaki.usuario.usuariobackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -54,5 +54,19 @@ public class UserServiceImpl implements UserService {
 
         return user;
     }
+
+    public User obtenerOCrearUsuarioGoogle(String correo) {
+        return userRepository.findByCorreo(correo).orElseGet(() -> {
+            User nuevo = new User();
+            nuevo.setCorreo(correo);
+            nuevo.setNombre("Usuario Google");
+            nuevo.setApellido("Sin apellido");
+            nuevo.setContrasena(""); // O algún marcador, ya que no tiene contraseña
+            nuevo.setEstadoId(1); // Ajusta si necesitas setear estado
+            nuevo.setRolId(1); // O el ID que quieras para "cliente"
+            return userRepository.save(nuevo);
+        });
+    }
+
 
 }
