@@ -1,181 +1,99 @@
-/* src/pages/LoginPage.css */
-
+/* Contenedor principal, centrado vertical y horizontal */
 .login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f7f7f7;  /* Fondo gris claro */
-}
-.nsm7Bb-HzV7m-LgbsSe-BPrWId {
-   font-size: 16px;
-}
-.login-card {
-  background-color: white;
-  padding: 40px;
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 40px 30px;
+  background: white;
   border-radius: 12px;
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   text-align: center;
-  width: 400px;
+  box-sizing: border-box;
 }
 
 h1 {
-  font-size: 24px;
+  font-size: 26px;
+  margin-bottom: 30px;
   font-weight: 600;
-  margin-bottom: 20px;
+  color: #222;
 }
 
-p {
-  font-size: 16px;
-  color: #555;
+/* Formulario */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   margin-bottom: 30px;
 }
 
-.login-buttons {
-  display: flex;
-  flex-direction: column;
-  
-  gap: 20px;
-}
-
-.google-login-button {
-  background-color: #4285F4;
-  color: white;
-  padding: 12px;
+.login-form input {
+  padding: 12px 15px;
   font-size: 16px;
-  font-weight: 500;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
 }
 
+.login-form input:focus {
+  border-color: #4285F4;
+  outline: none;
+}
+
+/* Botón login email */
 .email-login-button {
-  background-color: #ffffff;
-  color: #555;
-  padding: 9px;
-  font-size: 16px;
-  font-weight: 500;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  cursor: pointer;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 90px; /* Aumentar el espacio entre el icono y el texto */
-}
-.email-login-button:hover {
-  background-color: #f7f7f7;
-}
-
-.material-icons {
-  font-size: 18px;  /* Tamaño del icono */
-  vertical-align: middle;  /* Centra el icono verticalmente */
-}
-
-.terms {
-  font-size: 14px;
-  color: #888;
-  margin-top: 20px;
-}
-
-.terms a {
-  color: #4285F4;
-  text-decoration: none;
-}
-
-.terms a:hover {
-  text-decoration: underline;
-}
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f7f7f7;
-}
-
-.login-card {
-  background-color: white;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: 400px;
-}
-
-input {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-}
-
-button {
-  padding: 12px;
   background-color: #4285F4;
   color: white;
-  font-size: 16px;
-  font-weight: 500;
-  border-radius: 8px;
+  font-weight: 600;
   border: none;
+  border-radius: 8px;
+  padding: 12px 0;
   cursor: pointer;
-  width: 100%;
-  margin-top: 10px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
 }
 
-button:hover {
-  background-color: #4285F4;
+.email-login-button:hover {
+  background-color: #357ae8;
 }
 
+/* Mensaje error */
 .error {
   color: red;
   font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  text-align: left;
 }
 
-.terms {
+/* Divisor entre métodos */
+.divider {
+  margin: 20px 0;
+  font-weight: 500;
+  color: #666;
   font-size: 14px;
-  color: #888;
-  margin-top: 20px;
 }
 
-.back-button {
-  background-color: transparent;
-  border: none;
-  color: transparent;
-  font-size: 16px;
-  cursor: pointer;
-  margin-bottom: 20px;
-  display: inline-flex;
-}
-.step-header {
-  display: flex;
-  align-items: center;
-  gap: 10px; /* Espacio entre la flecha y el título */
-  margin-bottom: 20px;
-  padding-left: 10px; /* Añadir un poco de padding para alejar el contenido del borde */
+/* Contenedor botón Google */
+.google-login-button-wrapper {
+  max-width: 300px;
+  margin: 0 auto;
 }
 
-.back-button {
-  background-color: transparent;
-  border: none;
-  color: #010101;
-  cursor: pointer;
-  padding: 0;  /* Eliminar cualquier padding extra */
-  font-size: 50px; /* Ajuste el tamaño de la flecha */
-  width: auto; /* Evitar que el botón ocupe demasiado espacio */
-  height: auto; /* Ajuste automático de la altura */
+/* Si el GoogleLoginButton usa un botón nativo, aplica este estilo global */
+/* Ajusta según el botón real que uses */
+.google-login-button-wrapper button {
+  width: 100% !important;
+  background-color: #4285F4 !important;
+  color: white !important;
+  font-weight: 600 !important;
+  padding: 12px 0 !important;
+  border-radius: 8px !important;
+  border: none !important;
+  cursor: pointer !important;
+  font-size: 16px !important;
+  transition: background-color 0.3s ease !important;
 }
 
-.back-button svg {
-  width: 20px; /* Tamaño de la flecha ajustado */
-  height: 20px;
+.google-login-button-wrapper button:hover {
+  background-color: #357ae8 !important;
 }
-
-h2 {
-  font-size: 20px;
-  font-weight: bold;
-  margin: 0; /* Eliminar márgenes innecesarios */
-}
-
