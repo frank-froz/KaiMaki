@@ -5,6 +5,9 @@ import RegisterPage from './pages/RegisterPage';
 import Dashboard from './pages/Dashboard';
 import LandingPage from './pages/LandingPage'; // Importa la nueva página
 import TrabajadoresDisponibles from './pages/TrabajadoresDisponibles'
+import PerfilPage from './pages/PerfilPage';
+import Perfil from './components/Perfil';
+
 
 export default function App() {
   return (
@@ -16,6 +19,7 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/trabajadores" element={<TrabajadoresDisponibles />} />
+        <Route path="/perfil" element={<PerfilPage />} />
         {/* Rutas protegidas */}
         <Route
           path="/dashboard"
@@ -25,6 +29,34 @@ export default function App() {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/perfil"
+          element={
+            <PrivateRoute>
+              <PerfilPage />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/perfil/:id"
+          element={
+            <PrivateRoute>
+              <PerfilPage />
+            </PrivateRoute>
+          }
+        />
+        {/*
+        <Route
+          path="/mi-perfil"
+          element={
+            <PrivateRoute>
+              <PerfilPage />
+            </PrivateRoute>
+          }
+        />
+        */}
+
 
         {/* Redirige por defecto a Login si no existe la ruta */}
         <Route path="*" element={<LoginPage />} />

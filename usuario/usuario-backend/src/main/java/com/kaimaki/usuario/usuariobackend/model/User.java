@@ -2,9 +2,18 @@ package com.kaimaki.usuario.usuariobackend.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class User {
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Ubicacion ubicacion;
+
+    public Ubicacion getUbicacion() { return ubicacion; }
+
+    public void setUbicacion(Ubicacion ubicacion) { this.ubicacion = ubicacion; }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,10 +24,8 @@ public class User {
 
     @Column(unique = true)
     private String correo;
-
     @Column(name = "contrasena", nullable = true)
     private String contrasena;
-
     private String telefono;
 
     //  Relación con Rol
@@ -29,15 +36,24 @@ public class User {
     @Column(name = "estado_id")
     private Integer estadoId;
 
-    //  Relación con Ubicacion
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Ubicacion ubicacion;
+    @ManyToMany(mappedBy = "participants")
+    private List<Chat> chats;
+
+    @Column(columnDefinition = "TEXT")
+    private String presentacion;
+
+    @Column(name = "foto_perfil")
+    private String fotoPerfil;
 
     // Getters y Setters
 
-    public Long getId() { return id; }
+    public Long getId() {
+        return id;
+    }
 
-    public void setId(Long id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNombre() { return nombre; }
 
@@ -59,16 +75,23 @@ public class User {
 
     public void setTelefono(String telefono) { this.telefono = telefono; }
 
-
     public Rol getRol() { return rol; }
 
     public void setRol(Rol rol) { this.rol = rol; }
+
+    public List<Chat> getChats() {return chats; }
+
+    public void setChats(List<Chat> chats) { this.chats = chats; }
 
     public Integer getEstadoId() { return estadoId; }
 
     public void setEstadoId(Integer estadoId) { this.estadoId = estadoId; }
 
-    public Ubicacion getUbicacion() { return ubicacion; }
+    public String getPresentacion() { return presentacion; }
 
-    public void setUbicacion(Ubicacion ubicacion) { this.ubicacion = ubicacion; }
+    public void setPresentacion(String presentacion) { this.presentacion = presentacion; }
+
+    public String getFotoPerfil() { return fotoPerfil; }
+
+    public void setFotoPerfil(String fotoPerfil) {this.fotoPerfil = fotoPerfil;}
 }
