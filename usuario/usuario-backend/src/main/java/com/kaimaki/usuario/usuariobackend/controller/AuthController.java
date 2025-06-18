@@ -1,6 +1,8 @@
 package com.kaimaki.usuario.usuariobackend.controller;
 
+import com.kaimaki.usuario.usuariobackend.model.Rol;
 import com.kaimaki.usuario.usuariobackend.model.User;
+import com.kaimaki.usuario.usuariobackend.repository.RolRepository;
 import com.kaimaki.usuario.usuariobackend.repository.UserRepository;
 import com.kaimaki.usuario.usuariobackend.security.JwtService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
@@ -23,6 +25,8 @@ public class AuthController {
     private UserRepository userRepository;
 
     @Autowired
+    private RolRepository rolRepository;
+    @Autowired
     private JwtService jwtService;
 
     @Value("${google.client.id}")
@@ -44,7 +48,8 @@ public class AuthController {
     @PostMapping("/google")
     public ResponseEntity<?> loginWithGoogle(@RequestBody Map<String, String> body) {
         String idTokenString = body.get("idToken");
-        System.out.println("Token de Google recibido: " + idTokenString);// Para depuración
+        System.out.println("Token de Google recibido: " + idTokenString);
+
         if (idTokenString == null) {
             return ResponseEntity.badRequest().body("idToken es requerido");
         }
@@ -57,7 +62,6 @@ public class AuthController {
 
             String email = payload.getEmail();
 
-
             if (!email.endsWith("@tecsup.edu.pe")) {
                 return ResponseEntity.status(403).body("Solo se permiten correos @tecsup.edu.pe");
             }
@@ -68,12 +72,24 @@ public class AuthController {
                         User nuevo = new User();
                         nuevo.setCorreo(email);
                         nuevo.setNombre(payload.get("name").toString());
-                        // Ajusta otros campos si los tienes
+
+                        Rol rolCliente = rolRepository.findById(1L)
+                                .orElseThrow(() -> new RuntimeException("Rol CLIENTE no encontrado"));
+                        nuevo.setRol(rolCliente);
+
                         return userRepository.save(nuevo);
                     });
 
-            // Generar JWT para tu app
-            String token = jwtService.generateToken(email);
+
+            // cargando el objeto Rol
+            if (usuario.getRol() == null) {
+                usuario = userRepository.findById(usuario.getId()).orElseThrow();
+            }
+
+            String rolNombre = "ROLE_" + usuario.getRol().getNombre().toUpperCase();
+
+            // pasa el rol al JWT
+            String token = jwtService.generateToken(usuario.getCorreo(),rolNombre);
 
             return ResponseEntity.ok(Map.of(
                     "usuario", usuario,
