@@ -2,20 +2,23 @@ package com.kaimaki.usuario.usuariobackend.service.impl;
 
 import com.kaimaki.usuario.usuariobackend.dto.UserRegistroDTO;
 import com.kaimaki.usuario.usuariobackend.dto.LoginRequestDTO;
+import com.kaimaki.usuario.usuariobackend.model.Rol;
 import com.kaimaki.usuario.usuariobackend.model.User;
+import com.kaimaki.usuario.usuariobackend.repository.RolRepository;
 import com.kaimaki.usuario.usuariobackend.repository.UserRepository;
 import com.kaimaki.usuario.usuariobackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
 
-    // Mejor: inyectar el encoder para no instanciarlo cada vez
+    @Autowired
+    private RolRepository rolRepository;
+
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
@@ -27,13 +30,15 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setCorreo(dto.getCorreo());
         user.setContrasena(passwordEncoder.encode(dto.getContrasena()));
-
-        // Valores por defecto, ideal que los traigas del DTO o se definan mejor
         user.setNombre("Sin nombre");
         user.setApellido("Sin apellido");
         user.setTelefono(null);
-        user.setRolId(1);    // rol por defecto, ej: usuario normal
-        user.setEstadoId(1); // estado activo
+        user.setEstadoId(1); // Activo
+
+        // Asignar el rol cliente (ID fijo = 1)
+        Rol rolCliente = rolRepository.findById(1L)
+                .orElseThrow(() -> new Exception("Rol CLIENTE no encontrado"));
+        user.setRol(rolCliente);
 
         return userRepository.save(user);
     }
@@ -47,7 +52,6 @@ public class UserServiceImpl implements UserService {
             throw new Exception("Contraseña incorrecta");
         }
 
-        // Aquí podrías validar si el usuario está activo o verificado
         if (user.getEstadoId() != 1) {
             throw new Exception("Usuario no activo");
         }
@@ -61,12 +65,16 @@ public class UserServiceImpl implements UserService {
             nuevo.setCorreo(correo);
             nuevo.setNombre("Usuario Google");
             nuevo.setApellido("Sin apellido");
-            nuevo.setContrasena(""); // O algún marcador, ya que no tiene contraseña
-            nuevo.setEstadoId(1); // Ajusta si necesitas setear estado
-            nuevo.setRolId(1); // O el ID que quieras para "cliente"
+            nuevo.setContrasena("");
+            nuevo.setEstadoId(1);
+
+            // Asignar el rol cliente por ID
+            Rol rolCliente = rolRepository.findById(1L)
+                    .orElseThrow(); // Lanza excepción si no está, o puedes manejarlo
+            nuevo.setRol(rolCliente);
+
             return userRepository.save(nuevo);
         });
     }
-
-
 }
+
