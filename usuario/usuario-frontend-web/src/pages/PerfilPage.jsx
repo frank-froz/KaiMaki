@@ -1,45 +1,44 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import Perfil from '../components/Perfil';
 import { AuthContext } from '../context/AuthContext';
+import { perfil } from '../services/authService';
+import Perfil from '../components/Perfil';
 import Header from '../components/Header';
 
 const PerfilPage = () => {
   const { user } = useContext(AuthContext);
-  const { id: paramId } = useParams();
-  const id = paramId || user?.id;
-
-  const [perfil, setPerfil] = useState(null);
+  const [perfilData, setPerfilData] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    console.log("ID desde contexto:", user?.id);
-    console.log("ID desde URL:", paramId);
-
-    if (!id) return;
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError("Token no encontrado. Inicia sesión.");
+      return;
+    }
 
     const fetchPerfil = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/perfil/${id}`);
-        setPerfil(response.data);
-      } catch (error) {
-        console.error("Error al cargar perfil:", error);
+        const response = await perfil(token);
+        setPerfilData(response.data);
+      } catch (err) {
+        console.error("Error al obtener perfil:", err);
+        setError("No se pudo cargar el perfil.");
       }
     };
 
     fetchPerfil();
-  }, [id, paramId, user?.id]);
+  }, []);
 
-
-  if (!perfil) return <p className="text-center mt-10">Cargando perfil...</p>;
+  if (error) return <p className="text-red-500 text-center mt-10">{error}</p>;
+  if (!perfilData) return <p className="text-center mt-10">Cargando perfil...</p>;
 
   return (
-    <div>
-      <Header />
-      <div className="p-6">
-        <Perfil data={perfil} editable={id == user?.id} />
+      <div>
+        <Header />
+        <div className="p-6">
+          <Perfil data={perfilData} editable={true} />
+        </div>
       </div>
-    </div>
   );
 };
 
