@@ -23,14 +23,18 @@ public class JwtService {
     }
 
     public String generateToken(String correo, String rol) {
+        // Asegurar que el rol tenga prefijo ROLE_ una sola vez
+        String rolNormalizado = rol.startsWith("ROLE_") ? rol : "ROLE_" + rol;
+
         return Jwts.builder()
                 .setSubject(correo)
-                .claim("rol", rol)
+                .claim("rol", rolNormalizado)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
     }
+
 
     public boolean validateToken(String token) {
         try {
