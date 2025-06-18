@@ -49,8 +49,6 @@ public class UserController {
         }
     }
 
-
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO dto) {
         try {
@@ -69,8 +67,4 @@ public class UserController {
         }
     }
 
-
-
 }
-
-
