@@ -21,18 +21,21 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors() //  habilita CORS según la configuración del CorsConfig
-                .and()
-                .csrf(csrf -> csrf.disable())
+
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/ws/**")
+                        .disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/auth/**",
                                 "/api/auth/**",
                                 "/api/usuarios/registro" ,
-                                "/api/usuarios/login"
-                        ).permitAll()
-                        .anyRequest().authenticated()
-                )
+                                "/api/usuarios/login",
+                                "/api/trabajadores/**",
+                                "/api/perfil/**",
+                                "/ws/**")
+                        .permitAll()
+                        .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
