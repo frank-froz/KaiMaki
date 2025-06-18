@@ -1,12 +1,12 @@
-package com.kaimaki.usuario.usuariobackend.service;
+package com.kaimaki.usuario.usuariobackend.service.impl;
 
 import com.kaimaki.usuario.usuariobackend.dto.TrabajadorDTO;
-import com.kaimaki.usuario.usuariobackend.model.Oficio;
 import com.kaimaki.usuario.usuariobackend.model.Trabajador;
 import com.kaimaki.usuario.usuariobackend.model.Ubicacion;
 import com.kaimaki.usuario.usuariobackend.model.User;
 import com.kaimaki.usuario.usuariobackend.repository.TrabajadorRepository;
 import com.kaimaki.usuario.usuariobackend.repository.UbicacionRepository;
+import com.kaimaki.usuario.usuariobackend.service.TrabajadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class TrabajadorService {
+public class TrabajadorServiceImpl implements TrabajadorService {
 
     @Autowired
     private TrabajadorRepository trabajadorRepository;
@@ -23,7 +23,7 @@ public class TrabajadorService {
     @Autowired
     private UbicacionRepository ubicacionRepository;
 
-    // Obtener trabajadores verificados con info de ubicación y oficios
+    @Override
     public List<TrabajadorDTO> obtenerTrabajadoresDisponibles() {
         List<Trabajador> trabajadores = trabajadorRepository.findTrabajadoresVerificados();
 
@@ -48,7 +48,7 @@ public class TrabajadorService {
         }).collect(Collectors.toList());
     }
 
-    //obtener por ID con ubicacion
+    @Override
     public TrabajadorDTO obtenerTrabajadorPorId(Long id) {
         Optional<Trabajador> opt = trabajadorRepository.findById(id);
         if (opt.isEmpty()) return null;
@@ -74,7 +74,7 @@ public class TrabajadorService {
         );
     }
 
-    // Buscar trabajadores por nombre de oficio
+    @Override
     public List<TrabajadorDTO> obtenerTrabajadoresPorOficio(String nombreOficio) {
         List<Trabajador> trabajadores = trabajadorRepository.findTrabajadoresVerificados();
 
@@ -103,4 +103,3 @@ public class TrabajadorService {
                 .collect(Collectors.toList());
     }
 }
-
