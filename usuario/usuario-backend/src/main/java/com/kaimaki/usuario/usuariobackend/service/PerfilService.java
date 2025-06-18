@@ -16,7 +16,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 @Service
 public class PerfilService {
 
@@ -29,6 +28,9 @@ public class PerfilService {
     @Autowired
     private CalificacionRepository calificacionRepo;
 
+    /**
+     * Obtener perfil por ID (para acceder a perfiles de otros usuarios)
+     */
     public PerfilDTO obtenerPerfil(Long userId) {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
@@ -53,7 +55,6 @@ public class PerfilService {
             dto.setProvincia("No registrado");
             dto.setDepartamento("No registrado");
         }
-
 
         dto.setPresentacion(user.getPresentacion());
         dto.setFotoPerfil(user.getFotoPerfil());
@@ -86,6 +87,15 @@ public class PerfilService {
         }
 
         return dto;
+    }
+
+    /**
+     * Obtener perfil del usuario autenticado (por correo extraído del token)
+     */
+    public PerfilDTO obtenerPerfilPorCorreo(String correo) {
+        User user = userRepo.findByCorreo(correo)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+        return obtenerPerfil(user.getId()); // reutiliza lógica existente
     }
 }
 
