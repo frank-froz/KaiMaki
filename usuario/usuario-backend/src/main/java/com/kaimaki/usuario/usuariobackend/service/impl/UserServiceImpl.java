@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
         user.setNombre("Sin nombre");
         user.setApellido("Sin apellido");
         user.setTelefono(null);
-        user.setRolId(1);    // rol por defecto, ej: usuario normal
+        user.setRolId(1); // rol por defecto, ej: usuario normal
         user.setEstadoId(1); // estado activo
 
         return userRepository.save(user);
@@ -67,6 +67,5 @@ public class UserServiceImpl implements UserService {
             return userRepository.save(nuevo);
         });
     }
-
 
 }
