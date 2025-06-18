@@ -22,9 +22,10 @@ public class JwtService {
         this.expiration = expiration;
     }
 
-    public String generateToken(String correo) {
+    public String generateToken(String correo, String rol) {
         return Jwts.builder()
                 .setSubject(correo)
+                .claim("rol", rol)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(key, SignatureAlgorithm.HS512)
