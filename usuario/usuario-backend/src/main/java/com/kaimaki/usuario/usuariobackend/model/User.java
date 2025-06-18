@@ -6,13 +6,6 @@ import jakarta.persistence.*;
 @Table(name = "users")
 public class User {
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Ubicacion ubicacion;
-
-    public Ubicacion getUbicacion() { return ubicacion; }
-
-    public void setUbicacion(Ubicacion ubicacion) { this.ubicacion = ubicacion; }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,19 +15,29 @@ public class User {
 
     @Column(unique = true)
     private String correo;
+
     @Column(name = "contrasena", nullable = true)
     private String contrasena;
+
     private String telefono;
 
-    @Column(name = "rol_id")
-    private Integer rolId;
-
+    //  Relación con Rol
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "rol_id")
+    private Rol rol;
+    // Estado como simple ID
     @Column(name = "estado_id")
     private Integer estadoId;
+
+    //  Relación con Ubicacion
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Ubicacion ubicacion;
 
     // Getters y Setters
 
     public Long getId() { return id; }
+
+    public void setId(Long id) { this.id = id; }
 
     public String getNombre() { return nombre; }
 
@@ -56,11 +59,16 @@ public class User {
 
     public void setTelefono(String telefono) { this.telefono = telefono; }
 
-    public Integer getRolId() { return rolId; }
 
-    public void setRolId(Integer rolId) { this.rolId = rolId; }
+    public Rol getRol() { return rol; }
+
+    public void setRol(Rol rol) { this.rol = rol; }
 
     public Integer getEstadoId() { return estadoId; }
 
     public void setEstadoId(Integer estadoId) { this.estadoId = estadoId; }
+
+    public Ubicacion getUbicacion() { return ubicacion; }
+
+    public void setUbicacion(Ubicacion ubicacion) { this.ubicacion = ubicacion; }
 }
