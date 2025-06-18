@@ -1,25 +1,25 @@
 package com.kaimaki.usuario.usuariobackend.security;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Collections;
 
-@Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
+    private final UserDetailsService userDetailsService; // Inyectamos el servicio para obtener roles
 
-    public JwtAuthFilter(JwtService jwtService) {
+    public JwtAuthFilter(JwtService jwtService, UserDetailsService userDetailsService) {
         this.jwtService = jwtService;
+        this.userDetailsService = userDetailsService; //  lo guardamos
     }
 
     @Override
@@ -28,7 +28,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
-        // Obtener el header Authorization
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -36,23 +35,22 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return;
         }
 
-        // Extraer token
         String token = authHeader.substring(7);
         if (!jwtService.validateToken(token)) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        // Obtener el correo del token
         String correo = jwtService.getCorreoFromToken(token);
 
-        // Crear objeto de autenticación
+        // Obtenemos el UserDetails para incluir los roles del usuario
+        UserDetails userDetails = userDetailsService.loadUserByUsername(correo);
+
+        //  Usamos las authorities del UserDetails
         UsernamePasswordAuthenticationToken authToken =
-                new UsernamePasswordAuthenticationToken(correo, null, Collections.emptyList());
+                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
         authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-        // Establecer autenticación en el contexto
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
         filterChain.doFilter(request, response);
