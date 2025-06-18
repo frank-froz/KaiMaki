@@ -73,7 +73,7 @@ public class AuthController {
                     });
 
             // Generar JWT para tu app
-            String token = jwtService.generateToken(email);
+            String token = jwtService.generateToken(usuario);
 
             return ResponseEntity.ok(Map.of(
                     "usuario", usuario,

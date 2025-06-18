@@ -30,7 +30,8 @@ public class WebSecurityConfig {
                                 "/api/auth/**",
                                 "/api/usuarios/registro" ,
                                 "/api/usuarios/login",
-                                "/api/trabajadores/disponibles"
+                                "/api/trabajadores/**",
+                                "/api/perfil/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
