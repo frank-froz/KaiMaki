@@ -10,5 +10,10 @@ export const login = data => api.post('/usuarios/login', data)
 
 export const oauthGoogle = idToken => api.post('/auth/google', { idToken })
 
-export const perfil = data => api.get('perfil', data)
+export const perfil = (token) =>
+    api.get('/perfil', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
