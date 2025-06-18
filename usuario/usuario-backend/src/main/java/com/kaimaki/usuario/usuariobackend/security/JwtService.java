@@ -4,6 +4,7 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import com.kaimaki.usuario.usuariobackend.model.User;
 
 import javax.crypto.SecretKey;
 import java.util.Base64;
@@ -22,9 +23,11 @@ public class JwtService {
         this.expiration = expiration;
     }
 
-    public String generateToken(String correo) {
+    public String generateToken(User usuario) {
         return Jwts.builder()
-                .setSubject(correo)
+                .setSubject(usuario.getCorreo())
+                .claim("id", usuario.getId())
+                .claim("rol", usuario.getRol() != null ? usuario.getRol().getNombre() : "SIN_ROL")
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(key, SignatureAlgorithm.HS512)
@@ -51,4 +54,6 @@ public class JwtService {
                 .getBody();
         return claims.getSubject();
     }
+
+
 }

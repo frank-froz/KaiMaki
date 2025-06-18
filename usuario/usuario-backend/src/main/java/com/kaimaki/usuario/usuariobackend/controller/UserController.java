@@ -36,7 +36,7 @@ public class UserController {
             }
 
             User nuevoUsuario = userService.registrarUsuario(dto);
-            String token = jwtService.generateToken(nuevoUsuario.getCorreo());
+            String token = jwtService.generateToken(nuevoUsuario);
 
             Map<String, Object> response = new HashMap<>();
             response.put("token", token);
@@ -53,7 +53,7 @@ public class UserController {
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO dto) {
         try {
             User usuario = userService.loginUsuario(dto);
-            String token = jwtService.generateToken(usuario.getCorreo());
+            String token = jwtService.generateToken(usuario);
 
             Map<String, Object> response = new HashMap<>();
             response.put("token", token);

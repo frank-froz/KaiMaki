@@ -1,0 +1,91 @@
+package com.kaimaki.usuario.usuariobackend.service;
+
+import com.kaimaki.usuario.usuariobackend.dto.CalificacionDTO;
+import com.kaimaki.usuario.usuariobackend.dto.PerfilDTO;
+import com.kaimaki.usuario.usuariobackend.model.Trabajador;
+import com.kaimaki.usuario.usuariobackend.model.Ubicacion;
+import com.kaimaki.usuario.usuariobackend.model.User;
+import com.kaimaki.usuario.usuariobackend.repository.CalificacionRepository;
+import com.kaimaki.usuario.usuariobackend.repository.TrabajadorRepository;
+import com.kaimaki.usuario.usuariobackend.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service
+public class PerfilService {
+
+    @Autowired
+    private UserRepository userRepo;
+
+    @Autowired
+    private TrabajadorRepository trabajadorRepo;
+
+    @Autowired
+    private CalificacionRepository calificacionRepo;
+
+    public PerfilDTO obtenerPerfil(Long userId) {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+
+        PerfilDTO dto = new PerfilDTO();
+
+        Ubicacion ubicacion = user.getUbicacion();
+
+        dto.setId(user.getId());
+        dto.setNombre(user.getNombre());
+        dto.setApellido(user.getApellido());
+        dto.setCorreo(user.getCorreo());
+
+        if (ubicacion != null) {
+            dto.setDireccion(ubicacion.getDireccion());
+            dto.setDistrito(ubicacion.getDistrito());
+            dto.setProvincia(ubicacion.getProvincia());
+            dto.setDepartamento(ubicacion.getDepartamento());
+        } else {
+            dto.setDireccion("No registrada");
+            dto.setDistrito("No registrado");
+            dto.setProvincia("No registrado");
+            dto.setDepartamento("No registrado");
+        }
+
+
+        dto.setPresentacion(user.getPresentacion());
+        dto.setFotoPerfil(user.getFotoPerfil());
+
+        // Verificamos si es trabajador
+        Optional<Trabajador> trabajadorOpt = trabajadorRepo.findByUserId(userId);
+        if (trabajadorOpt.isPresent()) {
+            Trabajador trabajador = trabajadorOpt.get();
+
+            // Oficios
+            List<String> oficios = trabajador.getOficios()
+                    .stream()
+                    .map(to -> to.getOficio().getNombre())
+                    .collect(Collectors.toList());
+            dto.setOficios(oficios);
+
+            // Calificaciones
+            List<CalificacionDTO> calificaciones = calificacionRepo
+                    .findByEvaluadoId(userId)
+                    .stream()
+                    .map(calif -> {
+                        CalificacionDTO c = new CalificacionDTO();
+                        c.setPuntuacion(calif.getPuntuacion());
+                        c.setComentario(calif.getComentario());
+                        c.setFecha(calif.getFecha().toLocalDate());
+                        return c;
+                    })
+                    .collect(Collectors.toList());
+            dto.setCalificaciones(calificaciones);
+        }
+
+        return dto;
+    }
+}
+

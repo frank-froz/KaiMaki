@@ -1,22 +1,23 @@
 package com.kaimaki.usuario.usuariobackend.model;
 
 import jakarta.persistence.*;
+
 import java.util.List;
 
 @Entity
 @Table(name = "users")
 public class User {
 
+    @ManyToOne
+    @JoinColumn(name = "rol_id")
+    private Rol rol;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Ubicacion ubicacion;
 
-    public Ubicacion getUbicacion() {
-        return ubicacion;
-    }
+    public Ubicacion getUbicacion() { return ubicacion; }
 
-    public void setUbicacion(Ubicacion ubicacion) {
-        this.ubicacion = ubicacion;
-    }
+    public void setUbicacion(Ubicacion ubicacion) { this.ubicacion = ubicacion; }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +32,7 @@ public class User {
     private String contrasena;
     private String telefono;
 
-    @Column(name = "rol_id")
+    @Column(name = "rol_id", insertable = false, updatable = false)
     private Integer rolId;
 
     @Column(name = "estado_id")
@@ -39,6 +40,12 @@ public class User {
 
     @ManyToMany(mappedBy = "participants")
     private List<Chat> chats;
+
+    @Column(columnDefinition = "TEXT")
+    private String presentacion;
+
+    @Column(name = "foto_perfil")
+    private String fotoPerfil;
 
     // Getters y Setters
 
@@ -90,27 +97,41 @@ public class User {
         this.telefono = telefono;
     }
 
-    public Integer getRolId() {
-        return rolId;
+    public Rol getRol() {
+        return rol;
     }
 
     public void setRolId(Integer rolId) {
-        this.rolId = rolId;
+        if (this.rol == null) {
+            this.rol = new Rol();
+        }
+        this.rol.setId(rolId);
+    }
+
+    public Integer getRolId() {
+        return rol != null ? rol.getId() : null;
+    }
+
+
+
+    public List<Chat> getChats() {
+        return chats;
     }
 
     public Integer getEstadoId() {
         return estadoId;
     }
 
-    public void setEstadoId(Integer estadoId) {
-        this.estadoId = estadoId;
-    }
-
-    public List<Chat> getChats() {
-        return chats;
-    }
-
     public void setChats(List<Chat> chats) {
         this.chats = chats;
     }
+    public void setEstadoId(Integer estadoId) { this.estadoId = estadoId; }
+
+    public String getPresentacion() { return presentacion; }
+
+    public void setPresentacion(String presentacion) { this.presentacion = presentacion; }
+
+    public String getFotoPerfil() { return fotoPerfil; }
+
+    public void setFotoPerfil(String fotoPerfil) {this.fotoPerfil = fotoPerfil;}
 }

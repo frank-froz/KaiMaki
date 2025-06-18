@@ -1,5 +1,7 @@
 package com.kaimaki.usuario.usuariobackend.repository;
 
+
+import com.kaimaki.usuario.usuariobackend.model.Rol;
 import com.kaimaki.usuario.usuariobackend.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
