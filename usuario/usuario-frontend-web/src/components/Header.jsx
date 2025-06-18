@@ -1,42 +1,58 @@
-// src/components/Header.jsx
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../css/Header.css'; 
+import { AuthContext } from '../context/AuthContext';
+import '../css/Header.css';
 
-const Header = ({ isLoggedIn = false, userName = "Usuario" }) => {
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    //  limpiar el estado de autenticación si lo tienes
-    navigate('/');
-  };
+const Header = () => {
+    const { user, logout } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const [menuOpen, setMenuOpen] = useState(false);
 
-  return (
-    <header className="app-header">
-      <div className="logo">
-        <Link to="/">Kaimaki</Link> {/* Logo que redirige a la página principal */}
-      </div>
-      <nav>
-        <ul>
-          <li><Link to="/home">Home</Link></li>
-            <li><Link to="/services">Servicios</Link></li>
-            <li><Link to="/help">Ayuda</Link></li>
-          <li><Link to="/about">Nosotros</Link></li>
-          {isLoggedIn ? (
-            <>
-              <li><Link to="/profile">Perfil</Link></li>
-              <li><Link to="/settings">Configuración</Link></li>
-              <li><span onClick={handleLogout}>Cerrar sesión</span></li>
-            </>
-          ) : (
-            <>
-              <li><Link to="/login">Iniciar sesión</Link></li>
-              <li><Link to="/register" className="register-button">Registrarse</Link></li>
-            </>
-          )}
-        </ul>
-      </nav>
-    </header>
-  );
-}
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
+
+    return (
+        <header className="app-header">
+            <div className="logo">
+                <Link to="/">Kaimaki</Link>
+            </div>
+
+            <nav>
+                <ul className="nav-links">
+                    <li><Link to="/home">Home</Link></li>
+                    <li><Link to="/services">Servicios</Link></li>
+                    <li><Link to="/help">Ayuda</Link></li>
+                    <li><Link to="/about">Nosotros</Link></li>
+
+                    {user ? (
+                        <li className="user-menu">
+              <span className="user-name" onClick={toggleMenu}>
+                {user.nombre || user.email || 'Usuario'}
+              </span>
+                            {menuOpen && (
+                                <ul className="dropdown-menu">
+                                    <li><Link to="/mi-perfil">Mi perfil</Link></li>
+                                    <li><Link to="/dashboard">Dashboard</Link></li>
+                                    <li onClick={handleLogout}>Cerrar sesión</li>
+                                </ul>
+                            )}
+                        </li>
+                    ) : (
+                        <>
+                            <li><Link to="/login">Iniciar sesión</Link></li>
+                            <li><Link to="/register" className="register-button">Registrarse</Link></li>
+                        </>
+                    )}
+                </ul>
+            </nav>
+        </header>
+    );
+};
 
 export default Header;
