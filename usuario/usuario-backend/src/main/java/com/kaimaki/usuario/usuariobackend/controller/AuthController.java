@@ -1,5 +1,6 @@
 package com.kaimaki.usuario.usuariobackend.controller;
 
+import com.kaimaki.usuario.usuariobackend.dto.UserResponseDTO;
 import com.kaimaki.usuario.usuariobackend.model.Rol;
 import com.kaimaki.usuario.usuariobackend.model.User;
 import com.kaimaki.usuario.usuariobackend.repository.RolRepository;
@@ -44,7 +45,6 @@ public class AuthController {
                 .setAudience(Collections.singletonList(clientId))
                 .build();
     }
-
     @PostMapping("/google")
     public ResponseEntity<?> loginWithGoogle(@RequestBody Map<String, String> body) {
         String idTokenString = body.get("idToken");
@@ -66,12 +66,18 @@ public class AuthController {
                 return ResponseEntity.status(403).body("Solo se permiten correos @tecsup.edu.pe");
             }
 
-            // Buscar o crear usuario
+            // Buscar usuario o crearlo si no existe
             User usuario = userRepository.findByCorreo(email)
                     .orElseGet(() -> {
                         User nuevo = new User();
                         nuevo.setCorreo(email);
-                        nuevo.setNombre(payload.get("name").toString());
+                        nuevo.setNombre((String) payload.get("given_name"));   // nombre
+                        nuevo.setApellido((String) payload.get("family_name")); // apellido
+                        nuevo.setTelefono("000000000");
+                        nuevo.setEstadoId(1); // Estado activo por defecto
+
+                        // Foto de perfil desde el token de Google
+                        nuevo.setFotoPerfil((String) payload.get("picture"));
 
                         Rol rolCliente = rolRepository.findById(1L)
                                 .orElseThrow(() -> new RuntimeException("Rol CLIENTE no encontrado"));
@@ -80,26 +86,28 @@ public class AuthController {
                         return userRepository.save(nuevo);
                     });
 
-
-            // cargando el objeto Rol
+            // Asegurarse de que el rol esté cargado
             if (usuario.getRol() == null) {
                 usuario = userRepository.findById(usuario.getId()).orElseThrow();
             }
 
             String rolNombre = "ROLE_" + usuario.getRol().getNombre().toUpperCase();
+            String token = jwtService.generateToken(usuario.getCorreo(), rolNombre);
 
-            // pasa el rol al JWT
-            String token = jwtService.generateToken(usuario.getCorreo(),rolNombre);
+            // ⚠USAR DTO para evitar problemas de serialización
+            UserResponseDTO userDTO = new UserResponseDTO(usuario);
 
             return ResponseEntity.ok(Map.of(
-                    "usuario", usuario,
+                    "usuario", userDTO,
                     "token", token
             ));
 
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(500).body("Error interno: " + e.getMessage());
         }
     }
+
 
 
     private GoogleIdToken.Payload verifyGoogleToken(String idTokenString) throws Exception {
