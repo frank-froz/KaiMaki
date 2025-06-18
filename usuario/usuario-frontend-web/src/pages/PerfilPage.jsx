@@ -39,7 +39,6 @@ const PerfilPage = () => {
       <div className="p-6">
         <Perfil data={perfil} editable={id == user?.id} />
       </div>
-      <Footer />
     </div>
   );
 };

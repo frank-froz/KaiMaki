@@ -4,7 +4,11 @@ import { Navigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 
 export function PrivateRoute({ children }) {
-  const { user } = useContext(AuthContext)
+  const { user, loading } = useContext(AuthContext)
 
-  return user ? children : <Navigate to="/login" />
+  if (loading) {
+    return <p>Cargando sesión...</p> // o un spinner si prefieres
+  }
+
+  return user ? children : <Navigate to="/login"/>
 }

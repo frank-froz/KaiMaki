@@ -28,7 +28,7 @@ export default function LoginPage() {
       const token = res.data.token
       if (token) {
         login(token)
-        navigate('/dashboard')
+        navigate('/perfil')
       } else {
         setError('Credenciales inválidas')
       }
