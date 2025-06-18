@@ -1,0 +1,16 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Borde anaranjado -->
+
+    <stroke
+        android:width="2dp"
+        android:color="#FFA500" /> <!-- Naranja -->
+
+    <!-- Bordes redondeados -->
+    <corners android:radius="12dp" />
+
+    <!-- Fondo transparente -->
+    <solid android:color="@android:color/transparent" />
+
+</shape>

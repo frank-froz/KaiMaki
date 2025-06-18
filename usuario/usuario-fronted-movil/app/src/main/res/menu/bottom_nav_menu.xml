@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/inicioFragment"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="Inicio" />
+    <item
+        android:id="@+id/perfilFragment"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Perfil" />
+    <item
+        android:id="@+id/ajustesFragment"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="Ajustes" />
+    <item
+        android:id="@+id/trabajadoresFragment"
+        android:icon="@drawable/ic_trabajadores"
+        android:title="Trabajadores" />
+
+</menu>

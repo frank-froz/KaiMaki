@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_nav_graph"
+    app:startDestination="@id/inicioFragment">
+
+    <fragment
+        android:id="@+id/inicioFragment"
+        android:name="com.kaimaki.usuario.usuario_fronted_movil.ui.home.InicioFragment"
+        android:label="Inicio" />
+
+    <fragment
+        android:id="@+id/perfilFragment"
+        android:name="com.kaimaki.usuario.usuario_fronted_movil.ui.home.PerfilFragment"
+        android:label="Perfil" />
+
+    <fragment
+        android:id="@+id/ajustesFragment"
+        android:name="com.kaimaki.usuario.usuario_fronted_movil.ui.home.AjustesFragment"
+        android:label="Ajustes" />
+    <fragment
+        android:id="@+id/trabajadoresFragment"
+        android:name="com.kaimaki.usuario.usuario_fronted_movil.ui.trabajadores.TrabajadorFragment"
+        android:label="Trabajadores" />
+
+
+</navigation>
