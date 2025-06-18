@@ -1,6 +1,7 @@
 package com.kaimaki.usuario.usuariobackend.model;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -9,9 +10,13 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Ubicacion ubicacion;
 
-    public Ubicacion getUbicacion() { return ubicacion; }
+    public Ubicacion getUbicacion() {
+        return ubicacion;
+    }
 
-    public void setUbicacion(Ubicacion ubicacion) { this.ubicacion = ubicacion; }
+    public void setUbicacion(Ubicacion ubicacion) {
+        this.ubicacion = ubicacion;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,35 +37,80 @@ public class User {
     @Column(name = "estado_id")
     private Integer estadoId;
 
+    @ManyToMany(mappedBy = "participants")
+    private List<Chat> chats;
+
     // Getters y Setters
 
-    public Long getId() { return id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getNombre() { return nombre; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public String getNombre() {
+        return nombre;
+    }
 
-    public String getApellido() { return apellido; }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-    public void setApellido(String apellido) { this.apellido = apellido; }
+    public String getApellido() {
+        return apellido;
+    }
 
-    public String getCorreo() { return correo; }
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
 
-    public void setCorreo(String correo) { this.correo = correo; }
+    public String getCorreo() {
+        return correo;
+    }
 
-    public String getContrasena() { return contrasena; }
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
 
-    public void setContrasena(String contrasena) { this.contrasena = contrasena; }
+    public String getContrasena() {
+        return contrasena;
+    }
 
-    public String getTelefono() { return telefono; }
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
 
-    public void setTelefono(String telefono) { this.telefono = telefono; }
+    public String getTelefono() {
+        return telefono;
+    }
 
-    public Integer getRolId() { return rolId; }
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
 
-    public void setRolId(Integer rolId) { this.rolId = rolId; }
+    public Integer getRolId() {
+        return rolId;
+    }
 
-    public Integer getEstadoId() { return estadoId; }
+    public void setRolId(Integer rolId) {
+        this.rolId = rolId;
+    }
 
-    public void setEstadoId(Integer estadoId) { this.estadoId = estadoId; }
+    public Integer getEstadoId() {
+        return estadoId;
+    }
+
+    public void setEstadoId(Integer estadoId) {
+        this.estadoId = estadoId;
+    }
+
+    public List<Chat> getChats() {
+        return chats;
+    }
+
+    public void setChats(List<Chat> chats) {
+        this.chats = chats;
+    }
 }
