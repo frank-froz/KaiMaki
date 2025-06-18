@@ -5,6 +5,7 @@ import RegisterPage from './pages/RegisterPage';
 import Dashboard from './pages/Dashboard';
 import LandingPage from './pages/LandingPage'; // Importa la nueva página
 import TrabajadoresDisponibles from './pages/TrabajadoresDisponibles'
+import ChatPage from './pages/ChatPage'
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/trabajadores" element={<TrabajadoresDisponibles />} />
+        <Route path="/chat" element={<ChatPage />} />
         {/* Rutas protegidas */}
         <Route
           path="/dashboard"
