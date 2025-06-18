@@ -6,6 +6,10 @@ import jakarta.persistence.*;
 @Table(name = "users")
 public class User {
 
+    @ManyToOne
+    @JoinColumn(name = "rol_id")
+    private Rol rol;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Ubicacion ubicacion;
 
@@ -26,11 +30,17 @@ public class User {
     private String contrasena;
     private String telefono;
 
-    @Column(name = "rol_id")
+    @Column(name = "rol_id", insertable = false, updatable = false)
     private Integer rolId;
 
     @Column(name = "estado_id")
     private Integer estadoId;
+
+    @Column(columnDefinition = "TEXT")
+    private String presentacion;
+
+    @Column(name = "foto_perfil")
+    private String fotoPerfil;
 
     // Getters y Setters
 
@@ -56,11 +66,30 @@ public class User {
 
     public void setTelefono(String telefono) { this.telefono = telefono; }
 
-    public Integer getRolId() { return rolId; }
+    public Rol getRol() {
+        return rol;
+    }
 
-    public void setRolId(Integer rolId) { this.rolId = rolId; }
+    public void setRolId(Integer rolId) {
+        if (this.rol == null) {
+            this.rol = new Rol();
+        }
+        this.rol.setId(rolId);
+    }
+
+    public Integer getRolId() {
+        return rol != null ? rol.getId() : null;
+    }
 
     public Integer getEstadoId() { return estadoId; }
 
     public void setEstadoId(Integer estadoId) { this.estadoId = estadoId; }
+
+    public String getPresentacion() { return presentacion; }
+
+    public void setPresentacion(String presentacion) { this.presentacion = presentacion; }
+
+    public String getFotoPerfil() { return fotoPerfil; }
+
+    public void setFotoPerfil(String fotoPerfil) {this.fotoPerfil = fotoPerfil;}
 }
