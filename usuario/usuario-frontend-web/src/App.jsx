@@ -1,66 +1,62 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { PrivateRoute } from './components/PrivateRoute'; // Componente para rutas protegidas
+import { PrivateRoute } from './components/PrivateRoute';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import Dashboard from './pages/Dashboard';
-import LandingPage from './pages/LandingPage'; // Importa la nueva página
-import TrabajadoresDisponibles from './pages/TrabajadoresDisponibles'
+import LandingPage from './pages/LandingPage';
+import TrabajadoresDisponibles from './pages/TrabajadoresDisponibles';
 import PerfilPage from './pages/PerfilPage';
-import Perfil from './components/Perfil';
-
 
 export default function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        {/* Ruta pública */}
-        <Route path="/" element={<LandingPage />} /> {/* Página principal de aterrizaje */}
+    return (
+        <BrowserRouter>
+            <Routes>
+                {/* Rutas públicas */}
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/trabajadores" element={<TrabajadoresDisponibles />} />
 
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/trabajadores" element={<TrabajadoresDisponibles />} />
-        <Route path="/perfil" element={<PerfilPage />} />
-        {/* Rutas protegidas */}
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/perfil"
-          element={
-            <PrivateRoute>
-              <PerfilPage />
-            </PrivateRoute>
-          }
-        />
+                {/* Rutas protegidas */}
+                <Route
+                    path="/dashboard"
+                    element={
+                        <PrivateRoute>
+                            <Dashboard />
+                        </PrivateRoute>
+                    }
+                />
 
-        <Route
-          path="/perfil/:id"
-          element={
-            <PrivateRoute>
-              <PerfilPage />
-            </PrivateRoute>
-          }
-        />
-        {/*
-        <Route
-          path="/mi-perfil"
-          element={
-            <PrivateRoute>
-              <PerfilPage />
-            </PrivateRoute>
-          }
-        />
-        */}
+                <Route
+                    path="/perfil"
+                    element={
+                        <PrivateRoute>
+                            <PerfilPage />
+                        </PrivateRoute>
+                    }
+                />
 
+                <Route
+                    path="/perfil/:id"
+                    element={
+                        <PrivateRoute>
+                            <PerfilPage />
+                        </PrivateRoute>
+                    }
+                />
 
-        {/* Redirige por defecto a Login si no existe la ruta */}
-        <Route path="*" element={<LoginPage />} />
-      </Routes>
-    </BrowserRouter>
-  );
+                <Route
+                    path="/mi-perfil"
+                    element={
+                        <PrivateRoute>
+                            <PerfilPage />
+                        </PrivateRoute>
+                    }
+                />
+
+                {/* Ruta por defecto si no se encuentra ninguna */}
+                <Route path="*" element={<LandingPage />} />
+            </Routes>
+        </BrowserRouter>
+    );
 }
