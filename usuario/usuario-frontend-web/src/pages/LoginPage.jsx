@@ -6,6 +6,7 @@ import { AuthContext } from '../context/AuthContext'
 import { GoogleLoginButton } from '../components/GoogleLoginButton'
 import Header from '../components/Header'
 import '../css/LoginPage.css'
+import { jwtDecode } from 'jwt-decode'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -13,6 +14,24 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const { login } = useContext(AuthContext)
   const navigate = useNavigate()
+
+  const redirigirSegunRol = (token) => {
+    try {
+      const decoded = jwtDecode(token);
+      console.log('[Decoded Token]', decoded);
+
+      if (decoded.rol === 'ROLE_CLIENTE') {
+        login(token, () => navigate('/dashboard'));
+      } else {
+        setError('Solo los usuarios con rol CLIENTE pueden iniciar sesión aquí');
+      }
+    } catch (e) {
+      console.error('Error al decodificar el token:', e);
+      setError('Error inesperado al iniciar sesión');
+    }
+  };
+
+
 
   const handleEmailLogin = async (e) => {
     e.preventDefault()
@@ -27,8 +46,7 @@ export default function LoginPage() {
       const res = await apiLogin({ correo: email, contrasena: password })
       const token = res.data.token
       if (token) {
-        login(token)
-        navigate('/perfil')
+        redirigirSegunRol(token)
       } else {
         setError('Credenciales inválidas')
       }
@@ -38,24 +56,22 @@ export default function LoginPage() {
   }
 
   const handleGoogleLogin = async (response) => {
-    const idToken = response.credential;
-    console.log("🔐 Google ID Token recibido:", idToken); // 👈 ESTE LOG
+    const idToken = response.credential
+    console.log(" Google ID Token recibido:", idToken)
 
     try {
-      const res = await oauthGoogle(idToken);
-      const token = res.data.token || res.data.jwt;
+      const res = await oauthGoogle(idToken)
+      const token = res.data.token || res.data.jwt
       if (token) {
-        login(token);
-        navigate('/dashboard');
+        redirigirSegunRol(token)
       } else {
-        setError('Error al iniciar sesión con Google');
+        setError('Error al iniciar sesión con Google')
       }
     } catch (err) {
-      setError('Error al iniciar sesión con Google');
-      console.error(err);
+      console.error('Error en login con Google:', err)
+      setError('Error al iniciar sesión con Google')
     }
-  };
-
+  }
 
   const handleGoogleError = (error) => {
     console.error('Google login error:', error)
@@ -68,7 +84,6 @@ export default function LoginPage() {
         <div className="login-container">
           <h1>Inicia sesión</h1>
 
-          {/* Formulario login con email y password */}
           <form onSubmit={handleEmailLogin} className="login-form">
             <input
                 type="email"
@@ -90,12 +105,10 @@ export default function LoginPage() {
 
           <div className="divider">O inicia sesión con</div>
 
-          {/* Botón login con Google */}
           <div className="google-login-button-wrapper">
             <GoogleLoginButton onSuccess={handleGoogleLogin} onError={handleGoogleError} />
           </div>
         </div>
       </div>
   )
-
 }
