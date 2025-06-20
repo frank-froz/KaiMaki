@@ -1,90 +1,136 @@
-# KaiMaki 🛠️
+# 🛠️ KaiMaki – Conecta con Técnicos de Confianza para tu Hogar y Empresa 🧰🏠🔧⚡
 
-**KaiMaki** es un marketplace de oficios que conecta a clientes con trabajadores especializados. Su objetivo es facilitar la búsqueda, contratación y comunicación entre ambas partes de forma segura, rápida y eficiente.
+## 📖 Descripción
 
----
-
-## 🚀 Arquitectura General
-
-El sistema está dividido en dos grandes secciones:
-
-### 1. **Administración**
-- **Frontend**: React.js
-- **Backend**: Django (REST Framework)
-- Uso principal: gestión de usuarios, oficios, postulaciones, reclamos, y administración del sistema.
-
-### 2. **Usuario (Cliente & Trabajador)**
-- **Frontend Móvil**: Kotlin (Android)
-- **Frontend Web**: React.js
-- **Backend**: Spring Boot (REST API)
-- Funcionalidades: registro, solicitud de servicios, negociación, mensajería, evaluación, etc.
-
-### 🔗 Base de datos
-- **Gestor**: MySQL
-- Base de datos central compartida por todos los servicios.
+**KaiMaki** es una plataforma web y móvil diseñada para facilitar el contacto directo entre usuarios y técnicos especializados en servicios como gasfitería, electricidad, reparación de electrodomésticos, computadoras y más. Buscamos preservar y promover estos oficios esenciales, brindando nuevas oportunidades laborales a profesionales técnicos y soluciones eficientes a hogares que los necesitan.
 
 ---
 
-## 📂 Estructura del Repositorio
+## 🧐 Problemática
+
+- 🔍 **Falta de conexión directa** entre usuarios y técnicos confiables.
+- 📉 **Disminución de la visibilidad** de oficios técnicos menos comunes.
+- 💰 **Precios variables e inciertos** al momento de solicitar servicios.
+- ❌ **Falta de profesionalización** en la oferta técnica digital.
+- ⏳ **Pérdida de tiempo** buscando soluciones confiables y rápidas.
+
+---
+
+## 💡 Solución
+
+KaiMaki proporciona una plataforma web y móvil que:
+
+- Permite a los usuarios encontrar fácilmente técnicos verificados.
+- Ofrece precios claros y justos según el tipo de trabajo.
+- Centraliza el proceso de contacto, registro y evaluación del servicio.
+- Brinda oportunidades a técnicos para formalizar y ampliar su trabajo.
+- Mejora la confianza entre cliente y profesional mediante políticas claras.
+
+---
+
+## 🚀 Características Principales
+
+- 🔐 Registro y login para usuarios y técnicos.
+- 📋 Listado de técnicos disponibles por categoría (gasfitería, electricidad, etc.).
+- 🧾 Visualización de perfil técnico con datos, ubicación y experiencia.
+- 📱 Aplicación Android conectada al backend mediante API REST.
+- ⭐ Sistema de valoración y reseñas (en desarrollo).
+- 🔍 Filtros por ubicación y tipo de oficio.
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+| Componente     | Tecnología                        |
+|----------------|-----------------------------------|
+| Frontend Web   | React 19 + Tailwind CSS           |
+| Frontend Móvil | Kotlin + Android Studio           |
+| Backend        | Spring Boot + Spring Security     |
+| Autenticación  | JWT (token-based)                 |
+| Base de Datos  | MySQL                             |
+| Comunicación   | API REST                          |
+
+---
+
+## 📲 Plataformas
+
+- ✅ Web App (React)
+- ✅ Android App (Kotlin)
+- ❌ iOS (en etapa de planificación)
+
+---
+
+## 🧪 Cómo Probar el Proyecto
+
+### 🔧 Backend
+
+1. Clonar el repositorio y abrir en tu IDE favorito.
+2. Configurar `application.properties` con las credenciales de tu base de datos MySQL.
+3. Ejecutar el proyecto con Spring Boot:
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+
+### 🌐 Frontend Web
+
+1. Ir a la carpeta `/usuario-fronted-web`:
+   ```bash
+   cd frontend-react
+   npm install
+   npm run dev
+   ```
+
+### 📱 Android App
+
+1. Abrir el proyecto en Android Studio.
+2. Conectar tu emulador o dispositivo real.
+3. Ejecutar la app desde el entorno.
+
+---
+
+## 📁 Estructura del Proyecto
 
 ```
-/kaimaki/
-│
-├── backend-admin-django/ # Django REST para administración
-├── backend-user-spring/ # Spring Boot para clientes y trabajadores
-├── frontend-admin-react/ # Panel de control para administradores
-├── frontend-web-user-react/ # Plataforma web para usuarios
-├── mobile-user-kotlin/ # App móvil para usuarios
-├── db/ # Scripts SQL y modelo E/R
-├── docs/ # Documentación técnica y de diseño
-└── README.md # Este archivo
-
+KaiMaki/
+├── usuario-backend/
+│   ├── src/main/java/com/kaimaki/
+│   └── application.properties
+├── usuario-fronted-web/
+│   ├── src/components/
+│   └── App.jsx
+├── usuario-fronted-movil/
+│   └── app/src/main/java/com/kaimaki/
 ```
 
+---
+
+## 👥 Equipo de Desarrollo
+
+- 👨‍💻 Castro Hector – Full Stack 
+- 👩‍💻 Huaytalla Franklin – Full Stack 
+- 👨‍🔧 Ramos Kenedy – Full Stack 
+
 
 ---
 
-## 🔒 Roles en el sistema
+## 📈 Impacto y Beneficios Esperados
 
-- **Administrador**: Gestiona usuarios, oficios, postulaciones, y atiende reclamos.
-- **Trabajador**: Ofrece servicios, negocia y acepta solicitudes.
-- **Cliente**: Solicita servicios, negocia y califica trabajadores.
-
----
-
-## ⚙️ Funcionalidades Principales
-
-- Registro y autenticación con roles diferenciados.
-- Sistema de solicitudes y negociación entre clientes y trabajadores.
-- Mensajería en tiempo real.
-- Gestión de oficios y postulaciones con revisión de documentos.
-- Módulo de reclamos y resolución de conflictos.
+- 👨‍🔧 +50 técnicos registrados durante el primer mes.
+- 🏠 +500 usuarios activos buscando servicios técnicos.
+- 💬 Reducción del 30% en tiempos de búsqueda de profesionales.
+- 💼 Generación de nuevas oportunidades de trabajo formal.
 
 ---
 
-## 🛠️ En desarrollo
+## 🔜 Roadmap (Próximos Pasos)
 
-Actualmente nos encontramos trabajando en:
-
-- [ ] Crear el modelo E/R de la BBDD.
-- [ ] Desarrollo de los prototipos en figma de la página de registro.
-- [ ] Desarrollo del backend para el registro del usuario.
-- [ ] Desarrollo del frontend para el registro del usuario.
-- [ ] Desarrollo de los prototipos de la página de vista de los trabajadores disponibles.
-
----
-
-## 👥 Equipo
-
-| Nombre              | Rol                  | 
-|---------------------|----------------------|
-| Franklin Huaytalla  | Scrum Master         | 
-|   Hector Castro     | Scrum team           | 
-|   Kenedy Ramos      | Scrum team           | 
+1. ✔️ MVP funcional en Web y Android.
+2. 🚧 Implementación de sistema de reseñas y valoraciones.
+3. 📦 Integración de pasarela de pagos (Yape, Plin, etc.).
+4. 📢 Alianzas con gremios técnicos e instituciones educativas.
+5. 🚀 Publicación en Google Play Store.
 
 ---
 
 
-## 📄 Licencia
-
-MIT License © 2025 KaiMaki Dev Team
+¡Gracias por apoyar el crecimiento de los oficios técnicos con KaiMaki! 💪🔧
