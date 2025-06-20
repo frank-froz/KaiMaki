@@ -1,0 +1,99 @@
+/* Contenedor principal, centrado vertical y horizontal */
+.login-container {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 40px 30px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: 26px;
+  margin-bottom: 30px;
+  font-weight: 600;
+  color: #222;
+}
+
+/* Formulario */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.login-form input {
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.login-form input:focus {
+  border-color: #4285F4;
+  outline: none;
+}
+
+/* Botón login email */
+.email-login-button {
+  background-color: #4285F4;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 0;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.email-login-button:hover {
+  background-color: #357ae8;
+}
+
+/* Mensaje error */
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+/* Divisor entre métodos */
+.divider {
+  margin: 20px 0;
+  font-weight: 500;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Contenedor botón Google */
+.google-login-button-wrapper {
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+/* Si el GoogleLoginButton usa un botón nativo, aplica este estilo global */
+/* Ajusta según el botón real que uses */
+.google-login-button-wrapper button {
+  width: 100% !important;
+  background-color: #4285F4 !important;
+  color: white !important;
+  font-weight: 600 !important;
+  padding: 12px 0 !important;
+  border-radius: 8px !important;
+  border: none !important;
+  cursor: pointer !important;
+  font-size: 16px !important;
+  transition: background-color 0.3s ease !important;
+}
+
+.google-login-button-wrapper button:hover {
+  background-color: #357ae8 !important;
+}

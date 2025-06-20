@@ -1,0 +1,20 @@
+# Nombre de la aplicación
+spring.application.name=usuario-backend
+
+# Puerto del servidor (puedes cambiarlo si tienes conflicto)
+server.port=8080
+
+# Configuración de la base de datos
+spring.datasource.url=jdbc:mariadb://localhost:3306/kaimakier
+spring.datasource.username=tu_usuario
+spring.datasource.password=tu_contraseña
+spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+
+# Configuración de JPA / Hibernate
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.show-sql=true
+
+# Google OAuth - reemplazar con tus credenciales reales en tu entorno local
+spring.security.oauth2.client.registration.google.client-id=YOUR_GOOGLE_CLIENT_ID
+spring.security.oauth2.client.registration.google.client-secret=YOUR_GOOGLE_CLIENT_SECRET

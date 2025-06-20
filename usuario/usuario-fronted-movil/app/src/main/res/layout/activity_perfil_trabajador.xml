@@ -1,0 +1,108 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAFAFA">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Toolbar personalizada -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            android:navigationIcon="@drawable/ic_arrow_back"
+            android:theme="@style/ThemeOverlay.AppCompat.Light" />
+
+
+
+        <!-- Imagen de perfil centrada -->
+        <ImageView
+            android:id="@+id/imgPerfilDetalle"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/default_avatar"
+            android:scaleType="centerCrop"
+            android:background="@drawable/circle_background"
+            android:clipToOutline="true"
+            android:elevation="4dp" />
+
+        <!-- Nombre del trabajador -->
+        <TextView
+            android:id="@+id/txtNombrePerfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre Apellido"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#1A237E"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp" />
+
+        <!-- Oficios -->
+        <TextView
+            android:id="@+id/txtOficioPerfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Oficios: Electricista, Gasfitero"
+            android:textSize="16sp"
+            android:textColor="#424242"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp" />
+
+        <!-- Dirección detallada -->
+        <TextView
+            android:id="@+id/txtDireccionPerfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dirección: Av. Siempre Viva 123"
+            android:textSize="16sp"
+            android:textColor="#424242"
+            android:layout_marginTop="24dp" />
+
+        <TextView
+            android:id="@+id/txtDistritoPerfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Distrito: Miraflores"
+            android:textSize="16sp"
+            android:textColor="#616161"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/txtProvincia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Provincia: Lima"
+            android:textSize="16sp"
+            android:textColor="#616161"
+            android:layout_marginTop="2dp" />
+
+        <TextView
+            android:id="@+id/txtDepartamento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Departamento: Lima"
+            android:textSize="16sp"
+            android:textColor="#616161"
+            android:layout_marginTop="2dp" />
+
+        <!-- Botón de mensaje -->
+        <Button
+            android:id="@+id/btnMensajePerfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enviar mensaje"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#F4511E"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="24dp"
+            android:elevation="2dp" />
+    </LinearLayout>
+</ScrollView>
