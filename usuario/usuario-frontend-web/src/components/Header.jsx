@@ -26,7 +26,7 @@ const Header = () => {
             <nav>
                 <ul className="nav-links">
                     <li><Link to="/home">Home</Link></li>
-                    <li><Link to="/services">Servicios</Link></li>
+                    <li><Link to="/trabajadores">Trabajadores</Link></li>
                     <li><Link to="/help">Ayuda</Link></li>
                     <li><Link to="/about">Nosotros</Link></li>
 
@@ -37,7 +37,7 @@ const Header = () => {
               </span>
                             {menuOpen && (
                                 <ul className="dropdown-menu">
-                                    <li><Link to="/mi-perfil">Mi perfil</Link></li>
+                                    <li><Link to="/perfil">Mi perfil</Link></li>
                                     <li><Link to="/dashboard">Dashboard</Link></li>
                                     <li onClick={handleLogout}>Cerrar sesión</li>
                                 </ul>
