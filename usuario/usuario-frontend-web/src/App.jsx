@@ -4,7 +4,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import Dashboard from './pages/Dashboard';
 import LandingPage from './pages/LandingPage';
-import TrabajadoresDisponibles from './pages/TrabajadoresDisponibles';
+import TrabajadoresDisponibles from './pages/TrabajadoresPage';
 import PerfilPage from './pages/PerfilPage';
 
 export default function App() {
@@ -38,15 +38,6 @@ export default function App() {
 
                 <Route
                     path="/perfil/:id"
-                    element={
-                        <PrivateRoute>
-                            <PerfilPage />
-                        </PrivateRoute>
-                    }
-                />
-
-                <Route
-                    path="/mi-perfil"
                     element={
                         <PrivateRoute>
                             <PerfilPage />
