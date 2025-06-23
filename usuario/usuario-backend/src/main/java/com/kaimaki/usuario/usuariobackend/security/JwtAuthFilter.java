@@ -29,30 +29,35 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String authHeader = request.getHeader("Authorization");
+        System.out.println("Authorization Header: " + authHeader);
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            System.out.println("Token ausente o mal formado");
             filterChain.doFilter(request, response);
             return;
         }
 
         String token = authHeader.substring(7);
         if (!jwtService.validateToken(token)) {
+            System.out.println("Token inválido");
             filterChain.doFilter(request, response);
             return;
         }
 
         String correo = jwtService.getCorreoFromToken(token);
+        System.out.println("Correo extraído del token: " + correo);
 
-        // Obtenemos el UserDetails para incluir los roles del usuario
         UserDetails userDetails = userDetailsService.loadUserByUsername(correo);
 
-        //  Usamos las authorities del UserDetails
         UsernamePasswordAuthenticationToken authToken =
                 new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
         authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
+        System.out.println("Autenticación seteada en contexto de seguridad");
+
         filterChain.doFilter(request, response);
     }
+
 }
