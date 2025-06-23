@@ -29,7 +29,7 @@ const Perfil = ({ data, editable = false, onSave }) => {
 
       <div className="perfil-foto">
         <img
-          src={perfil.fotoPerfil || '/placeholder.jpg'}
+          src={perfil.fotoPerfil || '/avatar.png'}
           alt="Foto de perfil"
         />
       </div>
