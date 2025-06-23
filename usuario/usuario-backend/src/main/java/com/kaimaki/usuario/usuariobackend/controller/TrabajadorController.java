@@ -18,7 +18,7 @@ public class TrabajadorController {
     @Autowired
     private TrabajadorService trabajadorService;
 
-    @PreAuthorize("hasRole('CLIENTE')")
+
     @GetMapping("/disponibles")
     public ResponseEntity<List<TrabajadorDTO>> listarTrabajadoresDisponibles(){
         //líneas para depuración
