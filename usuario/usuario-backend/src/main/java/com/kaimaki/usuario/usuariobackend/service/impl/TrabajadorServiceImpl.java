@@ -7,6 +7,7 @@ import com.kaimaki.usuario.usuariobackend.model.User;
 import com.kaimaki.usuario.usuariobackend.repository.TrabajadorRepository;
 import com.kaimaki.usuario.usuariobackend.repository.UbicacionRepository;
 import com.kaimaki.usuario.usuariobackend.service.TrabajadorService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,52 +27,15 @@ public class TrabajadorServiceImpl implements TrabajadorService {
     @Override
     public List<TrabajadorDTO> obtenerTrabajadoresDisponibles() {
         List<Trabajador> trabajadores = trabajadorRepository.findTrabajadoresVerificados();
-
-        return trabajadores.stream().map(t -> {
-            String nombreCompleto = t.getUser().getNombre() + " " + t.getUser().getApellido();
-
-            List<String> oficios = t.getOficios().stream()
-                    .map(to -> to.getOficio().getNombre())
-                    .collect(Collectors.toList());
-
-            Ubicacion ubicacion = ubicacionRepository.findByUserId(t.getUser().getId());
-
-            return new TrabajadorDTO(
-                    t.getId(),
-                    nombreCompleto,
-                    oficios,
-                    ubicacion != null ? ubicacion.getDireccion() : "Sin dirección",
-                    ubicacion != null ? ubicacion.getDistrito() : "Sin distrito",
-                    ubicacion != null ? ubicacion.getProvincia() : "Sin provincia",
-                    ubicacion != null ? ubicacion.getDepartamento() : "Sin departamento"
-            );
-        }).collect(Collectors.toList());
+        return trabajadores.stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
     public TrabajadorDTO obtenerTrabajadorPorId(Long id) {
         Optional<Trabajador> opt = trabajadorRepository.findById(id);
-        if (opt.isEmpty()) return null;
-
-        Trabajador t = opt.get();
-        User usuario = t.getUser();
-
-        List<String> oficios = t.getOficios()
-                .stream()
-                .map(to -> to.getOficio().getNombre())
-                .collect(Collectors.toList());
-
-        Ubicacion ubicacion = ubicacionRepository.findByUserId(usuario.getId());
-
-        return new TrabajadorDTO(
-                t.getId(),
-                usuario.getNombre() + " " + usuario.getApellido(),
-                oficios,
-                ubicacion != null ? ubicacion.getDireccion() : "Sin dirección",
-                ubicacion != null ? ubicacion.getDistrito() : "Sin distrito",
-                ubicacion != null ? ubicacion.getProvincia() : "Sin provincia",
-                ubicacion != null ? ubicacion.getDepartamento() : "Sin departamento"
-        );
+        return opt.map(this::mapToDTO).orElse(null);
     }
 
     @Override
@@ -81,25 +45,34 @@ public class TrabajadorServiceImpl implements TrabajadorService {
         return trabajadores.stream()
                 .filter(t -> t.getOficios().stream()
                         .anyMatch(to -> to.getOficio().getNombre().equalsIgnoreCase(nombreOficio)))
-                .map(t -> {
-                    String nombreCompleto = t.getUser().getNombre() + " " + t.getUser().getApellido();
-
-                    List<String> oficios = t.getOficios().stream()
-                            .map(to -> to.getOficio().getNombre())
-                            .collect(Collectors.toList());
-
-                    Ubicacion ubicacion = ubicacionRepository.findByUserId(t.getUser().getId());
-
-                    return new TrabajadorDTO(
-                            t.getId(),
-                            nombreCompleto,
-                            oficios,
-                            ubicacion != null ? ubicacion.getDireccion() : "Sin dirección",
-                            ubicacion != null ? ubicacion.getDistrito() : "Sin distrito",
-                            ubicacion != null ? ubicacion.getProvincia() : "Sin provincia",
-                            ubicacion != null ? ubicacion.getDepartamento() : "Sin departamento"
-                    );
-                })
+                .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
+
+    // 🔁 Método común para mapear Trabajador a TrabajadorDTO
+    private TrabajadorDTO mapToDTO(Trabajador t) {
+        User usuario = t.getUser();
+
+        String nombreCompleto = usuario.getNombre() + " " + usuario.getApellido();
+        String fotoPerfil = usuario.getFotoPerfil();
+
+        List<String> oficios = t.getOficios().stream()
+                .map(to -> to.getOficio().getNombre())
+                .collect(Collectors.toList());
+
+        Ubicacion ubicacion = ubicacionRepository.findByUserId(usuario.getId());
+
+        return new TrabajadorDTO(
+                t.getId(), // ✅ ID del trabajador
+                usuario.getId(), // ✅ ID del usuario asociado
+                nombreCompleto,
+                oficios,
+                fotoPerfil,
+                ubicacion != null ? ubicacion.getDireccion() : "Sin dirección",
+                ubicacion != null ? ubicacion.getDistrito() : "Sin distrito",
+                ubicacion != null ? ubicacion.getProvincia() : "Sin provincia",
+                ubicacion != null ? ubicacion.getDepartamento() : "Sin departamento"
+        );
+    }
+
 }
