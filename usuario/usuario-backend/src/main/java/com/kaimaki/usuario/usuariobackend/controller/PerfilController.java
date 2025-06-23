@@ -15,11 +15,17 @@ public class PerfilController {
     @Autowired
     private PerfilService perfilService;
 
-    @PreAuthorize("hasAnyRole('CLIENTE')")
+
     @GetMapping
     public ResponseEntity<PerfilDTO> obtenerPerfilActual(Authentication authentication) {
         String correo = authentication.getName(); // obtenido del token
         PerfilDTO dto = perfilService.obtenerPerfilPorCorreo(correo);
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PerfilDTO> obtenerPerfil(@PathVariable Long id) {
+        PerfilDTO dto = perfilService.obtenerPerfil(id);
         return ResponseEntity.ok(dto);
     }
 
