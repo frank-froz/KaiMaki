@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/Perfil.css';
 
 const Perfil = ({ data, editable = false, onSave }) => {
@@ -14,6 +14,12 @@ const Perfil = ({ data, editable = false, onSave }) => {
     if (onSave) onSave(perfil);
     setModoEdicion(false);
   };
+  
+  useEffect(() => {
+    setPerfil(data);
+    setModoEdicion(false); // Evita que el modo edición se mantenga activo al cambiar de perfil
+  }, [data]);
+
 
   return (
     
