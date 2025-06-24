@@ -1,18 +1,28 @@
 // src/pages/TrabajadoresPage.jsx
 import React, { useEffect, useState } from 'react';
-import axios from '../services/api';
 import Header from '../components/Header';
 import TrabajadoresList from '../components/TrabajadoresList.jsx';
 import '../css/TrabajadoresDisponibles.css';
+import { getTrabajadoresDisponibles } from '../services/trabajadoresService.js';
+
 
 const TrabajadoresPage = () => {
   const [trabajadores, setTrabajadores] = useState([]);
   const [busqueda, setBusqueda] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('/trabajadores/disponibles')
-      .then(res => setTrabajadores(res.data))
-      .catch(err => console.error("Error al cargar trabajadores:", err));
+    getTrabajadoresDisponibles()
+      .then(res => {
+        setTrabajadores(res.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error al cargar trabajadores:", err);
+        setError("No se pudieron cargar los trabajadores.");
+        setLoading(false);
+      });
   }, []);
 
   const trabajadoresFiltrados = trabajadores.filter(t =>
@@ -39,8 +49,13 @@ const TrabajadoresPage = () => {
             />
           </div>
         </div>
-
-        <TrabajadoresList trabajadores={trabajadoresFiltrados} />
+          {loading ? (
+            <p className="td-loading">Cargando trabajadores...</p>
+          ) : error ? (
+            <p className="td-error">{error}</p>
+          ) : (
+            <TrabajadoresList trabajadores={trabajadoresFiltrados} />
+          )}
       </section>
     </div>
   );
