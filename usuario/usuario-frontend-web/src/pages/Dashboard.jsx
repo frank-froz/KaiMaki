@@ -1,52 +1,66 @@
 // src/pages/Dashboard.jsx
-import { useContext, useEffect } from 'react'
-import { AuthContext } from '../context/AuthContext'
-import { useNavigate } from 'react-router-dom'
-import { FaComments } from 'react-icons/fa'
-import Header from '../components/Header'
+import React, { useContext, useEffect } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import { useNavigate, Link } from 'react-router-dom';
+import { FaComments } from 'react-icons/fa';
+import Header from '../components/Header';
+import '../css/Dashboard.css'; // Estilos personalizados
 
 export default function Dashboard() {
-    const { user, logout } = useContext(AuthContext)
-    const navigate = useNavigate()
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!user) {
-            navigate('/login')
-        }
-    }, [user, navigate])
+  useEffect(() => {
+    if (!user) navigate('/login');
+  }, [user, navigate]);
 
-    const handleLogout = () => {
-        logout()
-        navigate('/login')
-    }
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
-    return (
-        <>
-            <Header /> {/* Aquí ya se verá el nombre si está logueado */}
+  const cards = [
+    { title: 'Perfil', desc: 'Gestiona tus datos', to: '/perfil', icon: '👤' },
+    { title: 'Trabajadores', desc: 'Busca trabajadores fácilmente', to: '/trabajadores', icon: '🛠️' },
+    { title: 'Reportes', desc: 'Genera tus reportes', to: '/reportes', icon: '📊' },
+    { title: 'Solicitudes', desc: 'Consulta tus solicitudes', to: '/solicitudes', icon: '📋' },
+    { title: 'Reclamos', desc: 'Haz un reclamo', to: '/reclamos/nuevo', icon: '⚠️' },
+    { title: 'Configuración', desc: 'Ajustes de perfil', to: '/perfil/configuracion', icon: '⚙️' },
+  ];
 
-            <div style={{ padding: '2rem' }}>
-                <h1>Bienvenido al Panel de Usuario</h1>
+  return (
+    <>
+      <Header />
+      <div className="dashboard-container">
+        <h1 className="dashboard-title">
+          Bienvenido, {user?.nombre || user?.sub || 'Usuario'} 👋
+        </h1>
 
-                <button
-                    style={{
-                        position: 'absolute', right: 24, top: 100, background: 'none', border: 'none', cursor: 'pointer', fontSize: 28
-                    }}
-                    title="Ir al chat"
-                    onClick={() => navigate('/chat')}
-                >
-                    <FaComments />
-                </button>
+        <button className="chat-button" onClick={() => navigate('/chat')} title="Ir al chat">
+          <FaComments />
+        </button>
 
-                {user ? (
-                    <div>
-                        <p>Hola, {user.nombre || user.sub}</p>
-                        <p>Este es tu panel de control. Aquí puedes ver tus datos, acceder al chat, y más.</p>
-                        <button onClick={handleLogout}>Cerrar sesión</button>
-                    </div>
-                ) : (
-                    <p>Cargando...</p>
-                )}
+        <div className="dashboard-grid">
+          {cards.map(({ title, desc, to, icon }, i) => (
+            <div className="dashboard-card" key={i}>
+              <div className="dashboard-card-header">
+                <span className="dashboard-icon">{icon}</span>
+                <h2>{title}</h2>
+              </div>
+              <p>{desc}</p>
+              <Link to={to} className="dashboard-button">
+                Ingresar
+              </Link>
             </div>
-        </>
-    )
+          ))}
+        </div>
+
+        <div className="dashboard-footer">
+          <button onClick={handleLogout} className="logout-button">
+            Cerrar sesión
+          </button>
+        </div>
+      </div>
+    </>
+  );
 }
