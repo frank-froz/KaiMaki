@@ -8,6 +8,9 @@ import com.kaimaki.usuario.usuariobackend.repository.RolRepository;
 import com.kaimaki.usuario.usuariobackend.repository.UserRepository;
 import com.kaimaki.usuario.usuariobackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 @Service
@@ -76,5 +79,20 @@ public class UserServiceImpl implements UserService {
             return userRepository.save(nuevo);
         });
     }
+
+    @Override
+    public User obtenerUsuarioActual() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new RuntimeException("Usuario no autenticado");
+        }
+
+        String correo = authentication.getName(); // El nombre de usuario es el correo (según tu login)
+
+        return userRepository.findByCorreo(correo)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+    }
+
 }
 
