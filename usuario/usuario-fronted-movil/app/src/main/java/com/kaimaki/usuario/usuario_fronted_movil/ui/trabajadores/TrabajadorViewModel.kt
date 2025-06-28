@@ -27,6 +27,17 @@ class TrabajadorViewModel(
             }
         }
     }
+    fun cargarTrabajadoresPorOficio(oficio: String) {
+        viewModelScope.launch {
+            try {
+                val trabajadoresFiltrados = repository.getTrabajadoresPorOficio(oficio)
+                _trabajadores.value = trabajadoresFiltrados
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
 
     fun filtrarTrabajadores(query: String) {
         _trabajadores.value = if (query.isBlank()) {

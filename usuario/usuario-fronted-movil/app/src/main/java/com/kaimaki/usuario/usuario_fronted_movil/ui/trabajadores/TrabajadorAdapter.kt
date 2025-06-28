@@ -85,4 +85,3 @@ class TrabajadorAdapter(
         submitList(nuevaLista)
     }
 }
-
