@@ -1,15 +1,50 @@
+# Archivos generados por Android Studio e IntelliJ
 *.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+*.hprof
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Carpetas del sistema y del entorno
 .DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+.idea/
+.gradle/
+build/
+captures/
+.cxx/
+.externalNativeBuild/
+
+# Archivos de configuración local
 local.properties
+google-services.json
+app/google-services.json
+
+# Archivos de cache de IDE
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+.idea/deploymentTargetSelector.xml
+.idea/appInsightsSettings.xml
+.idea/misc.xml
+
+# Archivos de diseño o recursos que no deberían versionarse
+*.orig
+*.rej
+*.class
+
+# Iconos de launcher y recursos generados automáticamente
+app/src/main/ic_launcher-playstore.png
+app/src/main/res/mipmap*/ic_launcher.png
+app/src/main/res/mipmap*/ic_launcher_round.png
+
+# Archivos de firmas de release
+*.jks
+*.keystore
+*.pem
+*.key
+*.crt
+*.der
