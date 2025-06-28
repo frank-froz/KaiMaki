@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1E1E2E"
+    android:padding="32dp">
+
+    <!-- Logo moderno centrado -->
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/kaimaki_logo"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitCenter"
+        android:layout_marginBottom="16dp" />
+
+
+</LinearLayout>

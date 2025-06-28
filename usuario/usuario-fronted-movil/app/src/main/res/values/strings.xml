@@ -2,5 +2,11 @@
     <string name="app_name">Kaimaki</string>
     <string name="open_drawer">Abrir menú</string>
     <string name="close_drawer">Cerrar menú</string>
+    <string name="onboarding_image_description">Imagen de presentación</string>
+    <string name="kaimaki_logo_description">Logo de Kaimaki</string>
+    <string name="hint_escribe_mensaje">Escribe un mensaje</string>
+    <string name="enviar_mensaje">Enviar mensaje</string>
+    <string name="volver_chat">Volver al chat</string>
+
 
 </resources>
