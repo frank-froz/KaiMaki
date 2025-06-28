@@ -97,5 +97,35 @@ public class PerfilService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
         return obtenerPerfil(user.getId()); // reutiliza lógica existente
     }
+
+    public PerfilDTO actualizarPerfil(String correo, PerfilDTO perfilDTO) {
+        User user = userRepo.findByCorreo(correo)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+
+        // Actualiza datos del perfil
+        user.setNombre(perfilDTO.getNombre());
+        user.setApellido(perfilDTO.getApellido());
+        user.setPresentacion(perfilDTO.getPresentacion());
+        user.setFotoPerfil(perfilDTO.getFotoPerfil());
+
+        // Manejo de Ubicación
+        Ubicacion ubicacion = user.getUbicacion();
+        if (ubicacion == null) {
+            ubicacion = new Ubicacion();
+            ubicacion.setUser(user); // <<<<<< ESTA LÍNEA ES CLAVE
+            user.setUbicacion(ubicacion); // establece la relación en ambas direcciones
+        }
+
+        ubicacion.setDireccion(perfilDTO.getDireccion());
+        ubicacion.setDistrito(perfilDTO.getDistrito());
+        ubicacion.setProvincia(perfilDTO.getProvincia());
+        ubicacion.setDepartamento(perfilDTO.getDepartamento());
+
+        userRepo.save(user); // Guarda todo en cascada
+
+        return obtenerPerfil(user.getId());
+    }
+
+
 }
 
