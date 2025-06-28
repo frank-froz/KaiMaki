@@ -4,12 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kaimaki.usuario.usuario_fronted_movil.data.api.RetrofitInstance
+
+import com.kaimaki.usuario.usuario_fronted_movil.data.repository.UserRepositoryImpl
 import com.kaimaki.usuario.usuario_fronted_movil.domain.model.AuthResponse
-import com.kaimaki.usuario.usuario_fronted_movil.domain.model.LoginRequest
+import com.kaimaki.usuario.usuario_fronted_movil.domain.repository.UserRepository
 import kotlinx.coroutines.launch
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(
+    private val userRepository: UserRepository = UserRepositoryImpl()
+) : ViewModel() {
 
     private val _authResult = MutableLiveData<Result<AuthResponse>>()
     val authResult: LiveData<Result<AuthResponse>> = _authResult
@@ -17,13 +20,19 @@ class LoginViewModel : ViewModel() {
     fun login(correo: String, contrasena: String) {
         viewModelScope.launch {
             try {
-                val request = LoginRequest(correo, contrasena)
-                val response = RetrofitInstance.authApi.login(request)
-                if (response.isSuccessful && response.body() != null) {
-                    _authResult.value = Result.success(response.body()!!)
-                } else {
-                    _authResult.value = Result.failure(Exception("Credenciales inválidas"))
-                }
+                val response = userRepository.login(correo, contrasena)
+                _authResult.value = Result.success(response)
+            } catch (e: Exception) {
+                _authResult.value = Result.failure(e)
+            }
+        }
+    }
+
+    fun loginConGoogle(idToken: String) {
+        viewModelScope.launch {
+            try {
+                val response = userRepository.loginConGoogle(idToken)
+                _authResult.value = Result.success(response)
             } catch (e: Exception) {
                 _authResult.value = Result.failure(e)
             }
