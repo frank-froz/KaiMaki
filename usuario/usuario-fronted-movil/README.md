@@ -1,36 +1,73 @@
-MVVM + Clean Architecture  para trabajar con Retrofit y ViewModels.
+# 🧱 MVVM + Clean Architecture con Retrofit y ViewModels
 
-📁 Estructura recomendada del proyecto
+Este proyecto sigue una arquitectura limpia basada en el patrón **MVVM (Model-View-ViewModel)**, utilizando Retrofit para el consumo de APIs y separación clara de responsabilidades en cada capa.
 
+---
+
+## 📁 Estructura recomendada del proyecto
+
+```
 com/
 └── kaimaki/
-└── usuario/
-└── usuario_fronted_movil/
-├── data/
-│   ├── api/               ← Aquí va todo lo relacionado con Retrofit (API)
-│   │   ├── ApiService.kt
-│   │   └── RetrofitInstance.kt
-│   ├── repository/           ← Implementación de repositorios
-│   │   ├── UserRepositoryImpl.kt
-│   │   └── ... (otros repos si tienes)
-│   └── local/                ← (opcional) Para base de datos local, Room, etc.
-│       └── ...
-│
-├── domain/
-│   ├── model/                ← Modelos de datos que usas en tu app (User, AuthResponse)
-│   │   ├── Usuario.kt
-│   │   └── AuthResponse.kt
-│   └── repository/           ← Interfaces de repositorios (contratos)
-│       └── UserRepository.kt
-│
-├── ui/
-│   ├── login/
-│   │   ├── LoginActivity.kt
-│   │   └── LoginViewModel.kt
-│   ├── home/
-│   │   ├── HomeActivity.kt
-│   │   └── HomeViewModel.kt (opcional)
-│   └── components/           ← (opcional) Para views reutilizables
-│
-└── util/                     ← Utilidades (clases helper, constantes, etc.)
-└── Resource.kt, TokenManager.kt, Const.kt, etc.
+    └── usuario/
+        └── usuario_fronted_movil/
+            ├── data/
+            │   ├── api/
+            │   │   ├── AuthApi.kt
+            │   │   └── RetrofitInstance.kt
+            │   ├── repository/
+            │   │   ├── UserRepositoryImpl.kt
+            │   │   └── ...
+            │
+            ├── domain/
+            │   ├── model/
+            │   │   ├── Usuario.kt
+            │   │   └── AuthResponse.kt
+            │   └── repository/
+            │       └── UserRepository.kt
+            │
+            ├── ui/
+            │   ├── login/
+            │   │   ├── LoginActivity.kt
+            │   │   └── LoginViewModel.kt
+            │   ├── home/
+            │   │   ├── HomeActivity.kt
+            │   │   └── HomeViewModel.kt
+            │   └── components/
+            │
+            └── util/
+                └── TokenManager.kt
+```
+
+---
+
+## 🧩 Capas de la Arquitectura
+
+### 🔹 data
+Contiene implementaciones concretas para acceder a datos (API REST, local, etc.).
+
+
+### 🔹 domain
+Capa intermedia con las **interfaces** de los repositorios y los **modelos de negocio**.
+
+
+### 🔹 ui
+Contiene la lógica de presentación y pantallas de la app.
+
+
+### 🔹 util
+Utilidades generales como manejo de tokens, validaciones, helpers, etc.
+
+---
+
+## 🚀 Tecnologías utilizadas
+
+- Kotlin
+- Android Architecture Components (ViewModel, LiveData)
+- Retrofit2
+- Coroutines
+- Clean Architecture
+- MVVM
+
+
+---

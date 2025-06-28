@@ -23,10 +23,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.kaimaki.usuario.usuario_fronted_movil" />
+                  <option name="mobileSdkAppId" value="1:398913924898:android:d92a8ce6097127e8ab3f7b" />
+                  <option name="projectId" value="kaimaki-d6fd4" />
+                  <option name="projectNumber" value="398913924898" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
