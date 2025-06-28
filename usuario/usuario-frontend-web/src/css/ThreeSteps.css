@@ -1,0 +1,91 @@
+/* src/components/ThreeSteps.css */
+
+.three-steps-container {
+  padding: 3rem 1rem;
+  background-color: #fff;
+}
+
+.three-steps-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.three-steps-card {
+  width: 100%;
+  max-width: 1000px;
+  background-color: #fff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.three-steps-title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.three-steps-content {
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.three-steps-image {
+  flex: 1;
+  max-width: 33%;
+  display: none;
+}
+
+.three-steps-image img {
+  width: 100%;
+  max-width: 220px;
+  margin: 0 auto;
+  display: block;
+}
+
+@media (min-width: 1024px) {
+  .three-steps-image {
+    display: block;
+  }
+}
+
+.three-steps-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: #f97316; /* naranja */
+  padding: 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.step-number {
+  background-color: #fff;
+  color: #f97316;
+  font-size: 1.25rem;
+  font-weight: bold;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-text {
+  color: #fff;
+  font-weight: 600;
+  line-height: 1.4;
+}

@@ -1,0 +1,92 @@
+.dashboard-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  position: relative;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.chat-button {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #f97316;
+  transition: color 0.3s;
+}
+.chat-button:hover {
+  color: #facc15;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.dashboard-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.dashboard-card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.dashboard-icon {
+  font-size: 1.5rem;
+  margin-right: 0.75rem;
+}
+
+.dashboard-button {
+  display: inline-block;
+  margin-top: 1rem;
+  background-color: #f97316;
+  color: white;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+.dashboard-button:hover {
+  background-color: #f59e0b;
+}
+
+.dashboard-footer {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  color: #dc2626;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.logout-button:hover {
+  color: #b91c1c;
+}

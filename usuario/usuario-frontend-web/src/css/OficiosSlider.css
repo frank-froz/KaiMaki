@@ -1,0 +1,45 @@
+.swiper--oficios {
+  padding-inline: 0.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.swiper--oficios .swiper-slide {
+  display: flex;
+  justify-content: center;
+}
+
+.oficio-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  width: 90%;
+  max-width: 250px;
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.oficio-card:hover {
+  transform: scale(1.03);
+}
+
+.oficio-img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-bottom: 0.75rem;
+}
+
+.oficios-title {
+  font-size: 2rem;          
+  font-weight: 700;          
+  text-align: center;
+  margin-bottom: 1.5rem;     
+  color: #ea580c;            
+}
+
+.swiper--oficios {
+  min-height: 400px;
+}
+
