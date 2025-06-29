@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import LandingPage from './pages/LandingPage';
 import TrabajadoresDisponibles from './pages/TrabajadoresPage';
 import PerfilPage from './pages/PerfilPage';
+import ChatPage from './pages/ChatPage';
 
 export default function App() {
     return (
@@ -34,13 +35,38 @@ export default function App() {
                             <PerfilPage />
                         </PrivateRoute>
                     }
-                />
-
-                <Route
+                />                <Route
                     path="/perfil/:id"
                     element={
                         <PrivateRoute>
                             <PerfilPage />
+                        </PrivateRoute>
+                    }
+                />
+
+                <Route
+                    path="/mi-perfil"
+                    element={
+                        <PrivateRoute>
+                            <PerfilPage />
+                        </PrivateRoute>
+                    }
+                />
+
+                {/* Rutas para el Chat */}
+                <Route
+                    path="/chat"
+                    element={
+                        <PrivateRoute>
+                            <ChatPage />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/chat/:roomId"
+                    element={
+                        <PrivateRoute>
+                            <ChatPage />
                         </PrivateRoute>
                     }
                 />
