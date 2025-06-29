@@ -31,6 +31,7 @@ public class TrabajadorController {
     @PreAuthorize("hasRole('CLIENTE')")
     @GetMapping("/{id}")
     public ResponseEntity<TrabajadorDTO> obtenerPorId(@PathVariable Long id) {
+
         TrabajadorDTO dto = trabajadorService.obtenerTrabajadorPorId(id);
         if (dto == null) {
             return ResponseEntity.notFound().build();
@@ -43,7 +44,11 @@ public class TrabajadorController {
     @PreAuthorize("hasRole('CLIENTE')")
     @GetMapping("/buscar")
     public ResponseEntity<List<TrabajadorDTO>> buscarPorOficio(@RequestParam String oficio) {
+        System.out.println("🔍 Buscando trabajadores por oficio: " + oficio);
         List<TrabajadorDTO> resultado = trabajadorService.obtenerTrabajadoresPorOficio(oficio);
         return ResponseEntity.ok(resultado);
     }
+
+
+
 }
