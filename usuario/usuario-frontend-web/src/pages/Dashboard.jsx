@@ -4,6 +4,7 @@ import { AuthContext } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { FaComments } from 'react-icons/fa'
 import Header from '../components/Header'
+import '../css/Dashboard.css'
 
 export default function Dashboard() {
     const { user, logout } = useContext(AuthContext)
@@ -24,15 +25,14 @@ export default function Dashboard() {
         <>
             <Header /> {/* Aquí ya se verá el nombre si está logueado */}
 
-            <div style={{ padding: '2rem' }}>
+            <div className="dashboard-content">
                 <h1>Bienvenido al Panel de Usuario</h1>
-
                 <button
-                    style={{
-                        position: 'absolute', right: 24, top: 100, background: 'none', border: 'none', cursor: 'pointer', fontSize: 28
-                    }}
+                    className="floating-chat-button"
                     title="Ir al chat"
                     onClick={() => navigate('/chat')}
+                    onMouseOver={e => e.currentTarget.classList.add('hover')}
+                    onMouseOut={e => e.currentTarget.classList.remove('hover')}
                 >
                     <FaComments />
                 </button>
