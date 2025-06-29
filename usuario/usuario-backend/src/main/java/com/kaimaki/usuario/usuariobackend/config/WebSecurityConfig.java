@@ -40,6 +40,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/auth/**",
+                                "/api/nlp/**",
                                 "/api/auth/**",
                                 "/api/usuarios/registro",
                                 "/api/usuarios/login",
