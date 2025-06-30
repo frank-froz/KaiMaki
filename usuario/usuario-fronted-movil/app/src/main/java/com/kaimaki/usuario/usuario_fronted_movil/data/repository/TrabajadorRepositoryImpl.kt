@@ -16,4 +16,13 @@ class TrabajadorRepositoryImpl(
         }
         return service.getTrabajadoresDisponibles("Bearer $token")
     }
+
+    override suspend fun getTrabajadoresPorOficio(oficio: String): List<Trabajador> {
+        val token = tokenProvider()
+        if (token.isNullOrEmpty()) {
+            throw Exception("Token de autorización no disponible")
+        }
+        return service.getTrabajadoresPorOficio("Bearer $token", oficio)
+            .body() ?: emptyList()
+    }
 }

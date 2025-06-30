@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#FFFFFF"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <!-- Imagen del paso -->
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_marginBottom="32dp"
+        android:contentDescription="@string/onboarding_image_description"
+        android:scaleType="fitCenter" />
+
+    <!-- Título -->
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:textColor="#333333"
+        android:textStyle="bold"
+        android:text="Título"
+        android:layout_marginBottom="12dp"
+        android:textAlignment="center" />
+
+    <!-- Descripción -->
+    <TextView
+        android:id="@+id/textDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="#777777"
+        android:text="Descripción del paso"
+        android:gravity="center"
+        android:paddingHorizontal="16dp"
+        android:lineSpacingExtra="4dp"
+        android:textAlignment="center" />
+</LinearLayout>

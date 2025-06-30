@@ -5,4 +5,5 @@ import retrofit2.Call
 
 interface TrabajadorRepository {
     suspend fun getTrabajadoresDisponibles(): List<Trabajador>
+    suspend fun getTrabajadoresPorOficio(oficio: String): List<Trabajador>
 }

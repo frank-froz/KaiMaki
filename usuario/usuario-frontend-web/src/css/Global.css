@@ -1,0 +1,20 @@
+/* index.css o Global.css */
+html, body, #root {
+    font-family: Arial, sans-serif;
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+    --size: 1vmin;
+  --primary-background: #fff;
+  --primary-font: 'Poppins', sans-serif;
+  --secondary-font: 'Inter', sans-serif;
+}
+
+main {
+  flex: 1;
+}

@@ -41,7 +41,7 @@ h1 {
 
 /* Botón login email */
 .email-login-button {
-  background-color: #4285F4;
+  background-color: #ff7f00;
   color: white;
   font-weight: 600;
   border: none;
@@ -53,7 +53,7 @@ h1 {
 }
 
 .email-login-button:hover {
-  background-color: #357ae8;
+  background-color: #ff7f00;
 }
 
 /* Mensaje error */
@@ -83,7 +83,7 @@ h1 {
 /* Ajusta según el botón real que uses */
 .google-login-button-wrapper button {
   width: 100% !important;
-  background-color: #4285F4 !important;
+  background-color: #ff7f00 !important;
   color: white !important;
   font-weight: 600 !important;
   padding: 12px 0 !important;

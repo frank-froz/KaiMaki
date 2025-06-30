@@ -6,7 +6,7 @@ import Perfil from '../components/Perfil';
 import Header from '../components/Header';
 
 const PerfilPage = () => {
-  const { id: paramId } = useParams(); // Puede ser undefined si es tu propio perfil
+  const { id: paramId } = useParams();
   const { user } = useContext(AuthContext);
   const [perfilData, setPerfilData] = useState(null);
   const [error, setError] = useState(null);
@@ -20,7 +20,6 @@ const PerfilPage = () => {
           response = await axios.get(`http://localhost:8080/api/perfil/${paramId}`);
         } else {
           const token = localStorage.getItem("token");
-          console.log("Token:", token);
           response = await axios.get("http://localhost:8080/api/perfil", {
             headers: { Authorization: `Bearer ${token}` }
           });
@@ -36,17 +35,30 @@ const PerfilPage = () => {
     fetchPerfil();
   }, [paramId]);
 
+  const handleSavePerfil = async (perfilActualizado) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.put("http://localhost:8080/api/perfil", perfilActualizado, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setPerfilData(res.data);
+      alert("Perfil actualizado con éxito");
+    } catch (err) {
+      console.error("Error al actualizar el perfil:", err);
+      alert("Hubo un error al guardar los cambios");
+    }
+  };
+
   if (error) return <p className="text-red-500 text-center mt-10">{error}</p>;
   if (!perfilData) return <p className="text-center mt-10">Cargando perfil...</p>;
 
-  // Editable solo si no hay paramId o si paramId == user.id
   const editable = !paramId || paramId === String(user?.id);
 
   return (
     <div>
       <Header />
       <div className="p-6">
-        <Perfil data={perfilData} editable={editable} />
+        <Perfil data={perfilData} editable={editable} onSave={handleSavePerfil} />
       </div>
     </div>
   );

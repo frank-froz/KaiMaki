@@ -1,7 +1,9 @@
 package com.kaimaki.usuario.usuario_fronted_movil.ui.trabajadores
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -11,12 +13,15 @@ import androidx.core.content.ContextCompat
 import com.kaimaki.usuario.usuario_fronted_movil.R
 import com.kaimaki.usuario.usuario_fronted_movil.data.api.RetrofitInstance
 import com.kaimaki.usuario.usuario_fronted_movil.domain.model.Trabajador
+import com.kaimaki.usuario.usuario_fronted_movil.ui.chat.ChatActivity
 import com.kaimaki.usuario.usuario_fronted_movil.util.TokenManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class PerfilTrabajadorActivity : AppCompatActivity() {
+
+    private var trabajadorCargado: Trabajador? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +46,21 @@ class PerfilTrabajadorActivity : AppCompatActivity() {
             Toast.makeText(this, "ID de trabajador no válido", Toast.LENGTH_SHORT).show()
             finish()
         }
+
+        val botonMensaje = findViewById<Button>(R.id.btnMensajePerfil)
+
+        botonMensaje.setOnClickListener {
+            trabajadorCargado?.let { trabajador ->
+                val intent = Intent(this, ChatActivity::class.java)
+                intent.putExtra("receptorId", trabajador.id) // este debe ser el id del usuario que es trabajador
+                intent.putExtra("nombre", trabajador.nombreCompleto)
+                intent.putExtra("foto", trabajador.fotoPerfil ?: "")
+                startActivity(intent)
+            } ?: run {
+                Toast.makeText(this, "Cargando datos del trabajador...", Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -61,6 +81,7 @@ class PerfilTrabajadorActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<Trabajador>, response: Response<Trabajador>) {
                     if (response.isSuccessful) {
                         val trabajador = response.body()
+                        trabajadorCargado = trabajador
                         findViewById<TextView>(R.id.txtNombrePerfil).text = trabajador?.nombreCompleto
                         findViewById<TextView>(R.id.txtOficioPerfil).text =
                             "Oficio(s): ${trabajador?.oficios?.joinToString(", ")}"
@@ -87,6 +108,7 @@ class PerfilTrabajadorActivity : AppCompatActivity() {
             })
 
     }
+
 
 
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/Perfil.css';
 
 const Perfil = ({ data, editable = false, onSave }) => {
@@ -14,6 +14,12 @@ const Perfil = ({ data, editable = false, onSave }) => {
     if (onSave) onSave(perfil);
     setModoEdicion(false);
   };
+  
+  useEffect(() => {
+    setPerfil(data);
+    setModoEdicion(false); 
+  }, [data]);
+
 
   return (
     
@@ -53,7 +59,15 @@ const Perfil = ({ data, editable = false, onSave }) => {
 
         <div className="perfil-campo">
           <label>Ubicación:</label>
-          <p>{perfil.distrito}, {perfil.provincia}, {perfil.departamento}</p>
+          {modoEdicion ? (
+            <>
+              <input type="text" name="distrito" value={perfil.distrito || ''} onChange={handleChange} placeholder="Distrito" />
+              <input type="text" name="provincia" value={perfil.provincia || ''} onChange={handleChange} placeholder="Provincia" />
+              <input type="text" name="departamento" value={perfil.departamento || ''} onChange={handleChange} placeholder="Departamento" />
+            </>
+          ) : (
+            <p>{perfil.distrito}, {perfil.provincia}, {perfil.departamento}</p>
+          )}
         </div>
       </div>
 

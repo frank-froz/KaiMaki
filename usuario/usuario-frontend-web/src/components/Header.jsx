@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import { AuthContext } from '../context/AuthContext';
 import '../css/Header.css';
 
@@ -27,7 +28,9 @@ const Header = () => {
                 <ul className="nav-links">
                     <li><Link to="/home">Home</Link></li>
                     <li><Link to="/trabajadores">Trabajadores</Link></li>
-                    <li><Link to="/help">Ayuda</Link></li>
+                    <li>
+                    <HashLink smooth to="/#todo-en-3-pasos">Ayuda</HashLink>
+                    </li>
                     <li><Link to="/about">Nosotros</Link></li>
 
                     {user ? (

@@ -5,6 +5,7 @@ import com.kaimaki.usuario.usuariobackend.model.Rol;
 import com.kaimaki.usuario.usuariobackend.model.User;
 import com.kaimaki.usuario.usuariobackend.repository.RolRepository;
 import com.kaimaki.usuario.usuariobackend.repository.UserRepository;
+import com.kaimaki.usuario.usuariobackend.security.GoogleClientProperties;
 import com.kaimaki.usuario.usuariobackend.security.JwtService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -30,8 +32,8 @@ public class AuthController {
     @Autowired
     private JwtService jwtService;
 
-    @Value("${google.client.id}")
-    private String clientId;
+    @Autowired
+    private GoogleClientProperties googleClientProperties;
 
     private GoogleIdTokenVerifier verifier;
 
@@ -42,7 +44,7 @@ public class AuthController {
                 GoogleNetHttpTransport.newTrustedTransport(),
                 JacksonFactory.getDefaultInstance()
         )
-                .setAudience(Collections.singletonList(clientId))
+                .setAudience(googleClientProperties.getIds())
                 .build();
     }
     @PostMapping("/google")

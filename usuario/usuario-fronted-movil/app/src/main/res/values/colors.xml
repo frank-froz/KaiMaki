@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Colores primarios -->
+    <color name="colorPrimary">#FFA500</color> <!-- Naranja principal -->
+    <color name="colorPrimaryVariant">#FF8C00</color> <!-- Naranja más fuerte (hover) -->
+    <color name="colorAccent">#FF6F00</color> <!-- Alternativa intensa -->
+
+    <!--  Fondo general -->
+    <color name="backgroundDark">#1E1E2E</color> <!-- Splash / header oscuro -->
+    <color name="backgroundLight">#F5F5F5</color> <!-- Pantallas claras -->
+
+    <!--  Tarjetas, contenedores -->
+    <color name="cardBackground">#FFFFFF</color> <!-- Fondo blanco limpio -->
+
+    <!--  Textos -->
+    <color name="textPrimary">#333333</color> <!-- Legible, fuerte -->
+    <color name="textSecondary">#777777</color> <!-- Informativo / menos importante -->
+    <color name="textOnDark">#FFFFFF</color> <!-- Texto blanco sobre fondo oscuro -->
+
+    <!--  Estados e interacción -->
+    <color name="success">#4CAF50</color> <!-- Verde para éxito -->
+    <color name="error">#F44336</color> <!-- Rojo para errores -->
+    <color name="warning">#FF9800</color> <!-- Amarillo/naranja para alertas -->
+
+    <!--  Neutros y auxiliares -->
+    <color name="divider">#DDDDDD</color>
+    <color name="iconTint">#888888</color>
+    <color name="buttonDisabled">#CCCCCC</color>
 </resources>

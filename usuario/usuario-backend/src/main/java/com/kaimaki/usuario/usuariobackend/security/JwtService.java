@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 import java.util.Base64;
 import java.util.Date;
-
 @Service
 public class JwtService {
 
@@ -35,7 +34,6 @@ public class JwtService {
                 .compact();
     }
 
-
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
@@ -55,5 +53,15 @@ public class JwtService {
                 .parseClaimsJws(token)
                 .getBody();
         return claims.getSubject();
+    }
+
+    // ← NUEVO método para extraer el rol
+    public String getRolFromToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.get("rol", String.class);
     }
 }

@@ -5,12 +5,3 @@ data class AuthResponse(
     val token: String
 )
 
-data class Usuario(
-    val id: Long,
-    val nombre: String,
-    val apellido: String,
-    val correo: String,
-    val telefono: String?,
-    val rolId: Int,
-    val estadoId: Int
-)
