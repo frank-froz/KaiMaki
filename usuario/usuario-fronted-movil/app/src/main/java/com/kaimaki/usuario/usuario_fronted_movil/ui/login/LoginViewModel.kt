@@ -11,7 +11,7 @@ import com.kaimaki.usuario.usuario_fronted_movil.domain.repository.UserRepositor
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val userRepository: UserRepository = UserRepositoryImpl()
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private val _authResult = MutableLiveData<Result<AuthResponse>>()

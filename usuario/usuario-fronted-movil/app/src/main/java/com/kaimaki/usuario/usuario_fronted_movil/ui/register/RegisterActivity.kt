@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 
 import com.kaimaki.usuario.usuario_fronted_movil.databinding.ActivityRegisterBinding
 import com.kaimaki.usuario.usuario_fronted_movil.ui.home.HomeActivity
@@ -14,12 +15,16 @@ import com.kaimaki.usuario.usuario_fronted_movil.ui.home.HomeActivity
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
-    private val viewModel: RegisterViewModel by viewModels() // Lo crearás en breve
+    private lateinit var viewModel: RegisterViewModel  // Lo crearás en breve
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Inicializar ViewModel con factory
+        val factory = RegisterViewModelFactory(applicationContext)
+        viewModel = ViewModelProvider(this, factory)[RegisterViewModel::class.java]
 
         binding.btnRegistrar.setOnClickListener {
             val correo = binding.editCorreo.text.toString().trim()
@@ -41,12 +46,10 @@ class RegisterActivity : AppCompatActivity() {
 
         viewModel.registroResult.observe(this) { result ->
             result.onSuccess { authResponse ->
-                // Guardar token
                 val prefs = getSharedPreferences("usuario_prefs", Context.MODE_PRIVATE)
                 prefs.edit().putString("token", authResponse.token).apply()
 
-                // Ir al HomeActivity
-                val intent = Intent(this, HomeActivity::class.java)
+                val intent = Intent(this, com.kaimaki.usuario.usuario_fronted_movil.ui.home.HomeActivity::class.java)
                 intent.putExtra("nombre", authResponse.usuario.nombre)
                 intent.putExtra("apellido", authResponse.usuario.apellido)
                 startActivity(intent)
@@ -56,4 +59,5 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
     }
+
 }

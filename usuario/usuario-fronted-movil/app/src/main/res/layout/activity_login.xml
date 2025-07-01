@@ -37,7 +37,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Correo electrónico"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:textColor="@color/textPrimary"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Contraseña -->
@@ -54,7 +55,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Contraseña"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textColor="@color/textPrimary"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Botón de login -->

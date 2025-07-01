@@ -9,6 +9,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -25,7 +26,7 @@ import com.kaimaki.usuario.usuario_fronted_movil.util.TokenManager
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private val viewModel: LoginViewModel by viewModels()
+    private lateinit var viewModel: LoginViewModel
 
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
@@ -34,6 +35,10 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //  Inicializar ViewModel con Factory
+        val factory = LoginViewModelFactory(applicationContext)
+        viewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
 
         // Iniciar sesión con correo y contraseña
         binding.btnLogin.setOnClickListener {
