@@ -11,7 +11,7 @@
 
     <fragment
         android:id="@+id/perfilFragment"
-        android:name="com.kaimaki.usuario.usuario_fronted_movil.ui.home.PerfilFragment"
+        android:name="com.kaimaki.usuario.usuario_fronted_movil.ui.perfil.PerfilFragment"
         android:label="Perfil" />
 
     <fragment

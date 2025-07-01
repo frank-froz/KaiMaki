@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.google.android.material.textfield.TextInputEditText
 import com.kaimaki.usuario.usuario_fronted_movil.R
 
 class InicioFragment : Fragment() {
@@ -16,10 +17,24 @@ class InicioFragment : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_inicio, container, false)
 
-        val txt = view.findViewById<TextView>(R.id.txtBienvenida)
-        val nombre = activity?.intent?.getStringExtra("nombre") ?: "usuario"
+        // Referencias de vista
+        val tvSaludo = view.findViewById<TextView>(R.id.tvSaludo)
+        val etBuscar = view.findViewById<TextInputEditText>(R.id.etBuscar)
+
+        // Obtener datos del usuario desde el intent o más adelante desde el ViewModel
+        val nombre = activity?.intent?.getStringExtra("nombre") ?: "Usuario"
         val apellido = activity?.intent?.getStringExtra("apellido") ?: ""
-        txt.text = "Bienvenido, $nombre $apellido"
+        tvSaludo.text = "¡Hola, $nombre $apellido!"
+
+        // Lógica de búsqueda (se puede implementar después)
+        etBuscar.setOnEditorActionListener { v, actionId, event ->
+            val query = etBuscar.text.toString().trim()
+            if (query.isNotEmpty()) {
+                // Aquí podrías buscar trabajadores según la palabra ingresada
+                // o llamar al backend para procesamiento NLP
+            }
+            true
+        }
 
         return view
     }
