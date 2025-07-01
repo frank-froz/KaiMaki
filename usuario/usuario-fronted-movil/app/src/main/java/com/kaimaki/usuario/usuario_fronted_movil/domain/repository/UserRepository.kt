@@ -8,6 +8,6 @@ interface UserRepository {
     suspend fun loginConGoogle(idToken: String): AuthResponse
     suspend fun register(correo: String, contrasena: String): AuthResponse
 
-    //suspend fun getPerfil(): Usuario
-    //suspend fun actualizarPerfil(usuario: Usuario): Boolean
+    suspend fun getPerfil(): Usuario
+    suspend fun actualizarPerfil(usuario: Usuario): Boolean
 }

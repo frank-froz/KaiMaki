@@ -4,7 +4,6 @@ data class Usuario(
     val id: Long,
     val nombre: String,
     val apellido: String,
-    val correo: String,
     val telefono: String?,
     val presentacion: String?,
     val direccion: String,
@@ -12,6 +11,8 @@ data class Usuario(
     val provincia: String,
     val departamento: String,
     val fotoPerfil: String?,
+    val correo: String?,
+    val tieneContrasena: Boolean,
     val rolId: Int,
     val estadoId: Int
 )
