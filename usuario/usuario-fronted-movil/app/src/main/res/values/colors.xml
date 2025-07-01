@@ -14,7 +14,7 @@
 
     <!--  Textos -->
     <color name="textPrimary">#333333</color> <!-- Legible, fuerte -->
-    <color name="textSecondary">#777777</color> <!-- Informativo / menos importante -->
+    <color name="textSecondary">#777777</color> <!-- Informativo / meñnos importante -->
     <color name="textOnDark">#FFFFFF</color> <!-- Texto blanco sobre fondo oscuro -->
 
     <!--  Estados e interacción -->
