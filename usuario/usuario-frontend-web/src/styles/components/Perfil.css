@@ -1,0 +1,131 @@
+.perfil-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.08);
+  max-width: 700px;
+  margin: 2rem auto;
+  font-family: Arial, sans-serif;
+}
+
+.perfil-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.perfil-editar {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.perfil-foto {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.perfil-foto input[type="file"] {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.perfil-foto img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #007bff33;
+}
+
+.perfil-datos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.perfil-campo {
+  display: flex;
+  flex-direction: column;
+}
+
+.perfil-campo label {
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+  color: #555;
+}
+
+.perfil-campo input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.perfil-campo p {
+  margin: 0;
+  padding: 0.4rem 0;
+  color: #333;
+}
+
+.perfil-listado {
+  margin-top: 2rem;
+}
+
+.perfil-listado h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.perfil-listado ul {
+  list-style: disc;
+  padding-left: 1.2rem;
+}
+
+.perfil-calificacion {
+  background: #f5f5f5;
+  padding: 0.8rem;
+  border-radius: 8px;
+  margin-bottom: 0.8rem;
+}
+
+.perfil-calif-fecha {
+  font-size: 0.8rem;
+  color: #777;
+  margin-bottom: 0.2rem;
+}
+
+.perfil-guardar {
+  margin-top: 1.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.perfil-guardar:hover {
+  background-color: #0056b3;
+}
+
+.perfil-campo input,
+.perfil-guardar {
+  transition: all 0.3s ease;
+}
+
+.perfil-campo input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px #007bff22;
+  outline: none;
+}
+
+
+@media (max-width: 600px) {
+  .perfil-datos {
+    grid-template-columns: 1fr;
+  }
+}

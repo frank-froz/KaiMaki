@@ -1,0 +1,237 @@
+/* === Header Base === */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+.app-header.scrolled {
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(4px);
+}
+
+/* === Logo === */
+.app-header .logo a {
+  font-family: 'Pacifico', cursive;
+  color: #ff7f00;
+  font-size: 2.5rem;
+  font-weight: normal;
+  text-decoration: none;
+  letter-spacing: 2px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.app-header .logo a:hover {
+  color: #ff5e00;
+  transform: scale(1.05);
+}
+
+/* === Header Left (logo + toggle) === */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* === Menu Toggle === */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  height: 3px;
+  width: 25px;
+  background-color: #333;
+  margin: 4px 0;
+  transition: all 0.3s ease;
+}
+
+/* === Navigation === */
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  position: relative;
+}
+
+.nav-links li a {
+  color: #333;
+  font-size: 1rem;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-links li a:hover {
+  background-color: #ff7f00;
+  color: white;
+}
+
+.dropdown-menu li a {
+  display: block;
+  color: #333;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-weight: 500;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #ff7f00;
+  color: white;
+}
+
+
+
+/* === Auth Buttons (opcional si se usan fuera del menú) === */
+.auth-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.auth-buttons a {
+  text-decoration: none;
+  color: #ff7f00;
+  font-weight: 500;
+  padding: 10px 20px;
+  border: 2px solid #ff7f00;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.auth-buttons a:hover {
+  background-color: #ff7f00;
+  color: white;
+}
+
+/* === User Dropdown === */
+.user-menu {
+  position: relative;
+  cursor: pointer;
+}
+
+.user-name {
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.user-name:hover {
+  background-color: #ff7f00;
+  color: white;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  list-style: none;
+  padding: 0.5rem;
+  margin: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.user-menu.open .dropdown-menu {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.dropdown-menu li {
+  padding: 10px 15px;
+  font-weight: 500;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dropdown-menu li:hover {
+  background-color: #f0f0f0;
+}
+
+/* === Responsive Styles === */
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    align-items: stretch; /* Permite que .header-left y nav ocupen 100% */
+    padding: 15px;
+  }
+
+  .header-left {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .nav {
+    width: 100%;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+    margin-top: 15px;
+    padding-left: 20px; /* añade espacio desde el borde izquierdo */
+  }
+
+  .nav-links.open {
+    display: flex;
+    text-align: left;
+  }
+
+  .nav-links li {
+    width: 100%;
+  }
+
+  .nav-links li a,
+  .user-name {
+    width: 100%;
+    text-align: left;
+  }
+
+  .dropdown-menu {
+    left: 20px;
+    right: auto;
+  }
+}
