@@ -1,6 +1,7 @@
 package com.kaimaki.usuario.usuariobackend.service.impl;
 
 import com.kaimaki.usuario.usuariobackend.dto.UserRegistroDTO;
+import com.kaimaki.usuario.usuariobackend.dto.UserResponseDTO;
 import com.kaimaki.usuario.usuariobackend.dto.LoginRequestDTO;
 import com.kaimaki.usuario.usuariobackend.model.Rol;
 import com.kaimaki.usuario.usuariobackend.model.User;
@@ -8,11 +9,12 @@ import com.kaimaki.usuario.usuariobackend.repository.RolRepository;
 import com.kaimaki.usuario.usuariobackend.repository.UserRepository;
 import com.kaimaki.usuario.usuariobackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -81,18 +83,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User obtenerUsuarioActual() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    public List<UserResponseDTO> searchUsersByEmail(String email) throws Exception {
+        try {
+            // Buscar usuarios que contengan el email (búsqueda parcial)
+            List<User> users = userRepository.findByCorreoContainingIgnoreCase(email);
 
-        if (authentication == null || !authentication.isAuthenticated()) {
-            throw new RuntimeException("Usuario no autenticado");
+            // Convertir a DTO y limitar resultados para evitar sobrecarga
+            return users.stream()
+                    .limit(10) // Máximo 10 resultados
+                    .map(UserResponseDTO::new)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new Exception("Error al buscar usuarios: " + e.getMessage());
         }
-
-        String correo = authentication.getName(); // El nombre de usuario es el correo (según tu login)
-
-        return userRepository.findByCorreo(correo)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
     }
-
 }
-

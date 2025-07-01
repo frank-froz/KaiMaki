@@ -1,94 +1,218 @@
 package com.kaimaki.usuario.usuariobackend.controller;
 
 import com.kaimaki.usuario.usuariobackend.dto.ChatDTO;
-import com.kaimaki.usuario.usuariobackend.model.ChatMessage;
-
 import com.kaimaki.usuario.usuariobackend.dto.ChatMessageDTO;
-import com.kaimaki.usuario.usuariobackend.model.Chat;
-import com.kaimaki.usuario.usuariobackend.model.User;
+import com.kaimaki.usuario.usuariobackend.dto.SendMessageRequestDTO;
+import com.kaimaki.usuario.usuariobackend.dto.StartChatRequestDTO;
+import com.kaimaki.usuario.usuariobackend.dto.WebSocketMessageDTO;
 import com.kaimaki.usuario.usuariobackend.service.ChatService;
-import com.kaimaki.usuario.usuariobackend.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-@RestController
+
+@Controller
 @RequestMapping("/api/chat")
-@PreAuthorize("hasAnyRole('CLIENTE', 'TRABAJADOR')")
 public class ChatController {
-
-    private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
-
     @Autowired
     private ChatService chatService;
 
     @Autowired
-    private UserService userService;
+    private SimpMessagingTemplate messagingTemplate; // ========== WebSocket Endpoints ==========
 
-    // NUEVO ENDPOINT: Crear/buscar chat con trabajador
-    @PostMapping("/trabajador/{trabajadorId}")
-    public ResponseEntity<?> crearChatConTrabajador(@PathVariable Long trabajadorId) {
+    @MessageMapping("/chat")
+    public void send(WebSocketMessageDTO message) {
+        System.out.println("Mensaje WebSocket recibido: " + message);
+        System.out.println("Sender email: " + message.getSenderEmail());
+        System.out.println("To email: " + message.getToEmail());
+
+        // Validar que el mensaje tenga los datos necesarios
+        if (message.getContent() == null || message.getContent().trim().isEmpty()) {
+            System.err.println("Error: Mensaje vacío");
+            return;
+        }
+
+        if (message.getSenderEmail() == null || message.getSenderEmail().trim().isEmpty()) {
+            System.err.println("Error: Email del remitente vacío");
+            return;
+        }
+        if (message.getToEmail() == null || message.getToEmail().trim().isEmpty()) {
+            System.err.println("Error: Email del destinatario vacío");
+            return;
+        } // Paso 1: Persistir el mensaje usando el servicio (PRIMERO GUARDAMOS)
         try {
-            Long userId = userService.obtenerUsuarioActual().getId();
+            String fromEmail = message.getSenderEmail();
+            String toEmail = message.getToEmail();
 
-            // Log para debug
-            logger.info("Usuario {} creando chat con trabajador {}", userId, trabajadorId);
+            System.out.println("Intentando guardar mensaje de " + fromEmail + " a " + toEmail);
 
-            Chat chat = chatService.crearOBuscarChat(userId, trabajadorId);
-            ChatDTO chatDTO = new ChatDTO(chat, userService.obtenerUsuarioActual());
+            // Generar roomId
+            String roomId = com.kaimaki.usuario.usuariobackend.model.Chat.generateRoomId(fromEmail, toEmail);
+            System.out.println("RoomId generado: " + roomId);
 
-            return ResponseEntity.ok(chatDTO);
+            // Crear el chat si no existe (IMPORTANTE: Esto debe hacerse antes de enviar el
+            // mensaje)
+            ChatDTO chat = chatService.getOrCreateChat(fromEmail, toEmail);
+            System.out.println("Chat creado/encontrado: " + chat.getRoomId());
 
-        } catch (RuntimeException e) {
-            logger.error("Error al crear chat: {}", e.getMessage());
-            return ResponseEntity.badRequest()
-                    .body(Map.of("error", e.getMessage()));
+            // Guardar el mensaje en la base de datos
+            ChatMessageDTO savedMessage = chatService.sendMessage(roomId, fromEmail, message.getContent());
+
+            System.out.println("Mensaje guardado correctamente con ID: " + savedMessage.getId());
+
+            // Paso 2: Envío al destinatario (CARTERO PRIVADO)
+            System.out.println("Enviando mensaje al destinatario: " + toEmail);
+            messagingTemplate.convertAndSendToUser(
+                    toEmail, // Email del usuario que recibe
+                    "/queue/messages", // Cola privada donde escucha
+                    savedMessage // El mensaje guardado
+            );
+
+            // Paso 3: Envío de confirmación al remitente (CONFIRMACIÓN)
+            System.out.println("Enviando confirmación al remitente: " + fromEmail);
+            messagingTemplate.convertAndSendToUser(
+                    fromEmail, // Email del usuario que envió
+                    "/queue/messages", // Su cola privada
+                    savedMessage // El mensaje guardado
+            );
+
+            System.out.println("Mensaje enviado exitosamente a ambos usuarios");
+
+        } catch (Exception e) {
+            System.err.println("Error al procesar mensaje: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    @PostMapping("/{receptorId}/mensaje")
-    public ResponseEntity<?> enviarMensaje(@PathVariable Long receptorId, @RequestBody Map<String, String> payload) {
+    // ========== REST Endpoints ==========
 
-        // Log para debug (temporal)
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        logger.info("Usuario: {}, Roles: {}, ReceptorId: {}",
-                auth.getName(), auth.getAuthorities(), receptorId);
-
-        Long emisorId = userService.obtenerUsuarioActual().getId();
-        String texto = payload.get("texto");
-
-        ChatMessage mensaje = chatService.enviarMensaje(emisorId, receptorId, texto);
-        ChatMessageDTO dto = new ChatMessageDTO(mensaje);
-        return ResponseEntity.ok(dto);
-    }
-
-    @GetMapping("/{chatId}/mensajes")
-    public ResponseEntity<?> obtenerMensajes(@PathVariable Long chatId) {
-        List<ChatMessage> mensajes = chatService.obtenerMensajesDeChat(chatId);
-        List<ChatMessageDTO> respuesta = mensajes.stream()
-                .map(ChatMessageDTO::new)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(respuesta);
-    }
-
+    /**
+     * Obtener chats del usuario autenticado
+     */
     @GetMapping
-    public ResponseEntity<?> obtenerMisChats() {
-        Long userId = userService.obtenerUsuarioActual().getId();
-        User actual = userService.obtenerUsuarioActual();
-        List<Chat> chats = chatService.obtenerChatsDeUsuario(userId);
+    @PreAuthorize("hasAnyRole('CLIENTE', 'TRABAJADOR')")
+    @ResponseBody
+    public ResponseEntity<List<ChatDTO>> getUserChats(Authentication authentication) {
+        String userEmail = authentication.getName();
+        List<ChatDTO> chats = chatService.getUserChats(userEmail);
+        return ResponseEntity.ok(chats);
+    }
 
-        List<ChatDTO> resultado = chats.stream()
-                .map(chat -> new ChatDTO(chat, actual))
-                .collect(Collectors.toList());
+    /**
+     * Obtener o crear un chat con otro usuario
+     */
+    @PostMapping("/start")
+    @PreAuthorize("hasAnyRole('CLIENTE', 'TRABAJADOR')")
+    @ResponseBody
+    public ResponseEntity<ChatDTO> startChat(
+            @RequestBody @Valid StartChatRequestDTO request,
+            Authentication authentication) {
 
-        return ResponseEntity.ok(resultado);
+        String currentUserEmail = authentication.getName();
+        String otherUserEmail = request.getOtherUserEmail();
+
+        if (currentUserEmail.equals(otherUserEmail)) {
+            return ResponseEntity.badRequest().build(); // No puede chatear consigo mismo
+        }
+
+        try {
+            ChatDTO chat = chatService.getOrCreateChat(currentUserEmail, otherUserEmail);
+            return ResponseEntity.ok(chat);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    /**
+     * Obtener mensajes de un chat específico
+     */
+    @GetMapping("/{roomId}/messages")
+    @PreAuthorize("hasAnyRole('CLIENTE', 'TRABAJADOR')")
+    @ResponseBody
+    public ResponseEntity<List<ChatMessageDTO>> getChatMessages(
+            @PathVariable String roomId,
+            Authentication authentication) {
+
+        String userEmail = authentication.getName();
+
+        try {
+            List<ChatMessageDTO> messages = chatService.getChatMessages(roomId, userEmail);
+            return ResponseEntity.ok(messages);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /**
+     * Enviar un mensaje a un chat
+     */
+    @PostMapping("/{roomId}/messages")
+    @PreAuthorize("hasAnyRole('CLIENTE', 'TRABAJADOR')")
+    @ResponseBody
+    public ResponseEntity<ChatMessageDTO> sendMessage(
+            @PathVariable String roomId,
+            @RequestBody @Valid SendMessageRequestDTO request,
+            Authentication authentication) {
+
+        String senderEmail = authentication.getName();
+        String content = request.getContent();
+
+        try {
+            ChatMessageDTO message = chatService.sendMessage(roomId, senderEmail, content);
+            return ResponseEntity.ok(message);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    /**
+     * Obtener información de un chat específico
+     */
+    @GetMapping("/{roomId}")
+    @PreAuthorize("hasAnyRole('CLIENTE', 'TRABAJADOR')")
+    @ResponseBody
+    public ResponseEntity<ChatDTO> getChatInfo(
+            @PathVariable String roomId,
+            Authentication authentication) {
+
+        String userEmail = authentication.getName();
+
+        try {
+            ChatDTO chat = chatService.getChatByRoomId(roomId, userEmail);
+            return ResponseEntity.ok(chat);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /**
+     * Endpoint de debugging para verificar conectividad
+     * TEMPORAL - Remover en producción
+     */
+    @GetMapping("/debug/test")
+    @PreAuthorize("hasAnyRole('CLIENTE', 'TRABAJADOR')")
+    @ResponseBody
+    public ResponseEntity<String> debugTest(Authentication authentication) {
+        try {
+            String userEmail = authentication.getName();
+            System.out.println("[DEBUG] Usuario autenticado: " + userEmail);
+
+            // Verificar que el usuario existe en la BD
+            List<ChatDTO> chats = chatService.getUserChats(userEmail);
+            System.out.println("[DEBUG] Chats del usuario: " + chats.size());
+
+            return ResponseEntity.ok("✅ Debug exitoso. Usuario: " + userEmail + ", Chats: " + chats.size());
+        } catch (Exception e) {
+            System.err.println("[DEBUG] Error: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("❌ Error: " + e.getMessage());
+        }
     }
 }

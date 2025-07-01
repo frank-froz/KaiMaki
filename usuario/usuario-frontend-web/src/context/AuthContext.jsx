@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import { perfil } from '../services/authService';
 
 export const AuthContext = createContext(null);
 
@@ -25,11 +25,8 @@ export function AuthProvider({ children }) {
         logout();
         setLoading(false);
         return;
-      }
-
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-      axios.get(`${import.meta.env.VITE_API_URL}/perfil`)
+      }      // Usar el servicio que ya tiene el interceptor configurado
+      perfil()
           .then(res => {
             console.log('[AuthContext] Perfil cargado:', res.data);
             setUser(res.data);
@@ -48,14 +45,11 @@ export function AuthProvider({ children }) {
       setLoading(false);
     }
   }, []);
-
   function login(token, callback) {
     localStorage.setItem('token', token);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    console.log('[AuthContext] Token guardado, el interceptor se encargará de agregarlo');
 
-    //const decoded = jwtDecode(token);
-
-    axios.get(`${import.meta.env.VITE_API_URL}/perfil`)
+    perfil()
         .then(res => {
           console.log('[AuthContext] Perfil cargado después del login:', res.data);
           setUser(res.data);
@@ -70,7 +64,6 @@ export function AuthProvider({ children }) {
 
   function logout() {
     localStorage.removeItem('token');
-    delete axios.defaults.headers.common['Authorization'];
     setUser(null);
   }
 

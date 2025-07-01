@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import LandingPage from './pages/LandingPage';
 import TrabajadoresDisponibles from './pages/TrabajadoresPage';
 import PerfilPage from './pages/PerfilPage';
+import ChatPage from './pages/ChatPage';
 import AboutPage from './pages/AboutPage';
 import Footer from './components/Footer';
 import './css/Global.css';
@@ -37,7 +38,7 @@ export default function App() {
                                 <PrivateRoute>
                                     <TrabajadoresDisponibles />
                                 </PrivateRoute>
-                            }  
+                            }
                         />
 
                         <Route
@@ -57,6 +58,32 @@ export default function App() {
                                 </PrivateRoute>
                             }
                         />
+                <Route
+                    path="/mi-perfil"
+                    element={
+                        <PrivateRoute>
+                            <PerfilPage />
+                        </PrivateRoute>
+                    }
+                />
+
+                {/* Rutas para el Chat */}
+                <Route
+                    path="/chat"
+                    element={
+                        <PrivateRoute>
+                            <ChatPage />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/chat/:roomId"
+                    element={
+                        <PrivateRoute>
+                            <ChatPage />
+                        </PrivateRoute>
+                    }
+                />
 
                         {/* Ruta por defecto si no se encuentra ninguna */}
                         <Route path="*" element={<LandingPage />} />
@@ -65,6 +92,5 @@ export default function App() {
                 <Footer />
             </div>
         </BrowserRouter>
-        
     );
 }

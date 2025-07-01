@@ -17,7 +17,7 @@ public class PerfilController {
     @Autowired
     private PerfilService perfilService;
 
-
+    @PreAuthorize("hasAnyRole('CLIENTE')")
     @GetMapping
     public ResponseEntity<PerfilDTO> obtenerPerfilActual(Authentication authentication) {
         String correo = authentication.getName(); // obtenido del token
