@@ -2,6 +2,7 @@ package com.kaimaki.usuario.usuario_fronted_movil.domain.model
 
 data class ChatMessage(
     val id: Long,
+    val roomId: String,
     val texto: String,
     val enviadoEn: String,
     val leido: Boolean,
