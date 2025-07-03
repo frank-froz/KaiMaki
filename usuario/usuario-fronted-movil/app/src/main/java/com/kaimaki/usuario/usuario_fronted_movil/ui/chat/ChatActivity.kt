@@ -1,22 +1,22 @@
 package com.kaimaki.usuario.usuario_fronted_movil.ui.chat
 
 import android.os.Bundle
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.util.Log
+import android.view.inputmethod.EditorInfo
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.kaimaki.usuario.usuario_fronted_movil.R
 import com.kaimaki.usuario.usuario_fronted_movil.domain.model.ChatMessage
-import kotlinx.coroutines.launch
-import android.util.Log
-import android.widget.*
+import com.kaimaki.usuario.usuario_fronted_movil.dto.ChatMessageDTO
 import com.kaimaki.usuario.usuario_fronted_movil.util.TokenManager
+import com.kaimaki.usuario.usuario_fronted_movil.websocket.StompClientManager
+import kotlinx.coroutines.launch
 
 class ChatActivity : AppCompatActivity() {
 
@@ -25,7 +25,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var btnEnviar: ImageButton
     private val chatViewModel: ChatViewModel by viewModels()
 
-    private var receptorId: Long = -1
+    private var roomId: String = ""
     private var userIdActual: Long = 0
 
     private val listaMensajes = mutableListOf<ChatMessage>()
@@ -35,58 +35,36 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
-        // Recibir datos del intent
-        receptorId = intent.getLongExtra("receptorId", -1L)
-        val nombreReceptor = intent.getStringExtra("nombre") ?: "Usuario"
-        val fotoReceptor = intent.getStringExtra("foto") ?: ""
+        // 🔐 Obtener datos del intent
+        roomId = intent.getStringExtra("roomId") ?: ""
+        val nombreReceptor = intent.getStringExtra("receptorNombre") ?: "Usuario"
+        val fotoReceptor = intent.getStringExtra("receptorFoto") ?: ""
 
-        Log.d("ChatActivity", "=== INICIO CHAT ACTIVITY ===")
-        Log.d("ChatActivity", "ReceptorId recibido: $receptorId")
-        Log.d("ChatActivity", "Nombre receptor: $nombreReceptor")
-
-        if (receptorId == -1L) {
-            Log.e("ChatActivity", "ReceptorId inválido, cerrando activity")
-            Toast.makeText(this, "Error: Usuario no válido", Toast.LENGTH_SHORT).show()
+        if (roomId.isEmpty()) {
+            Toast.makeText(this, "Chat no válido", Toast.LENGTH_SHORT).show()
             finish()
             return
         }
 
-        // Verificar token antes de continuar
+        // Verifica token válido
         val token = TokenManager.getToken(this)
         if (token.isNullOrEmpty()) {
-            Log.e("ChatActivity", "Token no disponible, cerrando activity")
-            Toast.makeText(this, "Sesión expirada. Inicia sesión nuevamente", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Sesión expirada", Toast.LENGTH_LONG).show()
             finish()
             return
         }
 
-        // Debug del token
-        chatViewModel.debugTokenInfo()
-
-        // Obtener ID del usuario actual
         userIdActual = chatViewModel.obtenerIdUsuarioActual()
-        Log.d("ChatActivity", "ID usuario actual: $userIdActual")
-
         if (userIdActual == -1L) {
-            Log.e("ChatActivity", "ID de usuario actual no válido")
-            Toast.makeText(this, "Error: Usuario no identificado", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Usuario no identificado", Toast.LENGTH_SHORT).show()
             finish()
             return
         }
 
-        // Inicializar vistas
         inicializarVistas()
-
-        // Configurar encabezado del chat
         configurarEncabezado(nombreReceptor, fotoReceptor)
-
-        // Configuración RecyclerView
         configurarRecyclerView()
-
-        // Cargar mensajes
         obtenerMensajes()
-
-        // Configurar envío de mensajes
         configurarEnvioMensajes()
     }
 
@@ -97,12 +75,9 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun configurarEncabezado(nombreReceptor: String, fotoReceptor: String) {
-        val txtNombreChat = findViewById<TextView>(R.id.txtNombreChat)
+        findViewById<TextView>(R.id.txtNombreChat).text = nombreReceptor
+
         val imgPerfilChat = findViewById<ImageView>(R.id.imgPerfilChat)
-        val btnVolverChat = findViewById<ImageView>(R.id.btnVolverChat)
-
-        txtNombreChat.text = nombreReceptor
-
         if (fotoReceptor.isNotEmpty()) {
             Glide.with(this)
                 .load(fotoReceptor)
@@ -113,16 +88,13 @@ class ChatActivity : AppCompatActivity() {
             imgPerfilChat.setImageResource(R.drawable.default_avatar)
         }
 
-        btnVolverChat.setOnClickListener {
-            Log.d("ChatActivity", "Cerrando chat activity")
-            finish()
-        }
+        findViewById<ImageView>(R.id.btnVolverChat).setOnClickListener { finish() }
     }
 
     private fun configurarRecyclerView() {
         adapter = MensajeAdapter(listaMensajes, userIdActual)
         recyclerMensajes.layoutManager = LinearLayoutManager(this).apply {
-            stackFromEnd = true // Los mensajes nuevos aparecen abajo
+            stackFromEnd = true
         }
         recyclerMensajes.adapter = adapter
     }
@@ -131,96 +103,117 @@ class ChatActivity : AppCompatActivity() {
         btnEnviar.setOnClickListener {
             val texto = editMensaje.text.toString().trim()
             if (texto.isNotEmpty()) {
-                Log.d("ChatActivity", "Intentando enviar mensaje: $texto")
                 enviarMensaje(texto)
                 editMensaje.setText("")
-            } else {
-                Log.d("ChatActivity", "Texto vacío, no se envía mensaje")
             }
         }
 
-        // También permitir enviar con Enter (opcional)
         editMensaje.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEND) {
+            if (actionId == EditorInfo.IME_ACTION_SEND) {
                 btnEnviar.performClick()
                 true
-            } else {
-                false
-            }
+            } else false
         }
     }
 
     private fun obtenerMensajes() {
-        Log.d("ChatActivity", "Iniciando carga de mensajes para receptor: $receptorId")
-
         lifecycleScope.launch {
             try {
-                val mensajes = chatViewModel.obtenerMensajesConUsuario(receptorId)
-                Log.d("ChatActivity", "Mensajes obtenidos: ${mensajes.size}")
-
+                val mensajes = chatViewModel.obtenerMensajesPorChatId(roomId)
                 listaMensajes.clear()
                 listaMensajes.addAll(mensajes)
                 adapter.notifyDataSetChanged()
-
-                // Scroll al último mensaje si hay mensajes
                 if (listaMensajes.isNotEmpty()) {
                     recyclerMensajes.scrollToPosition(listaMensajes.size - 1)
                 }
-
-                Log.d("ChatActivity", "UI actualizada con mensajes")
-
             } catch (e: Exception) {
-                Log.e("ChatActivity", "Error al obtener mensajes: ${e.message}", e)
-                Toast.makeText(this@ChatActivity, "Error al cargar mensajes: ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@ChatActivity, "Error al cargar mensajes", Toast.LENGTH_LONG).show()
             }
         }
     }
 
     private fun enviarMensaje(texto: String) {
-        Log.d("ChatActivity", "=== INICIANDO ENVÍO DE MENSAJE ===")
-        Log.d("ChatActivity", "Receptor ID: $receptorId")
-        Log.d("ChatActivity", "Usuario actual ID: $userIdActual")
-        Log.d("ChatActivity", "Texto: '$texto'")
-
-        // Verificación adicional antes de enviar
-        if (receptorId == userIdActual) {
-            Log.e("ChatActivity", "Error: Receptor es el mismo que el emisor")
-            Toast.makeText(this, "No puedes enviarte mensajes a ti mismo", Toast.LENGTH_LONG).show()
-            return
-        }
-
-        // Deshabilitar el botón temporalmente para evitar envíos múltiples
-        btnEnviar.isEnabled = false
-
-        lifecycleScope.launch {
-            try {
-                val nuevoMensaje = chatViewModel.enviarMensaje(receptorId, texto)
-                Log.d("ChatActivity", "Mensaje enviado exitosamente: ${nuevoMensaje.id}")
-
-                listaMensajes.add(nuevoMensaje)
-                adapter.notifyItemInserted(listaMensajes.size - 1)
-                recyclerMensajes.scrollToPosition(listaMensajes.size - 1)
-
-                Toast.makeText(this@ChatActivity, "Mensaje enviado", Toast.LENGTH_SHORT).show()
-
-            } catch (e: Exception) {
-                Log.e("ChatActivity", "Error al enviar mensaje: ${e.message}", e)
-                Toast.makeText(this@ChatActivity, "Error al enviar: ${e.message}", Toast.LENGTH_LONG).show()
-            } finally {
-                // Rehabilitar el botón
-                btnEnviar.isEnabled = true
+        if (btnEnviar.isEnabled) {
+            btnEnviar.isEnabled = false
+            lifecycleScope.launch {
+                try {
+                    val nuevoMensaje = chatViewModel.enviarMensajePorChatId(roomId, texto)
+                    listaMensajes.add(nuevoMensaje)
+                    adapter.notifyItemInserted(listaMensajes.size - 1)
+                    recyclerMensajes.scrollToPosition(listaMensajes.size - 1)
+                } catch (e: Exception) {
+                    Toast.makeText(this@ChatActivity, "Error al enviar mensaje", Toast.LENGTH_LONG).show()
+                } finally {
+                    btnEnviar.isEnabled = true
+                }
             }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        // Verificar token al volver a la actividad
         val token = TokenManager.getToken(this)
         if (token.isNullOrEmpty()) {
-            Log.e("ChatActivity", "Token perdido durante la actividad")
             Toast.makeText(this, "Sesión perdida", Toast.LENGTH_SHORT).show()
             finish()
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        val token = TokenManager.getToken(this)
+
+        if (!token.isNullOrEmpty()) {
+            StompClientManager.connect(token) {}
+
+            StompClientManager.connect(token) {
+                //  Suscribirse al canal privado (mensajes que me llegan a mí)
+                StompClientManager.subscribeToPrivateQueue { payload ->
+                    try {
+                        Log.d("WebSocket", "📩 Mensaje privado recibido: $payload")
+
+                        val mensajeDTO = Gson().fromJson(payload, ChatMessageDTO::class.java)
+
+                        val mensaje = ChatMessage(
+                            id = mensajeDTO.id,
+                            roomId = mensajeDTO.roomId,
+                            texto = mensajeDTO.content,
+                            enviadoEn = mensajeDTO.sentAt,
+                            leido = false,
+                            emisorId = mensajeDTO.senderId,
+                            emisorNombre = mensajeDTO.senderName,
+                            emisorCorreo = mensajeDTO.senderEmail,
+                            emisorFoto = null,
+                            receptorId = -1L,
+                            receptorNombre = "",
+                            receptorCorreo = "",
+                            receptorFoto = null
+                        )
+
+                        runOnUiThread {
+                            listaMensajes.add(mensaje)
+                            adapter.notifyItemInserted(listaMensajes.size - 1)
+                            recyclerMensajes.scrollToPosition(listaMensajes.size - 1)
+                        }
+
+                    } catch (e: Exception) {
+                        Log.e("WebSocket", "❌ Error al procesar mensaje privado: ${e.message}", e)
+                    }
+                }
+
+            }
+
+        } else {
+            Log.e("WebSocket", "❌ Token nulo o vacío. No se conectará a STOMP.")
+        }
+    }
+
+
+
+    override fun onStop() {
+        super.onStop()
+        StompClientManager.disconnect()
+    }
+
+
 }

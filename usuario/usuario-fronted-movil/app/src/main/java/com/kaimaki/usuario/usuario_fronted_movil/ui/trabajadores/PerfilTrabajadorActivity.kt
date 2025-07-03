@@ -6,15 +6,19 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.kaimaki.usuario.usuario_fronted_movil.R
 import com.kaimaki.usuario.usuario_fronted_movil.data.api.RetrofitInstance
 import com.kaimaki.usuario.usuario_fronted_movil.domain.model.Trabajador
 import com.kaimaki.usuario.usuario_fronted_movil.ui.chat.ChatActivity
+import com.kaimaki.usuario.usuario_fronted_movil.ui.chat.ChatViewModel
 import com.kaimaki.usuario.usuario_fronted_movil.util.TokenManager
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,7 +26,7 @@ import retrofit2.Response
 class PerfilTrabajadorActivity : AppCompatActivity() {
 
     private var trabajadorCargado: Trabajador? = null
-
+    private val chatViewModel: ChatViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perfil_trabajador)
@@ -51,15 +55,42 @@ class PerfilTrabajadorActivity : AppCompatActivity() {
 
         botonMensaje.setOnClickListener {
             trabajadorCargado?.let { trabajador ->
-                val intent = Intent(this, ChatActivity::class.java)
-                intent.putExtra("receptorId", trabajador.id) // este debe ser el id del usuario que es trabajador
-                intent.putExtra("nombre", trabajador.nombreCompleto)
-                intent.putExtra("foto", trabajador.fotoPerfil ?: "")
-                startActivity(intent)
+
+                val token = TokenManager.getAuthHeader(this)
+                if (token.isNullOrEmpty()) {
+                    Toast.makeText(this, "Sesión expirada", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                if (trabajador.correo.isNullOrEmpty()) {
+                    Toast.makeText(this, "El trabajador no tiene correo válido", Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
+
+                Log.d("ChatDebug", "Correo del trabajador: ${trabajador.correo}")
+
+                // Iniciar chat en coroutine
+                lifecycleScope.launch {
+                    try {
+                        val chatDTO = chatViewModel.iniciarChatCon(trabajador.correo)
+
+                        val intent = Intent(this@PerfilTrabajadorActivity, ChatActivity::class.java)
+                        intent.putExtra("roomId", chatDTO.roomId)
+                        intent.putExtra("receptorNombre", trabajador.nombreCompleto)
+                        intent.putExtra("receptorFoto", trabajador.fotoPerfil ?: "")
+                        startActivity(intent)
+
+                    } catch (e: Exception) {
+                        Log.e("ChatInitError", "Error real: ${e.message}", e)
+                        Toast.makeText(this@PerfilTrabajadorActivity, "Error al abrir chat: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
+
+                }
+
             } ?: run {
                 Toast.makeText(this, "Cargando datos del trabajador...", Toast.LENGTH_SHORT).show()
             }
         }
+
 
     }
 

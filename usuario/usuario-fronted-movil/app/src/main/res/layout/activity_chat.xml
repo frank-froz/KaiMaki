@@ -82,6 +82,8 @@
             android:background="@android:color/transparent"
             android:src="@drawable/ic_send"
             app:tint="#F4511E" />
+
+
     </LinearLayout>
 
 </LinearLayout>
