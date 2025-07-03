@@ -45,7 +45,10 @@ public class WebSecurityConfig {
                                 "/api/usuarios/registro",
                                 "/api/usuarios/login",
                                 "/api/perfil/**",
-                                "/ws/**"
+                                "/ws",
+                                "/ws/**",
+                                "/ws/**",
+                                "/ws-sockjs/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
