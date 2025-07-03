@@ -18,6 +18,7 @@ api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
 export const register = (data) => api.post("/usuarios/registro", data);
 
 export const login = (data) => api.post("/usuarios/login", data);

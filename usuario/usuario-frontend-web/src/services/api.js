@@ -1,11 +1,12 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080/', // URL base de tu backend
-    headers: {
-        'Content-Type': 'application/json',
-    },
-})
+  baseURL: import.meta.env.VITE_API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true
+});
 
 // Interceptor para agregar automáticamente el token en todas las peticiones
 api.interceptors.request.use(
