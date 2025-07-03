@@ -1,16 +1,16 @@
-import axios from 'axios'
+import axios from "axios";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  withCredentials: true  // necesario para cookies o tokens que se envían por header o cookie
-})
+  withCredentials: true, // necesario para cookies o tokens que se envían por header o cookie
+});
 
 // Interceptor para agregar automáticamente el token de localStorage
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.authorization = `Bearer ${token}`; // <-- minúscula
     }
     return config;
   },
@@ -18,15 +18,15 @@ api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-export const register = data => api.post('/usuarios/registro', data)
+export const register = (data) => api.post("/usuarios/registro", data);
 
-export const login = data => api.post('/usuarios/login', data)
+export const login = (data) => api.post("/usuarios/login", data);
 
-export const oauthGoogle = idToken => api.post('/auth/google', { idToken })
+export const oauthGoogle = (idToken) => api.post("/auth/google", { idToken });
 
 export const perfil = (token) =>
-    api.get('/perfil', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  api.get("/perfil", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
