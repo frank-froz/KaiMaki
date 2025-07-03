@@ -8,6 +8,7 @@ public class ChatMessageDTO {
     private Long id;
     private String senderEmail;
     private String senderName;
+    private Long senderId;
     private String content;
     private LocalDateTime sentAt;
     private String roomId;
@@ -21,6 +22,7 @@ public class ChatMessageDTO {
         this.senderEmail = message.getSenderEmail();
         this.content = message.getContent();
         this.sentAt = message.getSentAt();
+        this.senderId = message.getSender().getId();
 
         if (message.getSender() != null) {
             this.senderName = message.getSender().getNombre() != null ? message.getSender().getNombre() + " " +
@@ -39,6 +41,7 @@ public class ChatMessageDTO {
     public String getFrom() {
         return senderEmail;
     }
+
 
     public String getText() {
         return content;
@@ -89,6 +92,9 @@ public class ChatMessageDTO {
     public void setSentAt(LocalDateTime sentAt) {
         this.sentAt = sentAt;
     }
+
+    public Long getSenderId() {return senderId;}
+    public void setSenderId(Long senderId) { this.senderId = senderId;}
 
     public String getRoomId() {
         return roomId;
