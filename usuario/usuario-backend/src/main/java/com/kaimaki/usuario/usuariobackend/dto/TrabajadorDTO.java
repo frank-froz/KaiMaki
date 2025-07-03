@@ -12,10 +12,11 @@ public class TrabajadorDTO {
     private String distrito;
     private String provincia;
     private String departamento;
+    private String correo;
 
     // Constructor completo
     public TrabajadorDTO(Long idTrabajador, Long userId, String nombreCompleto, List<String> oficios,
-                         String fotoPerfil, String direccion, String distrito, String provincia, String departamento) {
+                         String fotoPerfil, String direccion, String distrito, String provincia, String departamento,String correo) {
         this.id = idTrabajador;
         this.userId = userId;
         this.nombreCompleto = nombreCompleto;
@@ -25,6 +26,7 @@ public class TrabajadorDTO {
         this.distrito = distrito;
         this.provincia = provincia;
         this.departamento = departamento;
+        this.correo = correo;
     }
 
 
@@ -58,4 +60,7 @@ public class TrabajadorDTO {
 
     public String getFotoPerfil() { return fotoPerfil; }
     public void setFotoPerfil(String fotoPerfil) { this.fotoPerfil = fotoPerfil; }
+
+    public String getCorreo() { return correo; }
+    public void setCorreo(String correo) { this.correo = correo;}
 }

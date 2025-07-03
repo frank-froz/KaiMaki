@@ -71,7 +71,8 @@ public class TrabajadorServiceImpl implements TrabajadorService {
                 ubicacion != null ? ubicacion.getDireccion() : "Sin dirección",
                 ubicacion != null ? ubicacion.getDistrito() : "Sin distrito",
                 ubicacion != null ? ubicacion.getProvincia() : "Sin provincia",
-                ubicacion != null ? ubicacion.getDepartamento() : "Sin departamento"
+                ubicacion != null ? ubicacion.getDepartamento() : "Sin departamento",
+                usuario.getCorreo()
         );
     }
 
