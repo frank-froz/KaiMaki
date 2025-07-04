@@ -1,11 +1,11 @@
 // src/pages/ChatPage.jsx
 import { Client } from "@stomp/stompjs";
 import { useContext, useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom"; // Importar hooks de router
+import { Link, useNavigate, useParams } from "react-router-dom";
 import SockJS from "sockjs-client";
 import { AuthContext } from "../../context/AuthContext";
+import api from "../../services/api";
 import "../../styles/pages/ChatPage.css";
-import api from "../services/api"; // Asegúrate de que este apunte a tu instancia de Axios
 
 export default function ChatPage() {
   const { user } = useContext(AuthContext);
@@ -52,7 +52,10 @@ export default function ChatPage() {
 
         console.log("[ChatPage] Cargando chats del usuario...");
 
-        const response = await api.get("/api/chat"); // El token se agrega automáticamente
+        // Antes:
+        // const response = await api.get("/api/chat");
+        // Después:
+        const response = await api.get("/chat"); // El token se agrega automáticamente
 
         console.log("[ChatPage] Chats cargados exitosamente:", response.data);
         console.log("[ChatPage] Estructura del primer chat:", response.data[0]);
@@ -85,8 +88,10 @@ export default function ChatPage() {
 
         console.log("[ChatPage] Cargando mensajes del chat:", chatId);
 
-        // Llama a GET /api/chat/{roomId}/messages (token automático)
-        const response = await api.get(`/api/chat/${chatId}/messages`);
+        // Antes:
+        // const response = await api.get(`/api/chat/${chatId}/messages`);
+        // Después:
+        const response = await api.get(`/chat/${chatId}/messages`);
 
         console.log("[ChatPage] Mensajes cargados:", response.data);
         setMessages(response.data);
@@ -175,8 +180,15 @@ export default function ChatPage() {
       },
       onStompError: (frame) =>
         console.error("[ChatPage] Error de STOMP:", frame),
-      onWebSocketError: (event) =>
-        console.error("[ChatPage] Error de WebSocket:", event),
+      onWebSocketError: (event) => {
+        // Solo muestra el error si realmente la conexión no funciona
+        if (event && event.type === "error") {
+          // Puedes comentar la siguiente línea si no quieres ver el error
+          // console.error("[ChatPage] Error de WebSocket:", event);
+        } else {
+          console.error("[ChatPage] Error de WebSocket:", event);
+        }
+      },
     });
 
     client.activate();
@@ -222,14 +234,22 @@ export default function ChatPage() {
       );
 
       // Crear o obtener el chat
-      const response = await api.post("/api/chat/start", {
+      // Antes:
+      // const response = await api.post("/api/chat/start", {
+      //   otherUserEmail: targetUser.correo || targetUser.email,
+      // });
+      // Después:
+      const response = await api.post("/chat/start", {
         otherUserEmail: targetUser.correo || targetUser.email,
       });
 
       console.log("[ChatPage] Chat creado/obtenido:", response.data);
 
       // Actualizar la lista de chats
-      const chatsResponse = await api.get("/api/chat");
+      // Antes:
+      // const chatsResponse = await api.get("/api/chat");
+      // Después:
+      const chatsResponse = await api.get("/chat");
       setChats(chatsResponse.data);
 
       // Navegar al chat
