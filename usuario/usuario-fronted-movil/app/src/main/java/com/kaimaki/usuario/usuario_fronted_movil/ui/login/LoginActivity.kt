@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.kaimaki.usuario.usuario_fronted_movil.R
 import com.kaimaki.usuario.usuario_fronted_movil.databinding.ActivityLoginBinding
 import com.kaimaki.usuario.usuario_fronted_movil.ui.home.HomeActivity
 import com.kaimaki.usuario.usuario_fronted_movil.ui.register.RegisterActivity
@@ -35,6 +36,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Aplicar animación de entrada
+        overridePendingTransition(R.anim.fade_in_slide_up, 0)
 
         //  Inicializar ViewModel con Factory
         val factory = LoginViewModelFactory(applicationContext)
@@ -84,6 +88,11 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(0, R.anim.fade_in_slide_up)
     }
 
     // Configuración de Google Sign-In con clientId desde BuildConfig

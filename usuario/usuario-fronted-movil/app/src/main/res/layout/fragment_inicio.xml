@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,119 +10,131 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/screen_padding_horizontal">
 
-        <!--  Banner de bienvenida -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@drawable/bg_banner_home"
-            android:padding="16dp">
-
-            <TextView
-                android:id="@+id/tvSaludo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="¡Hola!"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/white" />
-
-
-
-            <TextView
-                android:id="@+id/tvSubtitulo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="¿Qué necesitas hoy?"
-                android:textSize="16sp"
-                android:textColor="@android:color/white"
-                android:layout_below="@id/tvSaludo"
-                android:layout_marginTop="6dp" />
-
-            <ImageView
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_home_repair"
-                android:contentDescription="Icono de bienvenida"
-                android:layout_centerVertical="true" />
-        </RelativeLayout>
-
-        <!--  Buscador de oficios -->
-        <com.google.android.material.textfield.TextInputLayout
+        <!-- Banner de bienvenida moderno -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/bannerCard"
+            style="@style/Widget.App.BannerCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:background="@drawable/banner_gradient_background">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvSaludo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="¡Hola!"
+                        android:textAppearance="@style/TextAppearance.App.BannerTitle" />
+
+                    <TextView
+                        android:id="@+id/tvSubtitulo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:text="¿Qué necesitas hoy?"
+                        android:textAppearance="@style/TextAppearance.App.BannerSubtitle" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:src="@drawable/ic_home_repair"
+                    android:contentDescription="Icono de bienvenida"
+                    app:tint="@color/textOnDark" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Buscador de oficios moderno -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/searchLayout"
+            style="@style/Widget.App.TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xlarge"
             android:hint="Buscar un oficio..."
-            android:layout_marginTop="24dp"
-            app:startIconDrawable="@drawable/ic_search">
+            app:startIconDrawable="@drawable/ic_search"
+            app:startIconTint="@color/colorPrimary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etBuscar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textAppearance="@style/TextAppearance.App.Body" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!--  Servicios Destacados -->
+        <!-- Servicios Destacados -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xlarge"
+            android:layout_marginBottom="@dimen/spacing_medium"
             android:text="Servicios destacados"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="24dp"
-            android:textColor="@color/textPrimary" />
+            android:textAppearance="@style/TextAppearance.App.SectionTitle" />
 
-        <HorizontalScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvServicios"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp">
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:clipToPadding="false"
+            android:paddingStart="@dimen/spacing_small"
+            android:paddingEnd="@dimen/spacing_small" />
+
+        <!-- Mensaje promocional moderno -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.App.ProfileCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xlarge"
+            android:layout_marginBottom="@dimen/spacing_large">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
-                <!-- Tarjeta oficio -->
-                <LinearLayout
-                    android:layout_width="140dp"
-                    android:layout_height="160dp"
-                    android:layout_marginEnd="12dp"
-                    android:background="@drawable/card_background"
-                    android:padding="12dp"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_edit"
+                    android:contentDescription="Icono de información"
+                    app:tint="@color/colorPrimary"
+                    android:layout_marginEnd="@dimen/spacing_medium" />
 
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:src="@drawable/ic_electrician" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Electricista"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
-                        android:layout_marginTop="8dp" />
-                </LinearLayout>
-
-
-                <!-- Repite más tarjetas según necesidad -->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="¿Sabías que puedes guardar trabajadores como favoritos?"
+                    android:textAppearance="@style/TextAppearance.App.Body"
+                    android:textColor="@color/textMediumEmphasis" />
 
             </LinearLayout>
-        </HorizontalScrollView>
 
-        <!--  Mensaje promocional o consejo -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:padding="12dp"
-            android:background="@drawable/card_info_background"
-            android:text="¿Sabías que puedes guardar trabajadores como favoritos?"
-            android:textColor="@color/textPrimary"
-            android:textSize="14sp" />
+        </com.google.android.material.card.MaterialCardView>
+
     </LinearLayout>
-</ScrollView>
+
+</androidx.core.widget.NestedScrollView>

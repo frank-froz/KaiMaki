@@ -26,4 +26,71 @@
     <color name="divider">#DDDDDD</color>
     <color name="iconTint">#888888</color>
     <color name="buttonDisabled">#CCCCCC</color>
+
+    <!-- Nuevos colores para Material 3 -->
+    <color name="surface">#FFFFFF</color> <!-- Superficie principal -->
+    <color name="surfaceVariant">#F8F9FA</color> <!-- Superficie secundaria -->
+    <color name="outline">#E0E0E0</color> <!-- Bordes y contornos -->
+    <color name="outlineVariant">#C7C7C7</color> <!-- Bordes secundarios -->
+    
+    <!-- Estados de interacción -->
+    <color name="primaryHover">#E69500</color> <!-- Hover del color primario -->
+    <color name="primaryFocus">#FFB74D</color> <!-- Focus del color primario -->
+    <color name="errorLight">#FFEBEE</color> <!-- Fondo de error suave -->
+    <color name="successLight">#E8F5E8</color> <!-- Fondo de éxito suave -->
+    
+    <!-- Sombras y elevación -->
+    <color name="shadowLight">#1A000000</color> <!-- Sombra sutil -->
+    <color name="shadowMedium">#33000000</color> <!-- Sombra media -->
+    
+    <!-- Accesibilidad -->
+    <color name="textHighEmphasis">#212121</color> <!-- Texto de alta importancia -->
+    <color name="textMediumEmphasis">#757575</color> <!-- Texto de importancia media -->
+    <color name="textDisabled">#BDBDBD</color> <!-- Texto deshabilitado -->
+
+    <!-- Colores específicos para Home y Perfil -->
+    <color name="toolbarBackground">#1E1E1E</color> <!-- Fondo del toolbar -->
+    <color name="toolbarText">#FFFFFF</color> <!-- Texto del toolbar -->
+    <color name="bannerGradientStart">#FFA500</color> <!-- Inicio del gradiente del banner -->
+    <color name="bannerGradientEnd">#FF8C00</color> <!-- Fin del gradiente del banner -->
+    <color name="cardElevated">#FFFFFF</color> <!-- Tarjetas elevadas -->
+    <color name="fabBackground">#FFA500</color> <!-- Fondo del FAB -->
+    <color name="fabIcon">#FFFFFF</color> <!-- Icono del FAB -->
+    <color name="bottomNavBackground">#FFFFFF</color> <!-- Fondo de navegación inferior -->
+    <color name="bottomNavSelected">#FFA500</color> <!-- Item seleccionado -->
+    <color name="bottomNavUnselected">#757575</color> <!-- Item no seleccionado -->
+    <color name="drawerBackground">#FFFFFF</color> <!-- Fondo del drawer -->
+    <color name="drawerText">#333333</color> <!-- Texto del drawer -->
+    <color name="profileAvatarBorder">#E0E0E0</color> <!-- Borde del avatar -->
+    <color name="profileSectionBackground">#F8F9FA</color> <!-- Fondo de secciones -->
+    <color name="inputFieldBackground">#FFFFFF</color> <!-- Fondo de campos de entrada -->
+    <color name="inputFieldBorder">#E0E0E0</color> <!-- Borde de campos de entrada -->
+    <color name="inputFieldFocus">#FFA500</color> <!-- Color de focus -->
+
+    <!-- Colores específicos para Trabajadores -->
+    <color name="workerCardBackground">#FFFFFF</color> <!-- Fondo de tarjetas de trabajadores -->
+    <color name="workerCardElevation">#1A000000</color> <!-- Elevación de tarjetas -->
+    <color name="workerAvatarBorder">#E0E0E0</color> <!-- Borde del avatar del trabajador -->
+    <color name="workerNameText">#212121</color> <!-- Texto del nombre del trabajador -->
+    <color name="workerLocationText">#757575</color> <!-- Texto de ubicación -->
+    <color name="workerChipBackground">#FFF3E0</color> <!-- Fondo de chips de oficios -->
+    <color name="workerChipText">#E65100</color> <!-- Texto de chips de oficios -->
+    <color name="workerRatingColor">#FFA000</color> <!-- Color de calificación -->
+    <color name="workerContactButton">#FFA500</color> <!-- Botón de contacto -->
+
+    <!-- Colores específicos para Chat -->
+    <color name="chatHeaderBackground">#1E1E1E</color> <!-- Fondo del header del chat -->
+    <color name="chatHeaderText">#FFFFFF</color> <!-- Texto del header del chat -->
+    <color name="chatBackground">#F5F5F5</color> <!-- Fondo del chat -->
+    <color name="messageSentBackground">#FFA500</color> <!-- Fondo de mensaje enviado -->
+    <color name="messageSentText">#FFFFFF</color> <!-- Texto de mensaje enviado -->
+    <color name="messageReceivedBackground">#FFFFFF</color> <!-- Fondo de mensaje recibido -->
+    <color name="messageReceivedText">#212121</color> <!-- Texto de mensaje recibido -->
+    <color name="messageTimeText">#757575</color> <!-- Texto de hora del mensaje -->
+    <color name="chatInputBackground">#FFFFFF</color> <!-- Fondo del input del chat -->
+    <color name="chatInputBorder">#E0E0E0</color> <!-- Borde del input del chat -->
+    <color name="chatSendButton">#FFA500</color> <!-- Botón de enviar -->
+    <color name="chatSendButtonIcon">#FFFFFF</color> <!-- Icono del botón enviar -->
+    <color name="chatBubbleShadow">#1A000000</color> <!-- Sombra de burbujas -->
+    <color name="chatDivider">#E0E0E0</color> <!-- Divisor del chat -->
 </resources>

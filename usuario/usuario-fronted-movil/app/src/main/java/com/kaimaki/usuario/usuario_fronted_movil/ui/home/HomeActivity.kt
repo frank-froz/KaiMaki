@@ -39,6 +39,9 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        // Aplicar animación de entrada
+        overridePendingTransition(R.anim.fade_in_slide_up, 0)
+
         // Permiso de micrófono
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
             != android.content.pm.PackageManager.PERMISSION_GRANTED
@@ -94,9 +97,13 @@ class HomeActivity : AppCompatActivity() {
         habilitarMovimientoFAB()
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        drawerLayout.openDrawer(GravityCompat.START)
-        return true
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+            overridePendingTransition(0, R.anim.slide_out_left)
+        }
     }
 
     private fun iniciarReconocimientoVoz() {
