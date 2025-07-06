@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -46,20 +47,20 @@ class TrabajadorAdapter(
             // Limpiar los chips anteriores
             layoutOficios.removeAllViews()
 
-            // Agregar cada oficio como un chip visual
+            // Agregar cada oficio como un chip visual moderno
             trabajador.oficios.forEach { oficio ->
                 val chip = TextView(context).apply {
                     text = oficio
-                    setPadding(40, 10, 40, 10)
+                    setPadding(32, 12, 32, 12)
                     setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
-                    setTextColor(Color.BLACK)
-                    setBackgroundResource(R.drawable.oficio_chip_background)
+                    setTextColor(ContextCompat.getColor(context, R.color.workerChipText))
+                    setBackgroundResource(R.drawable.worker_chip_modern)
 
                     val params = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     )
-                    params.setMargins(0, 0, 20, 0)
+                    params.setMargins(0, 0, 12, 0)
                     layoutParams = params
                 }
                 layoutOficios.addView(chip)

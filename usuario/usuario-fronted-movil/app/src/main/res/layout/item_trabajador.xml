@@ -1,39 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginBottom="@dimen/spacing_medium"
     app:cardCornerRadius="16dp"
-    app:cardElevation="6dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/workerCardBackground"
+    app:strokeColor="@color/outline"
+    app:strokeWidth="1dp"
     android:foreground="?android:attr/selectableItemBackground"
     android:clickable="true"
-    android:focusable="true"
-    android:backgroundTint="@android:color/white">
+    android:focusable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="12dp">
+        android:padding="@dimen/spacing_large">
 
-        <!-- Imagen circular -->
-        <ImageView
-            android:id="@+id/imgPerfil"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginEnd="12dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/default_avatar"
-            android:background="@drawable/circle_background"
-            android:clipToOutline="true" />
+        <!-- Avatar del trabajador -->
+        <FrameLayout
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginEnd="@dimen/spacing_large"
+            android:background="@drawable/worker_avatar_modern">
 
-        <!-- Contenido a la derecha de la imagen -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_avatar"
+                app:shapeAppearanceOverlay="@style/Widget.App.WorkerAvatar" />
+
+        </FrameLayout>
+
+        <!-- Información del trabajador -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center_vertical">
 
             <!-- Nombre -->
             <TextView
@@ -41,9 +52,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nombre Apellido"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="#1A237E" />
+                android:textAppearance="@style/TextAppearance.App.WorkerName"
+                android:layout_marginBottom="@dimen/spacing_small" />
 
             <!-- Chips de oficios -->
             <LinearLayout
@@ -51,8 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
+                android:layout_marginBottom="@dimen/spacing_small"
                 android:gravity="start" />
 
             <!-- Ubicación -->
@@ -66,18 +75,29 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:src="@drawable/ic_location"
-                    android:tint="#F4511E"
-                    android:layout_marginEnd="4dp" />
+                    app:tint="@color/colorPrimary"
+                    android:layout_marginEnd="@dimen/spacing_small" />
 
                 <TextView
                     android:id="@+id/txtUbicacion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Distrito, Ciudad"
-                    android:textSize="14sp"
-                    android:textColor="#757575" />
+                    android:textAppearance="@style/TextAppearance.App.WorkerLocation" />
+
             </LinearLayout>
 
         </LinearLayout>
+
+        <!-- Indicador de acción -->
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/iconTint"
+            android:rotation="180"
+            android:layout_gravity="center_vertical" />
+
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+
+</com.google.android.material.card.MaterialCardView>

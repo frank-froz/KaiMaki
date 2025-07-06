@@ -3,60 +3,74 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/backgroundLight">
 
     <!-- Contenido principal -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Toolbar -->
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <!-- Toolbar moderno -->
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            android:layout_height="wrap_content"
+            android:background="@color/toolbarBackground"
+            app:elevation="4dp">
 
-        <!-- Fragment container -->
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/Widget.App.Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:title="Kaimaki"
+                app:titleTextAppearance="@style/TextAppearance.App.Headline"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <!-- Fragment container con comportamiento de scroll -->
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:defaultNavHost="true"
             app:navGraph="@navigation/home_nav_graph" />
 
-        <!-- Bottom navigation -->
+        <!-- Bottom navigation moderno -->
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
+            style="@style/Widget.App.BottomNavigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_nav_menu" />
 
-        <!-- Botón flotante de voz (posición libre) -->
+        <!-- Botón flotante de voz moderno -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabVoice"
+            style="@style/Widget.App.FloatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="@dimen/spacing_large"
             android:contentDescription="Hablar"
             android:src="@drawable/ic_mic"
-            app:backgroundTint="@color/textPrimary"
-            app:tint="@android:color/white"
-            android:layout_gravity="center" />
+            app:layout_anchor="@id/bottom_navigation"
+            app:layout_anchorGravity="top|center" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <!-- Drawer lateral -->
+    <!-- Drawer lateral moderno -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
+        style="@style/Widget.App.Drawer"
+        android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        app:headerLayout="@layout/drawer_header"
         app:menu="@menu/drawer_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

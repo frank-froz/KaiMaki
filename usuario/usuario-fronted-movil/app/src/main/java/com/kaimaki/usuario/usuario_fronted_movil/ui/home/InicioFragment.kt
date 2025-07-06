@@ -19,22 +19,12 @@ class InicioFragment : Fragment() {
 
         // Referencias de vista
         val tvSaludo = view.findViewById<TextView>(R.id.tvSaludo)
-        val etBuscar = view.findViewById<TextInputEditText>(R.id.etBuscar)
 
         // Obtener datos del usuario desde el intent o más adelante desde el ViewModel
         val nombre = activity?.intent?.getStringExtra("nombre") ?: "Usuario"
         val apellido = activity?.intent?.getStringExtra("apellido") ?: ""
         tvSaludo.text = "¡Hola, $nombre $apellido!"
 
-        // Lógica de búsqueda (se puede implementar después)
-        etBuscar.setOnEditorActionListener { v, actionId, event ->
-            val query = etBuscar.text.toString().trim()
-            if (query.isNotEmpty()) {
-                // Aquí podrías buscar trabajadores según la palabra ingresada
-                // o llamar al backend para procesamiento NLP
-            }
-            true
-        }
 
         return view
     }

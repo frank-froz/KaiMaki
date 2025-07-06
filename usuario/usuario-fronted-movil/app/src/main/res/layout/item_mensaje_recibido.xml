@@ -1,17 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="6dp"
-    android:gravity="start"
-    android:orientation="horizontal">
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/spacing_medium"
+    android:paddingVertical="2dp"
+    android:gravity="start">
 
-    <TextView
-        android:id="@+id/txtMensajeRecibido"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_mensaje_recibido"
-        android:textColor="#212121"
-        android:padding="10dp"
-        android:text="Hola"
-        android:maxWidth="250dp"/>
+        android:orientation="vertical"
+        android:maxWidth="280dp">
+
+        <!-- Burbuja del mensaje -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="@color/messageReceivedBackground"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/outline"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_medium">
+
+                <!-- Texto del mensaje -->
+                <TextView
+                    android:id="@+id/txtMensajeRecibido"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mensaje recibido"
+                    android:textAppearance="@style/TextAppearance.App.ChatMessage"
+                    android:textColor="@color/messageReceivedText"
+                    android:layout_marginBottom="4dp" />
+
+                <!-- Hora del mensaje -->
+                <TextView
+                    android:id="@+id/txtHoraRecibido"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12:30"
+                    android:textAppearance="@style/TextAppearance.App.ChatTime"
+                    android:textColor="@color/messageTimeText"
+                    android:alpha="0.7"
+                    android:layout_gravity="end" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
 </LinearLayout>

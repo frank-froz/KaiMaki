@@ -1,110 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
-    android:background="@android:color/white">
+    android:background="@color/backgroundLight"
+    android:fillViewport="true"
+    tools:context=".ui.login.LoginActivity">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:paddingHorizontal="@dimen/screen_padding_horizontal"
+        android:paddingVertical="@dimen/screen_padding_vertical">
 
-        <!-- Título -->
+        <!-- Logo y título -->
+        <ImageView
+            android:id="@+id/logoImage"
+            android:layout_width="@dimen/logo_size"
+            android:layout_height="@dimen/logo_size"
+            android:layout_marginTop="@dimen/spacing_xxlarge"
+            android:src="@drawable/kaimaki_logo"
+            android:contentDescription="@string/app_name"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <TextView
             android:id="@+id/txtTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Iniciar sesión"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="32dp"
-            android:textColor="@android:color/black" />
+            android:layout_marginTop="@dimen/spacing_large"
+            android:text="Bienvenido de vuelta"
+            android:textAppearance="@style/TextAppearance.App.Headline"
+            app:layout_constraintTop_toBottomOf="@id/logoImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Correo -->
-        <com.google.android.material.textfield.TextInputLayout
+        <TextView
+            android:id="@+id/txtSubtitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:text="Inicia sesión para continuar"
+            android:textAppearance="@style/TextAppearance.App.Caption"
+            app:layout_constraintTop_toBottomOf="@id/txtTitulo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Card principal -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/loginCard"
+            style="@style/Widget.App.Card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusTopStart="12dp"
-            app:boxCornerRadiusBottomEnd="12dp">
+            android:layout_marginTop="@dimen/spacing_xlarge"
+            app:layout_constraintTop_toBottomOf="@id/txtSubtitulo">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editCorreo"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Correo electrónico"
-                android:inputType="textEmailAddress"
-                android:textColor="@color/textPrimary"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:orientation="vertical">
 
-        <!-- Contraseña -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusTopStart="12dp"
-            app:boxCornerRadiusBottomEnd="12dp">
+                <!-- Correo -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/emailLayout"
+                    style="@style/Widget.App.TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:hint="Correo electrónico"
+                    app:startIconDrawable="@drawable/ic_edit"
+                    app:startIconTint="@color/colorPrimary">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editContrasena"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Contraseña"
-                android:inputType="textPassword"
-                android:textColor="@color/textPrimary"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editCorreo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:textAppearance="@style/TextAppearance.App.Body" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Botón de login -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Iniciar sesión"
-            style="@style/Widget.MaterialComponents.Button"
-            app:cornerRadius="16dp"
-            android:backgroundTint="@color/colorAccent"
-            android:textColor="@android:color/white"
-            android:layout_marginBottom="24dp" />
+                <!-- Contraseña -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/passwordLayout"
+                    style="@style/Widget.App.TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_xlarge"
+                    android:hint="Contraseña"
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="@color/colorPrimary"
+                    app:startIconDrawable="@drawable/ic_edit"
+                    app:startIconTint="@color/colorPrimary">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editContrasena"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:textAppearance="@style/TextAppearance.App.Body" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Botón de login -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLogin"
+                    style="@style/Widget.App.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_large"
+                    android:text="Iniciar sesión"
+                    app:icon="@drawable/ic_edit"
+                    app:iconGravity="textStart"
+                    app:iconPadding="@dimen/spacing_small" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Separador -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="O"
-            android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Botón Google personalizado -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnGoogle"
+        <LinearLayout
+            android:id="@+id/separatorLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xlarge"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/loginCard">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="@color/outline" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/spacing_medium"
+                android:text="O continúa con"
+                android:textAppearance="@style/TextAppearance.App.Caption" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="@color/outline" />
+        </LinearLayout>
+
+        <!-- Botón Google -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnGoogle"
+            style="@style/Widget.App.Button.Outlined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
             android:text="Continuar con Google"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             app:icon="@drawable/ic_google"
-            app:iconPadding="12dp"
-            app:cornerRadius="16dp"
-            android:textColor="@android:color/black" />
-        <!-- Botón de Registro -->
-        <TextView
-            android:id="@+id/txtIrRegistro"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/spacing_medium"
+            app:iconTint="@color/textPrimary"
+            app:layout_constraintTop_toBottomOf="@id/separatorLayout" />
+
+        <!-- Enlace de registro -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="¿No tienes una cuenta? Regístrate"
-            android:textColor="@color/colorAccent"
-            android:textStyle="bold"
-            android:layout_marginTop="24dp"
-            android:textSize="14sp"
-            android:layout_gravity="center"
-            android:clickable="true"
-            android:focusable="true" />
+            android:layout_marginTop="@dimen/spacing_xlarge"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/btnGoogle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¿No tienes una cuenta? "
+                android:textAppearance="@style/TextAppearance.App.Caption" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/txtIrRegistro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="@dimen/spacing_small"
+                android:text="Regístrate"
+                android:textAppearance="@style/TextAppearance.App.Body"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

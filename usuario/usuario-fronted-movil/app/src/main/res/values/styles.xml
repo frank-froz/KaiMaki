@@ -1,8 +1,296 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="RoundedImageView">
+
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/backgroundLight</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/textPrimary</item>
+        <item name="colorOnPrimary">@color/textOnDark</item>
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/textOnDark</item>
+    </style>
+
+    <!-- Estilos personalizados para Material 3 -->
+    <style name="Widget.App.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/colorPrimary</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+        <item name="hintTextColor">@color/colorPrimary</item>
+        <item name="android:textColorHint">@color/textMediumEmphasis</item>
+        <item name="android:backgroundTint">@color/surface</item>
+    </style>
+
+    <style name="Widget.App.TextInputLayout.Error" parent="Widget.App.TextInputLayout">
+        <item name="boxStrokeColor">@color/error</item>
+        <item name="hintTextColor">@color/error</item>
+        <item name="android:backgroundTint">@color/errorLight</item>
+    </style>
+
+    <style name="Widget.App.Button" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/textOnDark</item>
+        <item name="cornerRadius">16dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingEnd">24dp</item>
+        <item name="elevation">4dp</item>
+        <item name="android:background">@drawable/button_selector</item>
+    </style>
+
+    <style name="Widget.App.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">@color/outline</item>
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="cornerRadius">16dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingEnd">24dp</item>
+        <item name="elevation">2dp</item>
+        <item name="android:background">@drawable/button_outline_selector</item>
+    </style>
+
+    <style name="Widget.App.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/surface</item>
+        <item name="cardCornerRadius">20dp</item>
+        <item name="cardElevation">8dp</item>
+        <item name="contentPadding">24dp</item>
+        <item name="strokeColor">@color/outline</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="android:background">@drawable/card_background_material</item>
+    </style>
+
+    <style name="TextAppearance.App.Headline" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:textColor">@color/textHighEmphasis</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <style name="TextAppearance.App.Body" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textColor">@color/textMediumEmphasis</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
+    </style>
+
+    <style name="TextAppearance.App.Caption" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textColor">@color/textSecondary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- Estados de botones -->
+    <style name="Widget.App.Button.Pressed" parent="Widget.App.Button">
+        <item name="backgroundTint">@color/primaryHover</item>
+        <item name="elevation">2dp</item>
+    </style>
+
+    <style name="Widget.App.Button.Focused" parent="Widget.App.Button">
+        <item name="backgroundTint">@color/primaryFocus</item>
+        <item name="elevation">6dp</item>
+    </style>
+
+    <!-- Estilos específicos para Home y Perfil -->
+    <style name="Widget.App.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/toolbarBackground</item>
+        <item name="titleTextColor">@color/toolbarText</item>
+        <item name="subtitleTextColor">@color/toolbarText</item>
+        <item name="elevation">4dp</item>
+    </style>
+
+    <style name="Widget.App.BottomNavigation" parent="Widget.Material3.BottomNavigationView">
+        <item name="android:background">@color/bottomNavBackground</item>
+        <item name="itemIconTint">@color/bottom_nav_item_color</item>
+        <item name="itemTextColor">@color/bottom_nav_item_color</item>
+        <item name="itemRippleColor">@color/colorPrimary</item>
+        <item name="elevation">8dp</item>
+    </style>
+
+    <style name="Widget.App.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">@color/fabBackground</item>
+        <item name="tint">@color/fabIcon</item>
+        <item name="elevation">6dp</item>
+        <item name="borderWidth">0dp</item>
+    </style>
+
+    <style name="Widget.App.Drawer" parent="Widget.Material3.NavigationView">
+        <item name="android:background">@color/drawerBackground</item>
+        <item name="itemTextColor">@color/drawerText</item>
+        <item name="itemIconTint">@color/drawerText</item>
+        <item name="itemRippleColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="Widget.App.BannerCard" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/bannerGradientStart</item>
+        <item name="cardCornerRadius">24dp</item>
+        <item name="cardElevation">12dp</item>
+        <item name="contentPadding">24dp</item>
+    </style>
+
+    <style name="Widget.App.ServiceCard" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/cardElevated</item>
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">4dp</item>
+        <item name="contentPadding">16dp</item>
+        <item name="strokeColor">@color/outline</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="Widget.App.ProfileCard" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/profileSectionBackground</item>
+        <item name="cardCornerRadius">20dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="contentPadding">20dp</item>
+        <item name="strokeColor">@color/outline</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="Widget.App.ProfileInput" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/inputFieldFocus</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+        <item name="hintTextColor">@color/inputFieldFocus</item>
+        <item name="android:textColorHint">@color/textMediumEmphasis</item>
+        <item name="android:backgroundTint">@color/inputFieldBackground</item>
+    </style>
+
+    <style name="RoundedImageView" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="TextAppearance.App.BannerTitle" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:textColor">@color/textOnDark</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <style name="TextAppearance.App.BannerSubtitle" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textColor">@color/textOnDark</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:alpha">0.9</item>
+    </style>
+
+    <style name="TextAppearance.App.SectionTitle" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textColor">@color/textHighEmphasis</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">-0.01</item>
+    </style>
+
+    <style name="TextAppearance.App.ServiceTitle" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textColor">@color/textHighEmphasis</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Estilos específicos para Trabajadores -->
+    <style name="Widget.App.WorkerCard" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/workerCardBackground</item>
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">4dp</item>
+        <item name="contentPadding">16dp</item>
+        <item name="strokeColor">@color/outline</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="android:background">@drawable/worker_card_background</item>
+    </style>
+
+    <style name="Widget.App.WorkerAvatar" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+        <item name="strokeColor">@color/colorPrimary</item>
+        <item name="strokeWidth">3dp</item>
+    </style>
+
+    <style name="TextAppearance.App.WorkerName" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textColor">@color/workerNameText</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">-0.01</item>
+    </style>
+
+    <style name="TextAppearance.App.WorkerLocation" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textColor">@color/workerLocationText</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextAppearance.App.WorkerRating" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textColor">@color/workerRatingColor</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.App.WorkerContactButton" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/workerContactButton</item>
+        <item name="android:textColor">@color/textOnDark</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingEnd">24dp</item>
+        <item name="elevation">4dp</item>
+    </style>
+
+    <!-- Estilos específicos para Chat -->
+    <style name="Widget.App.ChatHeader" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/chatHeaderBackground</item>
+        <item name="titleTextColor">@color/chatHeaderText</item>
+        <item name="subtitleTextColor">@color/chatHeaderText</item>
+        <item name="elevation">4dp</item>
+    </style>
+
+    <style name="Widget.App.ChatInput" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeColor">@android:color/transparent</item>
+        <item name="hintTextColor">@color/textMediumEmphasis</item>
+        <item name="android:backgroundTint">@android:color/transparent</item>
+        <item name="android:background">@drawable/chat_input_modern</item>
+    </style>
+
+    <style name="Widget.App.ChatSendButton" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">@color/chatSendButton</item>
+        <item name="tint">@color/chatSendButtonIcon</item>
+        <item name="elevation">4dp</item>
+        <item name="borderWidth">0dp</item>
+    </style>
+
+    <style name="TextAppearance.App.ChatMessage" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
+    </style>
+
+    <style name="TextAppearance.App.ChatTime" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textColor">@color/messageTimeText</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- Estilos para animaciones -->
+    <style name="Widget.App.CardAnimation" parent="">
+        <item name="android:stateListAnimator">@animator/card_state_list_anim</item>
+    </style>
+
+    <style name="Widget.App.ButtonAnimation" parent="">
+        <item name="android:stateListAnimator">@animator/button_state_list_anim</item>
     </style>
 
 </resources>

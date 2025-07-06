@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,177 +10,270 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="@dimen/screen_padding_horizontal"
         android:gravity="center_horizontal">
 
+        <!-- Sección de avatar -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.App.ProfileCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large">
 
-        <FrameLayout
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginTop="12dp">
+            <FrameLayout
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:background="@drawable/profile_avatar_background">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgFotoPerfil"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                app:shapeAppearanceOverlay="@style/RoundedImageView"
-                android:src="@drawable/default_avatar" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgFotoPerfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="4dp"
+                    android:scaleType="centerCrop"
+                    app:shapeAppearanceOverlay="@style/RoundedImageView"
+                    android:src="@drawable/default_avatar" />
 
-            <ImageView
-                android:id="@+id/ivEditarFoto"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="4dp"
-                android:padding="6dp"
-                android:background="@drawable/circle_background"
-                android:src="@drawable/ic_edit"
-                app:tint="@color/iconTint" />
-        </FrameLayout>
+                <ImageView
+                    android:id="@+id/ivEditarFoto"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="8dp"
+                    android:padding="6dp"
+                    android:background="@drawable/circle_background"
+                    android:src="@drawable/ic_edit"
+                    app:tint="@color/colorPrimary" />
 
+            </FrameLayout>
 
-        <!-- Campo: Correo (solo lectura) -->
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Información del correo -->
         <TextView
             android:id="@+id/tvCorreo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="correo@ejemplo.com"
-            android:textSize="14sp"
+            android:textAppearance="@style/TextAppearance.App.Caption"
             android:textColor="@color/textSecondary"
             android:gravity="center"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:layout_marginBottom="@dimen/spacing_xlarge" />
 
-        <!-- Campos Editables -->
-        <com.google.android.material.textfield.TextInputLayout
+        <!-- Sección de información personal -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.App.ProfileCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="@dimen/spacing_large">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etNombre"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/textPrimary"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Información Personal"
+                    android:textAppearance="@style/TextAppearance.App.SectionTitle"
+                    android:layout_marginBottom="@dimen/spacing_large" />
+
+                <!-- Nombre -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/nombreLayout"
+                    style="@style/Widget.App.ProfileInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:hint="Nombre">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.App.Body" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Apellido -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/apellidoLayout"
+                    style="@style/Widget.App.ProfileInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:hint="Apellido">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etApellido"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.App.Body" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Teléfono -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/telefonoLayout"
+                    style="@style/Widget.App.ProfileInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:hint="Teléfono">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etTelefono"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:textAppearance="@style/TextAppearance.App.Body" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Presentación -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/presentacionLayout"
+                    style="@style/Widget.App.ProfileInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:hint="Presentación">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPresentacion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="4"
+                        android:textAppearance="@style/TextAppearance.App.Body" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Sección de ubicación -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.App.ProfileCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Apellido"
-            android:layout_marginBottom="12dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etApellido"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textPrimary"/>
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginBottom="@dimen/spacing_large">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Teléfono"
-            android:layout_marginBottom="12dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etTelefono"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:textColor="@color/textPrimary"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Presentación"
-            android:layout_marginBottom="12dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPresentacion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="4"
-                android:textColor="@color/textPrimary"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ubicación"
+                    android:textAppearance="@style/TextAppearance.App.SectionTitle"
+                    android:layout_marginBottom="@dimen/spacing_large" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Dirección"
-            android:layout_marginBottom="12dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etDireccion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textPrimary"/>
+                <!-- Dirección -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/direccionLayout"
+                    style="@style/Widget.App.ProfileInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:hint="Dirección"
+                    app:startIconDrawable="@drawable/ic_location"
+                    app:startIconTint="@color/colorPrimary">
 
-        </com.google.android.material.textfield.TextInputLayout>
-        <!-- Distrito -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Distrito"
-            android:layout_marginBottom="12dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etDistrito"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textPrimary"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etDireccion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.App.Body" />
 
-        <!-- Provincia -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Provincia"
-            android:layout_marginBottom="12dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etProvincia"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textPrimary"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Departamento -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Departamento"
-            android:layout_marginBottom="12dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etDepartamento"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textPrimary"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                <!-- Distrito -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/distritoLayout"
+                    style="@style/Widget.App.ProfileInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:hint="Distrito">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etDistrito"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.App.Body" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Provincia -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/provinciaLayout"
+                    style="@style/Widget.App.ProfileInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:hint="Provincia">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etProvincia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.App.Body" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Departamento -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/departamentoLayout"
+                    style="@style/Widget.App.ProfileInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:hint="Departamento">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etDepartamento"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.App.Body" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
         <!-- Botones de Acción -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="@dimen/spacing_large"
+            android:layout_marginBottom="@dimen/bottom_navigation_margin">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnGuardar"
+                style="@style/Widget.App.Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Guardar"
-                android:backgroundTint="@color/colorPrimary"
-                android:textColor="@color/textOnDark" />
+                android:text="Guardar" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCancelar"
+                style="@style/Widget.App.Button.Outlined"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginStart="8dp"
-                android:text="Cancelar"
-                android:backgroundTint="@color/cardBackground"
-                android:textColor="@color/textPrimary"
-                style="@style/Widget.Material3.Button.OutlinedButton" />
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:text="Cancelar" />
+
         </LinearLayout>
 
     </LinearLayout>
-</ScrollView>
+
+</androidx.core.widget.NestedScrollView>

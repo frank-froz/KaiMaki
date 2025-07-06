@@ -8,8 +8,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 
+import com.kaimaki.usuario.usuario_fronted_movil.R
 import com.kaimaki.usuario.usuario_fronted_movil.databinding.ActivityRegisterBinding
 import com.kaimaki.usuario.usuario_fronted_movil.ui.home.HomeActivity
+import com.kaimaki.usuario.usuario_fronted_movil.ui.login.LoginActivity
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -21,6 +23,9 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Aplicar animación de entrada
+        overridePendingTransition(R.anim.fade_in_slide_up, 0)
 
         // Inicializar ViewModel con factory
         val factory = RegisterViewModelFactory(applicationContext)
@@ -44,6 +49,12 @@ class RegisterActivity : AppCompatActivity() {
             viewModel.registrarUsuario(correo, contrasena)
         }
 
+        // Navegar a login
+        binding.txtIrLogin.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+
         viewModel.registroResult.observe(this) { result ->
             result.onSuccess { authResponse ->
                 val prefs = getSharedPreferences("usuario_prefs", Context.MODE_PRIVATE)
@@ -58,6 +69,11 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(this, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(0, R.anim.fade_in_slide_up)
     }
 
 }

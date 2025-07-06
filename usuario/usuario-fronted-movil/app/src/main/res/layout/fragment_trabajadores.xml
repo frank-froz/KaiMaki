@@ -1,19 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_trabajadores"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="#FAFAFA">
+    android:background="@color/backgroundLight">
 
-    <!-- Barra de búsqueda -->
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
+    <!-- Header con título -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Buscar por nombre, oficio o distrito" />
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/screen_padding_horizontal"
+        android:paddingTop="@dimen/spacing_large"
+        android:paddingBottom="@dimen/spacing_medium">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Encuentra tu trabajador"
+            android:textAppearance="@style/TextAppearance.App.Headline"
+            android:layout_marginBottom="@dimen/spacing_small" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Busca por nombre, oficio o ubicación"
+            android:textAppearance="@style/TextAppearance.App.Caption"
+            android:textColor="@color/textSecondary" />
+
+    </LinearLayout>
+
+    <!-- Barra de búsqueda moderna -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/screen_padding_horizontal"
+        android:layout_marginBottom="@dimen/spacing_large"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="@color/surface"
+        app:strokeColor="@color/outline"
+        app:strokeWidth="1dp">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_medium"
+            android:queryHint="Buscar trabajadores..."
+            android:background="@drawable/search_view_modern"
+            app:queryBackground="@android:color/transparent"
+            app:searchIcon="@drawable/ic_search_modern"
+            app:iconTint="@color/iconTint" />
+
+    </com.google.android.material.card.MaterialCardView>
 
     <!-- Lista de trabajadores -->
     <androidx.recyclerview.widget.RecyclerView
@@ -21,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="8dp"
+        android:paddingHorizontal="@dimen/screen_padding_horizontal"
         android:clipToPadding="false"
         android:scrollbars="vertical"
         tools:listitem="@layout/item_trabajador" />

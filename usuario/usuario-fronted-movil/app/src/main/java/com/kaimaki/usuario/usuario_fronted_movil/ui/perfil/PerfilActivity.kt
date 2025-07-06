@@ -10,6 +10,9 @@ class PerfilActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perfil)
 
+        // Aplicar animación de entrada
+        overridePendingTransition(R.anim.slide_in_right, 0)
+
         // Configura la Toolbar como ActionBar
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -27,5 +30,10 @@ class PerfilActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressedDispatcher.onBackPressed()
         return true
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(0, R.anim.slide_out_left)
     }
 }
