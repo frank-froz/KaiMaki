@@ -325,7 +325,19 @@ export default function ChatPage() {
       <div className="chat-sidebar">
         <div className="chat-sidebar-header">
           <div className="logo">
-            <Link to="/">Kaimaki</Link>
+            <Link to="/">
+              <img
+                src="/kaimaki_imagotipo.png"
+                alt="Kaimaki logo"
+                style={{
+                  height: "80px",
+                  width: "auto",
+                  maxWidth: "240px",
+                  verticalAlign: "middle",
+                  display: "block",
+                }}
+              />
+            </Link>
           </div>
         </div>
 
