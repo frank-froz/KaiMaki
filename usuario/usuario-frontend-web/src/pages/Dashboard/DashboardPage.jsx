@@ -19,12 +19,10 @@ export default function DashboardPage() {
   };
 
   const cards = [
-    { title: 'Perfil', desc: 'Gestiona tus datos', to: '/perfil', icon: '👤' },
-    { title: 'Trabajadores', desc: 'Busca trabajadores fácilmente', to: '/trabajadores', icon: '🛠️' },
-    { title: 'Reportes', desc: 'Genera tus reportes', to: '/reportes', icon: '📊' },
-    { title: 'Solicitudes', desc: 'Consulta tus solicitudes', to: '/solicitudes', icon: '📋' },
-    { title: 'Reclamos', desc: 'Haz un reclamo', to: '/reclamos/nuevo', icon: '⚠️' },
-    { title: 'Configuración', desc: 'Ajustes de perfil', to: '/perfil/configuracion', icon: '⚙️' },
+    { title: 'Perfil', desc: 'Que conozcan más de ti, gestiona tus datos', to: '/perfil', icon: '👤' },
+    { title: 'Trabajadores', desc: 'Busca trabajadores confiables fácilmente', to: '/trabajadores', icon: '🛠️' },
+    { title: 'Chat', desc: 'LLega a un acuerdo con trabajadores', to: '/chat', icon: '💬' },
+    { title: 'FAQ', desc: 'Resuelve tus dudas frecuentes', to: '/about#faq', icon: '❓' },
   ];
 
   return (
