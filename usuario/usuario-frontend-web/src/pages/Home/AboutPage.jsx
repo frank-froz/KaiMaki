@@ -2,6 +2,9 @@
 import React from 'react';
 import '../../styles/pages/AboutPage.css';
 import portada from '../../assets/about-us/portada.jpg';
+import franklinImg from '../../assets/about-us/Frank.png';
+import hectorImg from '../../assets/about-us/Han.png';
+import kenedyImg from '../../assets/about-us/Kenedy.png';
 import mision from '../../assets/about-us/mision.png';
 import vision from '../../assets/about-us/vision.png';
 import valor from '../../assets/about-us/valor.png';
@@ -66,9 +69,9 @@ const AboutPage = () => {
         <h2>Nuestro Equipo</h2>
         <div className="team-grid">
           {[
-            { nombre: 'Franklin Alvaro Huaytalla Rodriguez', rol: 'Scrum Master' },
-            { nombre: 'Hector Hanmer Castro Peñaloza', rol: 'Scrum Team'  },
-            { nombre: 'Kenedy Ramos Huaman', rol: 'Scrum Team' },
+            { nombre: 'Franklin Alvaro Huaytalla Rodriguez', rol: 'Scrum Master', img: franklinImg },
+            { nombre: 'Hector Hanmer Castro Peñaloza', rol: 'Scrum Team', img: hectorImg },
+            { nombre: 'Kenedy Ramos Huaman', rol: 'Scrum Team', img: kenedyImg },
           ].map((miembro, index) => (
             <div key={index} className="team-member">
               <img src={miembro.img} alt={miembro.nombre} />
