@@ -39,4 +39,8 @@
     <!-- Dimensiones para chips -->
     <dimen name="chip_stroke_width">1dp</dimen>
     <dimen name="chip_corner_radius">12dp</dimen>
+
+    <!-- Dimensiones para bottom navigation -->
+    <dimen name="bottom_navigation_height">56dp</dimen>
+    <dimen name="bottom_navigation_margin">80dp</dimen>
 </resources> 

@@ -62,25 +62,6 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Buscador de oficios moderno -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/searchLayout"
-            style="@style/Widget.App.TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xlarge"
-            android:hint="Buscar un oficio..."
-            app:startIconDrawable="@drawable/ic_search"
-            app:startIconTint="@color/colorPrimary">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etBuscar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:textAppearance="@style/TextAppearance.App.Body" />
-
-        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Servicios Destacados -->
         <TextView

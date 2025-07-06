@@ -15,7 +15,7 @@ class WebSocketManager private constructor() {
     private var messageDisposable: Disposable? = null
 
     fun connect(authToken: String, onMessageReceived: (String) -> Unit) {
-        val url = "ws://110.0.2.2:8080/ws/websocket"
+        val url = "ws://10.0.2.2:8080/ws/websocket"
         Log.d("WebSocket", " Conectando a $url con token: $authToken")
 
         stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, url)

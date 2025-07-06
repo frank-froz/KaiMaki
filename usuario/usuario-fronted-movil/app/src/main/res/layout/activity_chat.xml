@@ -17,7 +17,7 @@
             android:id="@+id/headerChat"
             style="@style/Widget.App.ChatHeader"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="64dp"
             android:paddingHorizontal="@dimen/spacing_large">
 
             <LinearLayout
@@ -36,15 +36,14 @@
                     android:clickable="true"
                     android:focusable="true" />
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/imgPerfilChat"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="@dimen/spacing_large"
                     android:src="@drawable/default_avatar"
                     android:scaleType="centerCrop"
-                    android:background="@drawable/circle_background"
-                    android:clipToOutline="true" />
+                    app:shapeAppearanceOverlay="@style/Widget.App.WorkerAvatar" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -58,7 +57,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Nombre del Trabajador"
-                        android:textAppearance="@style/TextAppearance.App.Headline"
+                        android:textAppearance="@style/TextAppearance.App.WorkerName"
                         android:textColor="@color/chatHeaderText" />
 
                     <TextView
@@ -125,7 +124,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:maxLines="4"
-                    android:textAppearance="@style/TextAppearance.App.Body"
+                    android:textAppearance="@style/TextAppearance.App.ChatMessage"
                     android:background="@android:color/transparent"
                     android:padding="0dp" />
 
@@ -137,7 +136,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="@dimen/spacing_medium"
-                android:src="@drawable/ic_send"
+                android:src="@drawable/ic_send_modern"
                 app:fabSize="mini" />
 
         </LinearLayout>

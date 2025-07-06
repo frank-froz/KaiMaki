@@ -209,40 +209,19 @@
         <item name="contentPadding">16dp</item>
         <item name="strokeColor">@color/outline</item>
         <item name="strokeWidth">1dp</item>
+        <item name="android:background">@drawable/worker_card_background</item>
     </style>
 
     <style name="Widget.App.WorkerAvatar" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
-        <item name="strokeColor">@color/workerAvatarBorder</item>
-        <item name="strokeWidth">2dp</item>
-    </style>
-
-    <style name="Widget.App.WorkerChip" parent="Widget.Material3.Chip.Assist">
-        <item name="chipBackgroundColor">@color/workerChipBackground</item>
-        <item name="android:textColor">@color/workerChipText</item>
-        <item name="chipStrokeColor">@color/workerChipText</item>
-        <item name="chipStrokeWidth">1dp</item>
-        <item name="cornerRadius">12dp</item>
-    </style>
-
-    <style name="Widget.App.WorkerContactButton" parent="Widget.Material3.Button">
-        <item name="backgroundTint">@color/workerContactButton</item>
-        <item name="android:textColor">@color/textOnDark</item>
-        <item name="cornerRadius">24dp</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:letterSpacing">0.05</item>
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:paddingBottom">16dp</item>
-        <item name="android:paddingStart">32dp</item>
-        <item name="android:paddingEnd">32dp</item>
-        <item name="elevation">4dp</item>
+        <item name="strokeColor">@color/colorPrimary</item>
+        <item name="strokeWidth">3dp</item>
     </style>
 
     <style name="TextAppearance.App.WorkerName" parent="TextAppearance.Material3.TitleLarge">
         <item name="android:textColor">@color/workerNameText</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:letterSpacing">-0.01</item>
     </style>
@@ -258,6 +237,20 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Widget.App.WorkerContactButton" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/workerContactButton</item>
+        <item name="android:textColor">@color/textOnDark</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingEnd">24dp</item>
+        <item name="elevation">4dp</item>
+    </style>
+
     <!-- Estilos específicos para Chat -->
     <style name="Widget.App.ChatHeader" parent="Widget.Material3.Toolbar">
         <item name="android:background">@color/chatHeaderBackground</item>
@@ -267,15 +260,11 @@
     </style>
 
     <style name="Widget.App.ChatInput" parent="Widget.Material3.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/chatInputBorder</item>
-        <item name="boxStrokeWidth">1dp</item>
-        <item name="boxCornerRadiusTopStart">24dp</item>
-        <item name="boxCornerRadiusTopEnd">24dp</item>
-        <item name="boxCornerRadiusBottomStart">24dp</item>
-        <item name="boxCornerRadiusBottomEnd">24dp</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeColor">@android:color/transparent</item>
         <item name="hintTextColor">@color/textMediumEmphasis</item>
-        <item name="android:textColorHint">@color/textMediumEmphasis</item>
-        <item name="android:backgroundTint">@color/chatInputBackground</item>
+        <item name="android:backgroundTint">@android:color/transparent</item>
+        <item name="android:background">@drawable/chat_input_modern</item>
     </style>
 
     <style name="Widget.App.ChatSendButton" parent="Widget.MaterialComponents.FloatingActionButton">
@@ -285,39 +274,23 @@
         <item name="borderWidth">0dp</item>
     </style>
 
-    <style name="TextAppearance.App.MessageSent" parent="TextAppearance.Material3.BodyLarge">
-        <item name="android:textColor">@color/messageSentText</item>
+    <style name="TextAppearance.App.ChatMessage" parent="TextAppearance.Material3.BodyLarge">
         <item name="android:textSize">16sp</item>
         <item name="android:lineSpacingMultiplier">1.2</item>
     </style>
 
-    <style name="TextAppearance.App.MessageReceived" parent="TextAppearance.Material3.BodyLarge">
-        <item name="android:textColor">@color/messageReceivedText</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:lineSpacingMultiplier">1.2</item>
-    </style>
-
-    <style name="TextAppearance.App.MessageTime" parent="TextAppearance.Material3.BodySmall">
+    <style name="TextAppearance.App.ChatTime" parent="TextAppearance.Material3.BodySmall">
         <item name="android:textColor">@color/messageTimeText</item>
         <item name="android:textSize">12sp</item>
     </style>
 
-    <!-- Estilos para burbujas de mensaje -->
-    <style name="Widget.App.MessageBubbleSent" parent="">
-        <item name="android:background">@drawable/message_bubble_sent</item>
-        <item name="android:padding">12dp</item>
-        <item name="android:layout_marginStart">48dp</item>
-        <item name="android:layout_marginEnd">8dp</item>
-        <item name="android:layout_marginTop">4dp</item>
-        <item name="android:layout_marginBottom">4dp</item>
+    <!-- Estilos para animaciones -->
+    <style name="Widget.App.CardAnimation" parent="">
+        <item name="android:stateListAnimator">@animator/card_state_list_anim</item>
     </style>
 
-    <style name="Widget.App.MessageBubbleReceived" parent="">
-        <item name="android:background">@drawable/message_bubble_received</item>
-        <item name="android:padding">12dp</item>
-        <item name="android:layout_marginStart">8dp</item>
-        <item name="android:layout_marginEnd">48dp</item>
-        <item name="android:layout_marginTop">4dp</item>
-        <item name="android:layout_marginBottom">4dp</item>
+    <style name="Widget.App.ButtonAnimation" parent="">
+        <item name="android:stateListAnimator">@animator/button_state_list_anim</item>
     </style>
+
 </resources>

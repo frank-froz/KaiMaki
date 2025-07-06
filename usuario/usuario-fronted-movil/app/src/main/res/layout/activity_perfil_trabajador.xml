@@ -8,8 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/screen_padding_horizontal">
+        android:orientation="vertical">
 
         <!-- Header con toolbar -->
         <com.google.android.material.appbar.AppBarLayout
@@ -28,181 +27,190 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <!-- Sección de información principal -->
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.App.Card"
+        <!-- Contenido principal -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_large"
-            android:layout_marginBottom="@dimen/spacing_large">
+            android:orientation="vertical"
+            android:padding="@dimen/screen_padding_horizontal">
 
-            <LinearLayout
+            <!-- Sección de información principal -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.App.WorkerCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:layout_marginTop="@dimen/spacing_large"
+                android:layout_marginBottom="@dimen/spacing_large">
 
-                <!-- Avatar del trabajador -->
-                <FrameLayout
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_marginBottom="@dimen/spacing_large"
-                    android:background="@drawable/worker_avatar_background">
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/imgPerfilDetalle"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="4dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/default_avatar"
-                        app:shapeAppearanceOverlay="@style/Widget.App.WorkerAvatar" />
-
-                </FrameLayout>
-
-                <!-- Nombre del trabajador -->
-                <TextView
-                    android:id="@+id/txtNombrePerfil"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nombre Apellido"
-                    android:textAppearance="@style/TextAppearance.App.WorkerName"
-                    android:layout_marginBottom="@dimen/spacing_small" />
-
-                <!-- Oficios -->
-                <TextView
-                    android:id="@+id/txtOficioPerfil"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Oficios: Electricista, Gasfitero"
-                    android:textAppearance="@style/TextAppearance.App.Body"
-                    android:textColor="@color/textMediumEmphasis"
-                    android:layout_marginBottom="@dimen/spacing_large" />
-
-                <!-- Calificación -->
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="@dimen/spacing_large">
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal">
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@android:drawable/btn_star"
-                        app:tint="@color/workerRatingColor"
-                        android:layout_marginEnd="@dimen/spacing_small" />
+                    <!-- Avatar del trabajador -->
+                    <FrameLayout
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_marginBottom="@dimen/spacing_large"
+                        android:background="@drawable/worker_avatar_modern">
 
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/imgPerfilDetalle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="4dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/default_avatar"
+                            app:shapeAppearanceOverlay="@style/Widget.App.WorkerAvatar" />
+
+                    </FrameLayout>
+
+                    <!-- Nombre del trabajador -->
                     <TextView
-                        android:id="@+id/txtRatingPerfil"
+                        android:id="@+id/txtNombrePerfil"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="4.8 (24 reseñas)"
-                        android:textAppearance="@style/TextAppearance.App.WorkerRating" />
+                        android:text="Nombre Apellido"
+                        android:textAppearance="@style/TextAppearance.App.WorkerName"
+                        android:layout_marginBottom="@dimen/spacing_small" />
+
+                    <!-- Oficios -->
+                    <TextView
+                        android:id="@+id/txtOficioPerfil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Oficios: Electricista, Gasfitero"
+                        android:textAppearance="@style/TextAppearance.App.Body"
+                        android:textColor="@color/textMediumEmphasis"
+                        android:layout_marginBottom="@dimen/spacing_large" />
+
+                    <!-- Calificación -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/spacing_large">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@android:drawable/btn_star"
+                            app:tint="@color/workerRatingColor"
+                            android:layout_marginEnd="@dimen/spacing_small" />
+
+                        <TextView
+                            android:id="@+id/txtRatingPerfil"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4.8 (24 reseñas)"
+                            android:textAppearance="@style/TextAppearance.App.WorkerRating" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Sección de ubicación -->
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.App.ProfileCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_large">
-
-            <LinearLayout
+            <!-- Sección de ubicación -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.App.WorkerCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginBottom="@dimen/spacing_large">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ubicación"
-                    android:textAppearance="@style/TextAppearance.App.SectionTitle"
-                    android:layout_marginBottom="@dimen/spacing_large" />
-
-                <!-- Dirección detallada -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ubicación"
+                        android:textAppearance="@style/TextAppearance.App.SectionTitle"
+                        android:layout_marginBottom="@dimen/spacing_large" />
+
+                    <!-- Dirección detallada -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginBottom="@dimen/spacing_small">
+                        android:orientation="vertical">
 
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_location"
-                            app:tint="@color/colorPrimary"
-                            android:layout_marginEnd="@dimen/spacing_small" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="@dimen/spacing_small">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:src="@drawable/ic_location"
+                                app:tint="@color/colorPrimary"
+                                android:layout_marginEnd="@dimen/spacing_small" />
+
+                            <TextView
+                                android:id="@+id/txtDireccionPerfil"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Av. Siempre Viva 123"
+                                android:textAppearance="@style/TextAppearance.App.Body" />
+
+                        </LinearLayout>
 
                         <TextView
-                            android:id="@+id/txtDireccionPerfil"
-                            android:layout_width="0dp"
+                            android:id="@+id/txtDistritoPerfil"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Av. Siempre Viva 123"
-                            android:textAppearance="@style/TextAppearance.App.Body" />
+                            android:text="Distrito: Miraflores"
+                            android:textAppearance="@style/TextAppearance.App.Caption"
+                            android:textColor="@color/textSecondary"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginBottom="@dimen/spacing_small" />
+
+                        <TextView
+                            android:id="@+id/txtProvincia"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Provincia: Lima"
+                            android:textAppearance="@style/TextAppearance.App.Caption"
+                            android:textColor="@color/textSecondary"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginBottom="@dimen/spacing_small" />
+
+                        <TextView
+                            android:id="@+id/txtDepartamento"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Departamento: Lima"
+                            android:textAppearance="@style/TextAppearance.App.Caption"
+                            android:textColor="@color/textSecondary"
+                            android:layout_marginStart="24dp" />
 
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/txtDistritoPerfil"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Distrito: Miraflores"
-                        android:textAppearance="@style/TextAppearance.App.Caption"
-                        android:textColor="@color/textSecondary"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginBottom="@dimen/spacing_small" />
-
-                    <TextView
-                        android:id="@+id/txtProvincia"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Provincia: Lima"
-                        android:textAppearance="@style/TextAppearance.App.Caption"
-                        android:textColor="@color/textSecondary"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginBottom="@dimen/spacing_small" />
-
-                    <TextView
-                        android:id="@+id/txtDepartamento"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Departamento: Lima"
-                        android:textAppearance="@style/TextAppearance.App.Caption"
-                        android:textColor="@color/textSecondary"
-                        android:layout_marginStart="24dp" />
-
                 </LinearLayout>
 
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-        </com.google.android.material.card.MaterialCardView>
+            <!-- Botón de contacto -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnMensajePerfil"
+                style="@style/Widget.App.WorkerContactButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enviar mensaje"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:layout_marginBottom="@dimen/spacing_xlarge"
+                app:icon="@drawable/ic_edit"
+                app:iconGravity="textStart"
+                app:iconPadding="@dimen/spacing_small" />
 
-        <!-- Botón de contacto -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnMensajePerfil"
-            style="@style/Widget.App.WorkerContactButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Enviar mensaje"
-            android:layout_marginTop="@dimen/spacing_large"
-            android:layout_marginBottom="@dimen/spacing_xlarge"
-            app:icon="@drawable/ic_edit"
-            app:iconGravity="textStart"
-            app:iconPadding="@dimen/spacing_small" />
+        </LinearLayout>
 
     </LinearLayout>
 
