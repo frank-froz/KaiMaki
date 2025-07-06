@@ -9,12 +9,19 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  transition: background-color 0.3s ease;
+  transition: transform 0.45s cubic-bezier(.4,0,.2,1), background 0.3s;
 }
 
 .app-header.scrolled {
   background-color: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(4px);
+}
+
+.app-header.hide-header {
+  transform: translateY(-120%);
+  transition: transform 0.45s cubic-bezier(.4,0,.2,1), background 0.3s;
+  box-shadow: none;
+  pointer-events: none;
 }
 
 /* === Logo === */
@@ -81,12 +88,45 @@
   font-weight: 500;
   padding: 10px 15px;
   border-radius: 5px;
-  transition: background-color 0.3s, color 0.3s;
+  transition: color 0.3s, font-size 0.3s;
 }
 
-.nav-links li a:hover {
-  background-color: #ff7f00;
-  color: white;
+.nav-links li a:hover,
+.nav-links li .nav-link-active:hover {
+  color: #111 !important;
+  font-size: 1.13rem;
+  background-color: transparent;
+}
+
+.nav-links li .nav-link-active {
+  position: relative;
+  color: #ff7f00 !important;
+  font-weight: 700;
+}
+
+/* Flecha color Kaimaki bajo el enlace activo */
+.nav-links li .nav-link-active::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -13px;
+  width: 22px;
+  height: 12px;
+  background: none;
+  pointer-events: none;
+  z-index: 2;
+  /* SVG flecha naranja Kaimaki hacia arriba */
+  background-image: url('data:image/svg+xml;utf8,<svg width="22" height="12" viewBox="0 0 22 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 2L21 11" stroke="%23ff7f00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+@media (max-width: 768px) {
+  .nav-links li .nav-link-active::after {
+    display: none;
+  }
 }
 
 .dropdown-menu li a {
@@ -100,8 +140,8 @@
 }
 
 .dropdown-menu li a:hover {
-  background-color: #ff7f00;
-  color: white;
+  
+  color: #FF9801;
 }
 
 
@@ -146,7 +186,7 @@
 }
 
 .user-name:hover {
-  background-color: #ff7f00;
+  
   color: white;
 }
 
@@ -183,6 +223,83 @@
 
 .dropdown-menu li:hover {
   background-color: #f0f0f0;
+}
+
+/* === User Dropdown Bubble === */
+.user-dropdown-bubble {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  min-width: 260px;
+  background: #fff;
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.10);
+  padding: 1.1rem 0.7rem 0.7rem 0.7rem;
+  margin-top: 18px;
+  z-index: 9999;
+  animation: bubbleIn 0.32s cubic-bezier(.6,-0.28,.74,.05);
+  overflow: visible;
+}
+
+.user-dropdown-bubble::before {
+  display: none !important;
+}
+
+@keyframes bubbleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.85) translateY(-18px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.dropdown-user-greeting {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #ff9800;
+  margin-bottom: 0.7rem;
+  padding-bottom: 0.5rem;
+  text-align: center;
+}
+
+.dropdown-sep {
+  border: none;
+  border-top: 1.5px solid #f0f0f0;
+  margin: 0.5rem 0 0.5rem 0;
+}
+
+.dropdown-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-list li {
+  padding: 10px 10px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+  color: #222;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropdown-list li.logout {
+  justify-content: center;
+  color: #e53935;
+  font-weight: 600;
+}
+
+.dropdown-list li:hover {
+  background: #fff3e0;
+  color: #ff9800;
 }
 
 /* === Responsive Styles === */
