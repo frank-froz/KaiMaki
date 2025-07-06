@@ -64,3 +64,131 @@ footer {
   padding: 0;
   margin: 0;
 }
+
+/* Estilos adicionales para el footer al estilo de Apple */
+
+.footer-apple-style {
+  background: #fff;
+  color: #222;
+  border-top: 1px solid #ccc;
+  padding: 2.5rem 1rem;
+}
+
+.footer-apple-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 2rem;
+}
+
+.footer-apple-col {
+  min-width: 180px;
+}
+
+.footer-apple-title {
+  color: #f97316;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.footer-apple-list {
+  color: #888;
+  list-style: disc inside;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-apple-item {
+  transition: color 0.2s;
+  cursor: pointer;
+}
+.footer-apple-item:hover {
+  color: #222;
+}
+
+.footer-apple-copyright {
+  margin-top: 1rem;
+  font-size: 0.95em;
+}
+
+.footer-apple-social {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  list-style: none;
+  color: #222;
+}
+.footer-apple-social img {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s ease;
+}
+.footer-apple-social img:hover {
+  transform: scale(1.2);
+}
+
+.footer-link {
+  text-decoration: none;
+  color: inherit;
+}
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+.footer-apple-bottom {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.95em;
+}
+.footer-apple-sep {
+  margin: 0 0.5em;
+  color: #888;
+}
+
+@media (max-width: 900px) {
+  .footer-apple-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+@media (max-width: 700px) {
+  .footer-apple-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .footer-apple-col {
+    min-width: 220px;
+    width: 100%;
+    text-align: center;
+  }
+}
+@media (max-width: 500px) {
+  .footer-apple-container {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    padding: 0 0.5rem;
+  }
+  .footer-apple-col {
+    min-width: 0;
+    width: 100%;
+    text-align: center;
+    padding: 0;
+  }
+  .footer-apple-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.7rem;
+  }
+  .footer-apple-list {
+    font-size: 0.98rem;
+  }
+  .footer-apple-bottom {
+    font-size: 0.9em;
+    margin-top: 1.2rem;
+    padding: 0 0.5rem;
+  }
+  .footer-apple-social img {
+    width: 22px;
+    height: 22px;
+  }
+}
