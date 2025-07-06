@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import '../../styles/components/Perfil.css';
 
-const Perfil = ({ data, editable = false, onSave }) => {
+const Perfil = ({ data, editable = false, onSave, onMessageClick }) => {
   const [modoEdicion, setModoEdicion] = useState(false);
   const [perfil, setPerfil] = useState(data);
+  const [saving, setSaving] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPerfil(prev => ({ ...prev, [name]: value }));
   };
-
-  const [saving, setSaving] = useState(false);
 
   const handleGuardar = async () => {
     setSaving(true);
@@ -19,90 +18,101 @@ const Perfil = ({ data, editable = false, onSave }) => {
     setSaving(false);
   };
 
-  
   useEffect(() => {
     setPerfil(data);
-    setModoEdicion(false); 
+    setModoEdicion(false);
   }, [data]);
 
+  const ubicacion = [perfil.distrito, perfil.provincia, perfil.departamento].filter(Boolean).join(', ');
 
   return (
-    
-    <div className="perfil-card">
-      <div className="perfil-header">
-        <h2>Perfil de Usuario</h2>
-        {editable && (
-          <button className="perfil-editar" onClick={() => setModoEdicion(!modoEdicion)}>
-            {modoEdicion ? 'Cancelar' : 'Editar'}
-          </button>
-        )}
-      </div>
-
-      <div className="perfil-foto">
-        <img
-          src={perfil.fotoPerfil || '/avatar.png'}
-          alt="Foto de perfil"
-        />
-      </div>
-
-      <div className="perfil-datos">
-        {[
-          { label: 'Nombres', key: 'nombre' },
-          { label: 'Apellidos', key: 'apellido' },
-          { label: 'Correo', key: 'correo' },
-          { label: 'Presentación', key: 'presentacion' }
-        ].map(({ label, key }) => (
-          <div className="perfil-campo" key={key}>
-            <label>{label}:</label>
+    <div className="perfil-fb-card">
+      <div className="perfil-fb-banner"></div>
+      <div className="perfil-fb-header-row">
+        <div className="perfil-fb-foto-box">
+          <img className="perfil-fb-foto" src={perfil.fotoPerfil || '/avatar.png'} alt="Foto de perfil" />
+        </div>
+        <div className="perfil-fb-nombre-botones-row">
+          <div className="perfil-fb-nombre">
             {modoEdicion ? (
-              <input type="text" name={key} value={perfil[key] || ''} onChange={handleChange} />
+              <>
+                <input
+                  type="text"
+                  name="nombre"
+                  value={perfil.nombre || ''}
+                  onChange={handleChange}
+                  placeholder="Nombre"
+                  className="perfil-fb-input-nombre"
+                  style={{marginRight: 8, minWidth: 90}}
+                />
+                <input
+                  type="text"
+                  name="apellido"
+                  value={perfil.apellido || ''}
+                  onChange={handleChange}
+                  placeholder="Apellido"
+                  className="perfil-fb-input-apellido"
+                  style={{minWidth: 90}}
+                />
+              </>
             ) : (
-              <p>{perfil[key] || '—'}</p>
+              <>{perfil.nombre} {perfil.apellido}</>
             )}
           </div>
-        ))}
-
-        <div className="perfil-campo">
-          <label>Ubicación:</label>
-          {modoEdicion ? (
-            <>
-              <input type="text" name="distrito" value={perfil.distrito || ''} onChange={handleChange} placeholder="Distrito" /><br />
-              <input type="text" name="provincia" value={perfil.provincia || ''} onChange={handleChange} placeholder="Provincia" /><br />
-              <input type="text" name="departamento" value={perfil.departamento || ''} onChange={handleChange} placeholder="Departamento" />
-            </>
-          ) : (
-            <p>
-              {perfil.distrito || '—'}, {perfil.provincia || '—'}, {perfil.departamento || '—'}
-            </p>
+          {editable && (
+            <button className="perfil-fb-editar" onClick={() => setModoEdicion(!modoEdicion)}>
+              {modoEdicion ? 'Cancelar' : 'Editar perfil'}
+            </button>
+          )}
+          {!editable && (
+            <button className="perfil-fb-mensaje" onClick={() => onMessageClick && onMessageClick(perfil)}>
+              Enviar mensaje
+            </button>
           )}
         </div>
       </div>
-
-      {perfil.oficios?.length > 0 && (
-        <div className="perfil-listado">
-          <h3>Oficios:</h3>
-          <ul>
-            {perfil.oficios.map((o, i) => <li key={i}>{o}</li>)}
-          </ul>
-        </div>
-      )}
-
-      {perfil.calificaciones?.length > 0 && (
-        <div className="perfil-listado">
-          <h3>Calificaciones:</h3>
-          {perfil.calificaciones.map((cal, i) => (
-            <div key={i} className="perfil-calificacion">
-              <p className="perfil-calif-fecha">{cal.fecha}</p>
-              <p>⭐ {cal.puntuacion} - {cal.comentario}</p>
+      <div className="perfil-fb-body">
+        <div className="perfil-fb-col-izq">
+          <div className="perfil-fb-bloque-presentacion">
+            <h3>Presentación</h3>
+            <div className="perfil-fb-presentacion-texto">
+              {modoEdicion ? (
+                <textarea name="presentacion" value={perfil.presentacion || ''} onChange={handleChange} placeholder="Presentación" />
+              ) : (
+                <span>{perfil.presentacion || '—'}</span>
+              )}
             </div>
-          ))}
+            <hr className="perfil-fb-hr" />
+            <div className="perfil-fb-ubicacion">
+              <span className="perfil-fb-ubicacion-label">Ubicación:</span>
+              {modoEdicion ? (
+                <>
+                  <input type="text" name="distrito" value={perfil.distrito || ''} onChange={handleChange} placeholder="Distrito" style={{marginRight:4}} />
+                  <input type="text" name="provincia" value={perfil.provincia || ''} onChange={handleChange} placeholder="Provincia" style={{marginRight:4}} />
+                  <input type="text" name="departamento" value={perfil.departamento || ''} onChange={handleChange} placeholder="Departamento" />
+                </>
+              ) : (
+                <span className="perfil-fb-ubicacion-text">{ubicacion || '—'}</span>
+              )}
+            </div>
+          </div>
         </div>
-      )}
-
+        {!editable && (
+        <div className="perfil-fb-col-der">
+          <div className="perfil-fb-bloque-instrucciones-card">
+            <ul className="perfil-fb-instrucciones-list">
+              <li>Revisa la información y experiencia del trabajador</li>
+              <li>Ten en cuenta la ubicación, para llegar a un acuerdo con el trabajador.</li>
+              <li>Contactalo dando clic en "Enviar mensaje"</li>
+            </ul>
+          </div>
+        </div>
+        )}
+      </div>
       {modoEdicion && (
-      <button className="perfil-guardar" onClick={handleGuardar} disabled={saving}>
-        {saving ? 'Guardando...' : 'Guardar Cambios'}
-      </button>
+        <button className="perfil-fb-guardar" onClick={handleGuardar} disabled={saving}>
+          {saving ? 'Guardando...' : 'Guardar Cambios'}
+        </button>
       )}
     </div>
   );
