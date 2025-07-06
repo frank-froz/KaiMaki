@@ -1,16 +1,32 @@
 // src/components/trabajadores/TrabajadoresList.jsx
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 
 const TrabajadoresList = ({ trabajadores }) => {
+  const [popupTrabajador, setPopupTrabajador] = useState(null);
+  const navigate = useNavigate();
+
+  const handleCardClick = (t, e) => {
+    // Evitar que el popup se cierre si se hace clic dentro de la tarjeta
+    e.stopPropagation();
+    setPopupTrabajador(t);
+  };
+
+  const closePopup = () => setPopupTrabajador(null);
+
   return (
     <>
-      <div className="td-grid">
+      <div className="td-grid" onClick={closePopup}>
         {trabajadores.map((t) => (
-          <div key={t.userId} className="td-card">
+          <div
+            key={t.userId}
+            className={`td-card${popupTrabajador && popupTrabajador.userId === t.userId ? ' td-card-selected' : ''}`}
+            onClick={(e) => handleCardClick(t, e)}
+            style={{cursor:'pointer'}}
+          >
             <img
               src={t.fotoPerfil || "/avatar.png"}
               alt="Foto"
@@ -29,15 +45,23 @@ const TrabajadoresList = ({ trabajadores }) => {
                   .join(' | ')}
               </div>
             </div>
-            <div className="td-card-actions">
-              <Link to={`/perfil/${t.userId}`}>
-                <button className="td-btn td-btn-profile">Perfil</button>
-              </Link>
-              <button className="td-btn td-btn-message">Mensaje</button>
-            </div>
+            <div className="td-card-actions"></div>
           </div>
         ))}
       </div>
+      {popupTrabajador && (
+        <div className="td-popup-overlay" onClick={closePopup}>
+          <div className="td-popup-card" onClick={e => e.stopPropagation()}>
+            <button className="td-popup-close" onClick={closePopup}>&times;</button>
+            <img src={popupTrabajador.fotoPerfil || '/avatar.png'} alt="Foto" className="td-popup-avatar" />
+            <div className="td-popup-nombre">{popupTrabajador.nombreCompleto}</div>
+            <div className="td-popup-presentacion">{popupTrabajador.presentacion || 'Sin presentación.'}</div>
+            <button className="td-popup-perfil-btn" onClick={() => window.location.href = `/perfil/${popupTrabajador.userId}`}>
+              Visitar perfil
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };
